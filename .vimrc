@@ -47,6 +47,7 @@ set ruler           " show the cursor position all the time
 set number          " show line numbers
 set title           " show title in console title bar
 set ttyfast         " smoother changes
+set expandtab       " space instead of tab
 
 " map NERDTree to F2
 map <F2> :NERDTreeToggle<CR>
