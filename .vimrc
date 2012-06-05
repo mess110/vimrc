@@ -53,6 +53,9 @@ set expandtab       " space instead of tab
 map <F2> :NERDTreeToggle<CR>
 let NERDTreeShowBookmarks=1
 
+" map BufExplorere to F3
+map <F3> :BufExplorer<CR>
+
 " lines with width bigger than 81 get red background
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
