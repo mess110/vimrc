@@ -49,6 +49,8 @@ set title           " show title in console title bar
 set ttyfast         " smoother changes
 set expandtab       " space instead of tab
 
+filetype indent on
+
 " map NERDTree to F2
 map <F2> :NERDTreeToggle<CR>
 let NERDTreeShowBookmarks=1
