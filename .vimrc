@@ -40,8 +40,8 @@ filetype indent on
 
 colorscheme darkblue
 set ls=2            " allways show status line
-set tabstop=4       " numbers of spaces of tab character
-set shiftwidth=4    " numbers of spaces to (auto)indent
+set tabstop=2       " numbers of spaces of tab character
+set shiftwidth=2    " numbers of spaces to (auto)indent
 set hls             " highlight searches
 set ruler           " show the cursor position all the time
 set number          " show line numbers
@@ -60,8 +60,29 @@ let NERDTreeShowBookmarks=1
 " map BufExplorere to F3
 map <F3> :BufExplorer<CR>
 
+map <F5> :so %<CR>
+
 " lines with width bigger than 81 get red background
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
+
+" move lines, blocks up/down in different modes
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-down> :m .+1<CR>==
+
+nnoremap <C-up> :m .-2<CR>==
+nnoremap <C-k> :m .-2<CR>==
+
+inoremap <C-j> <Esc>:m+<CR>==gi
+inoremap <C-down> <Esc>:m+<CR>==gi
+
+inoremap <C-k> <Esc>:m-2<CR>==gi
+inoremap <C-up> <Esc>:m-2<CR>==gi
+
+vnoremap <C-j> :m'>+<CR>gv=gv
+vnoremap <C-down> :m'>+<CR>gv=gv
+
+vnoremap <C-k> :m-2<CR>gv=gv
+vnoremap <C-up> :m-2<CR>gv=gv
 
 " ~/.vimrc ends here
