@@ -48,6 +48,7 @@ set number          " show line numbers
 set title           " show title in console title bar
 set ttyfast         " smoother changes
 set expandtab       " space instead of tab
+set nowrap          " don't wrap lines, let them continue
 
 " indent stuff
 filetype indent on
