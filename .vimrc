@@ -67,6 +67,11 @@ map <F5> :so %<CR>
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
 
+" Ctrl+s to save
+noremap <silent> <C-S> :update<CR>
+vnoremap <silent> <C-S> <C-C>:update<CR>
+inoremap <silent> <C-S> <C-O>:update<CR>
+
 " move lines, blocks up/down in different modes
 nnoremap <C-j> :m .+1<CR>==
 nnoremap <C-down> :m .+1<CR>==
