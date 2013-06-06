@@ -61,7 +61,7 @@ let NERDTreeShowBookmarks=1
 " map BufExplorere to F3
 map <F3> :BufExplorer<CR>
 
-map <F5> :so %<CR>
+map <F5> :FufFile **/<CR>
 
 " lines with width bigger than 81 get red background
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
