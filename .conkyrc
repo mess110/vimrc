@@ -1,0 +1,83 @@
+######################
+# - Conky settings - #
+######################
+update_interval 1
+total_run_times 0
+net_avg_samples 1
+cpu_avg_samples 1
+
+imlib_cache_size 0
+double_buffer yes
+no_buffers yes
+
+#####################
+# - Text settings - #
+#####################
+use_xft yes
+xftfont Ubuntu:size=9
+override_utf8_locale yes
+text_buffer_size 2048
+
+#############################
+# - Window specifications - #
+#############################
+own_window_class Conky
+own_window yes
+own_window_type desktop
+own_window_transparent no
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_argb_visual yes
+own_window_argb_value 255
+alignment bl
+minimum_size 200,500
+gap_x 25
+gap_y 25
+
+#########################
+# - Graphics settings - #
+#########################
+draw_shades no
+
+default_color efefef
+default_shade_color 1d1d1d
+color0 ffffff
+color1 ffffff
+color2 ffffff
+
+TEXT
+${alignc}${nodename}
+
+cpu0 ${cpu cpu0}% ${alignr}${execi 30 sensors | grep 'Core 0' | cut -c17-21}°C
+cpu1 ${cpu cpu1}% ${alignr}${execi 30 sensors | grep 'Core 1' | cut -c17-21}°C
+cpu2 ${cpu cpu2}% ${alignr}${execi 30 sensors | grep 'Core 2' | cut -c17-21}°C
+cpu3 ${cpu cpu3}% ${alignr}${execi 30 sensors | grep 'Core 3' | cut -c17-21}°C
+${cpugraph}
+${top name 1} $alignr ${top pid 1} ${top cpu 1}
+${top name 2} $alignr ${top pid 2} ${top cpu 2}
+${top name 3} $alignr ${top pid 3} ${top cpu 3}
+
+ram ${alignr} ${memperc}%
+${mem} ${alignr}${memmax}
+${membar}
+
+swap ${alignr} ${swapperc}%
+${swap} ${alignr}${swapmax}
+${swapbar}
+
+/home ${alignr}${fs_used_perc /home}%
+${fs_used /home}${alignr}${fs_size /home}
+${fs_bar /home}
+
+/media/montezuma ${alignr}${fs_used_perc /media/montezuma}%
+${fs_used /media/montezuma}${alignr}${fs_size /media/montezuma}
+${fs_bar /media/montezuma}
+
+
+${alignc}${addr eth0}
+
+↑${upspeed eth0}${alignr}${totalup eth0}
+${upspeedgraph eth0 92B6F1 CCDFFF}
+↓${downspeed eth0}${alignr}${totaldown eth0}
+${downspeedgraph eth0 92B6F1 CCDFFF}
+
+${execi 300 ~/vimrc/weather.py 08534}
