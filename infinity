@@ -1,0 +1,14 @@
+#!/bin/bash
+if (( $# != 2 )); then
+  echo "Usage: $0 sleep_seconds 'command'" >&2
+  exit 1
+fi
+
+echo "Executing $2"
+echo "Every $1 second(s)"
+
+while :
+do
+  eval $2
+  sleep 1
+done
