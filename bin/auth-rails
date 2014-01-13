@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if (( $# != 2 )); then
+  echo "Usage: $0 db_user db_pass" >&2
+  exit 1
+fi
+
+if [ ! -f config/database.yml ]; then
+  echo "config/database.yml not found" >&2
+  exit 1
+fi
+
+sed -i "s/^  username.*/  username: $1/" config/database.yml
+sed -i "s/^  password.*/  password: $2/" config/database.yml
+
+echo "config/database.yml"
+grep 'username\|password\|database' config/database.yml | grep -v '^#'

@@ -9,3 +9,9 @@ git config --global user.name "Cristian Mircea Messel"
 # git config --global user.email mess110@gmail.com
 git config --global core.editor "vim"
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+chmod +x bin/infinity
+sudo ln -s ~/vimrc/bin/infinity /usr/local/bin/
+
+chmod +x bin/auth-rails
+sudo ln -s ~/vimrc/bin/auth-rails /usr/local/bin/
