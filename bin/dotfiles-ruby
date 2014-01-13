@@ -1,0 +1,5 @@
+cp ~/vimrc/.ruby-version .
+cp ~/vimrc/.ruby-gemset .
+vim .ruby-version
+vim .ruby-gemset
+cd .
