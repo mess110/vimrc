@@ -80,4 +80,4 @@ ${upspeedgraph eth0 92B6F1 CCDFFF}
 ↓${downspeed eth0}${alignr}${totaldown eth0}
 ${downspeedgraph eth0 92B6F1 CCDFFF}
 
-${execi 300 ~/vimrc/weather.py 08534}
+${execi 300 ~/vimrc/bin/weather 08534}
