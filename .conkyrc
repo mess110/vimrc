@@ -14,7 +14,7 @@ no_buffers yes
 # - Text settings - #
 #####################
 use_xft yes
-xftfont Ubuntu:size=9
+xftfont Ubuntu:size=12
 override_utf8_locale yes
 text_buffer_size 2048
 
@@ -28,10 +28,11 @@ own_window_transparent no
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 own_window_argb_visual yes
 own_window_argb_value 255
-alignment bl
-minimum_size 200,500
-gap_x 25
-gap_y 25
+alignment tl
+minimum_size 240,1200
+gap_x 20
+gap_y 50
+border_width 20
 
 #########################
 # - Graphics settings - #
@@ -55,6 +56,8 @@ ${cpugraph}
 ${top name 1} $alignr ${top pid 1} ${top cpu 1}
 ${top name 2} $alignr ${top pid 2} ${top cpu 2}
 ${top name 3} $alignr ${top pid 3} ${top cpu 3}
+${top name 4} $alignr ${top pid 4} ${top cpu 4}
+${top name 5} $alignr ${top pid 5} ${top cpu 5}
 
 ram ${alignr} ${memperc}%
 ${mem} ${alignr}${memmax}
@@ -64,20 +67,27 @@ swap ${alignr} ${swapperc}%
 ${swap} ${alignr}${swapmax}
 ${swapbar}
 
-/home ${alignr}${fs_used_perc /home}%
+home ${alignr}${fs_used_perc /home}%
 ${fs_used /home}${alignr}${fs_size /home}
 ${fs_bar /home}
 
-/media/montezuma ${alignr}${fs_used_perc /media/montezuma}%
-${fs_used /media/montezuma}${alignr}${fs_size /media/montezuma}
-${fs_bar /media/montezuma}
+montezuma ${alignr}${fs_used_perc /media/kiki/montezuma}%
+${fs_used /media/kiki/montezuma}${alignr}${fs_size /media/kiki/montezuma}
+${fs_bar /media/kiki/montezuma}
+
+walrus ${alignr}${fs_used_perc /media/kiki/walrus}%
+${fs_used /media/kiki/walrus}${alignr}${fs_size /media/kiki/walrus}
+${fs_bar /media/kiki/walrus}
 
 
 ${alignc}${addr eth0}
 
-↑${upspeed eth0}${alignr}${totalup eth0}
+${upspeed eth0}${alignr}${totalup eth0}
 ${upspeedgraph eth0 92B6F1 CCDFFF}
-↓${downspeed eth0}${alignr}${totaldown eth0}
+${downspeed eth0}${alignr}${totaldown eth0}
 ${downspeedgraph eth0 92B6F1 CCDFFF}
 
 ${execi 300 ~/vimrc/bin/weather 08534}
+
+
+
