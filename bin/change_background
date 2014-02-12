@@ -40,7 +40,8 @@ def extension_exists(url):
 
 def set_wallpapper():
     if operating_system == 'linux':
-        if desktop_session == 'gnome':
+        print desktop_session
+        if desktop_session == 'gnome' or desktop_session == 'gnome-shell':
             link = get_random_link()
             file_path = os.path.join(directory, link['name'])
             print file_path
