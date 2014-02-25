@@ -11,6 +11,8 @@ rm -rf ~/.vimrc
 cp .vimrc ~
 cp -R .vim ~
 
+cp .tmux.conf ~
+
 # Configure Conky (also uses bin/weather)
 cp .conkyrc ~
 

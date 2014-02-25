@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if (( $# != 1 )); then
+  echo "Usage: `basename $0` /path/to/project" >&2
+  exit 1
+fi
+
+if [ ! -d $1 ]; then
+  echo "Folder not found" >&2
+  exit 1
+fi
+
+BASE=$1
+cd $BASE
+
+tmux start-server
+tmux new-session -d -s dev -n git
+tmux new-window -t dev:2 -n vim
+tmux new-window -t dev:3 -n tests
+tmux new-window -t dev:4 -n server
+tmux new-window -t dev:5 -n logs
+
+tmux send-keys -t dev:1 "cd $BASE; git status" C-m
+tmux send-keys -t dev:2 "cd $BASE; vim Gemfile" C-m
+
+tmux send-keys -t dev:4 "cd $BASE; ./script/server" C-m
+tmux send-keys -t dev:5 "cd $BASE; tail -f log/*.log" C-m
+
+tmux select-window -t dev:1
+tmux attach-session -t dev
