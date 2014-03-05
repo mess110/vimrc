@@ -11,7 +11,8 @@ rm -rf ~/.vimrc
 cp .vimrc ~
 cp -R .vim ~
 
-cp .tmux.conf ~
+rm -rf ~/.byobu
+cp -R .byobu ~
 
 # Configure Conky (also uses bin/weather)
 cp .conkyrc ~
@@ -31,6 +32,6 @@ git config --global color.ui true
 sed '/^export PATH=~\/vimrc\/bin\:\$PATH/d' ~/.bashrc > ~/vimrc/tmp/file && mv ~/vimrc/tmp/file ~/.bashrc
 echo 'export PATH=~/vimrc/bin:$PATH' >> ~/.bashrc
 
-# Add tmux to .bashrc
-sed '/^\[\[\ \$TERM\ \!\=\ \"screen\"\ \]\]\ \&\&\ exec tmux/d' ~/.bashrc > ~/vimrc/tmp/file && mv ~/vimrc/tmp/file ~/.bashrc
-echo '[[ $TERM != "screen" ]] && exec tmux' >> ~/.bashrc
+# # Add tmux to .bashrc
+# sed '/^\[\[\ \$TERM\ \!\=\ \"screen\"\ \]\]\ \&\&\ exec tmux/d' ~/.bashrc > ~/vimrc/tmp/file && mv ~/vimrc/tmp/file ~/.bashrc
+# echo '[[ $TERM != "screen" ]] && exec tmux' >> ~/.bashrc

@@ -22,5 +22,8 @@ map <Leader>f gg=G``
 " map BufExplorere to F5
 map <Leader>t :BufExplorer<CR>
 
-" " List contents of all registers (that typically contain pasteable text).
+" List contents of all registers (that typically contain pasteable text).
 nnoremap <silent> "" :registers "*+.<CR>
+
+" dir browser
+map <Leader>6 :Explore<CR>
