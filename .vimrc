@@ -19,7 +19,7 @@ map <Leader>p :CtrlP<CR>
 filetype indent on
 map <Leader>f gg=G``
 
-" map BufExplorere to F5
+" map BufExplorere
 map <Leader>t :BufExplorer<CR>
 
 " List contents of all registers (that typically contain pasteable text).
@@ -27,3 +27,11 @@ nnoremap <silent> "" :registers "*+.<CR>
 
 " dir browser
 map <Leader>6 :Explore<CR>
+
+" reload .vimrc
+map <Leader>v :source $MYVIMRC<CR>
+
+" git
+map <Leader>gs :!clear; git status<CR>
+map <Leader>gc :!clear; git commit<CR>
+map <Leader>gd :!clear; git diff<CR>
