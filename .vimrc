@@ -1,4 +1,5 @@
 filetype plugin on
+syntax on
 
 set ls=2            " allways show status line
 set tabstop=2       " numbers of spaces of tab character
@@ -19,7 +20,7 @@ map <Leader>p :CtrlP<CR>
 filetype indent on
 map <Leader>f gg=G``
 
-" map BufExplorere
+" map BufExplorere to F5
 map <Leader>t :BufExplorer<CR>
 
 " List contents of all registers (that typically contain pasteable text).
@@ -35,3 +36,29 @@ map <Leader>v :source $MYVIMRC<CR>
 map <Leader>gs :!clear; git status<CR>
 map <Leader>gc :!clear; git commit<CR>
 map <Leader>gd :!clear; git diff<CR>
+
+" make the 81st column stand out
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%81v', 100)
+
+" Highlight matches when jumping to next
+set incsearch 
+set hlsearch 
+
+function! HLNext (blinktime)
+  set invcursorline
+  redraw
+  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+  set invcursorline
+  redraw
+endfunction
+
+nnoremap <silent> n n:call HLNext(0.4)<cr>
+nnoremap <silent> N N:call HLNext(0.4)<cr>
+
+" No funny stuff. trailing spaces tabs etc
+set listchars=tab:>~,nbsp:_,trail:.
+set list
+
+" no more shift for :
+nnoremap ; :
