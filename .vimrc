@@ -37,6 +37,7 @@ map <Leader>gs :!clear; git status<CR>
 map <Leader>gc :!clear; git commit<CR>
 map <Leader>gd :!clear; git diff<CR>
 map <Leader>gg :!clear; git grep 
+map <Leader>ga :!git add `git ls-files --modified`<CR>
 
 " make the 81st column stand out
 highlight ColorColumn ctermbg=magenta
