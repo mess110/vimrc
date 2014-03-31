@@ -29,8 +29,8 @@ git config --global color.ui true
 # Add ~/vimrc/bin to PATH
 # It makes sure the export command is only written once in ./bashrc
 # If sed fails, mv is not executed
-sed '/^export PATH=~\/vimrc\/bin\:\$PATH/d' ~/.bashrc > ~/vimrc/tmp/file && mv ~/vimrc/tmp/file ~/.bashrc
-echo 'export PATH=~/vimrc/bin:$PATH' >> ~/.bashrc
+# sed '/^export PATH=~\/vimrc\/bin\:\$PATH/d' ~/.bashrc > ~/vimrc/tmp/file && mv ~/vimrc/tmp/file ~/.bashrc
+# echo 'export PATH=~/vimrc/bin:$PATH' >> ~/.bashrc
 
 # # Add tmux to .bashrc
 # sed '/^\[\[\ \$TERM\ \!\=\ \"screen\"\ \]\]\ \&\&\ exec tmux/d' ~/.bashrc > ~/vimrc/tmp/file && mv ~/vimrc/tmp/file ~/.bashrc
