@@ -44,19 +44,8 @@ highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
 
 " Highlight matches when jumping to next
-set incsearch 
-set hlsearch 
-
-function! HLNext (blinktime)
-  set invcursorline
-  redraw
-  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
-  set invcursorline
-  redraw
-endfunction
-
-nnoremap <silent> n n:call HLNext(0.4)<cr>
-nnoremap <silent> N N:call HLNext(0.4)<cr>
+set incsearch
+set hlsearch
 
 " No funny stuff. trailing spaces tabs etc
 set listchars=tab:>~,nbsp:_,trail:.
