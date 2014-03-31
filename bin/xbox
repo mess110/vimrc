@@ -1,0 +1,9 @@
+#!/bin/bash
+if (( $# == 1 )); then
+  sudo killall -SIGINT xboxdrv
+  exit 0
+fi
+
+sudo xboxdrv --wid 0 --silent &
+sudo xboxdrv --wid 1 --silent &
+echo 'To stop run "xbox kill"'
