@@ -20,9 +20,10 @@ nnoremap <Leader>. :CtrlPTag<CR>
 Plugin 'bufexplorer.zip'
 map <Leader>t :BufExplorer<CR>
 
-Plugin 'SuperTab'
+" autocomplete with Ctrl+n
 
 Plugin 'The-NERD-Commenter'
+" <Leader>c<space>
 
 Plugin 'The-NERD-tree'
 map <Leader>6 :NERDTreeToggle<CR>
@@ -31,8 +32,12 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
-imap <S-space> <Plug>snipMateNextOrTrigger
-smap <S-space> <Plug>snipMateNextOrTrigger
+"imap <S><S> <Plug>snipMateNextOrTrigger
+"smap <S><S> <Plug>snipMateNextOrTrigger
+
+" use cs"' to change from " to '
+" cs change surrounding
+Plugin 'surround.vim'
 
 set ls=2            " allways show status line
 set tabstop=2       " numbers of spaces of tab character
@@ -48,10 +53,6 @@ set nowrap          " don't wrap lines, let them continue
 " indent stuff
 filetype indent on
 map <Leader>f gg=G``
-
-" List contents of all registers (that typically contain pasteable text).
-nnoremap <silent> "" :registers "*+.<CR>
-
 
 " reload .vimrc
 map <Leader>v :source $MYVIMRC<CR>:CtrlPClearAllCaches<CR>
