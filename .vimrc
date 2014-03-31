@@ -1,6 +1,39 @@
 filetype plugin on
 syntax on
 
+set rtp+=~/.vim/bundle/vundle/set rtp+=~/.vim/bundle/vundle/
+let g:vundle_default_git_proto = 'git'
+call vundle#rc()
+" alternatively, pass a path where Vundle should install plugins
+" "let path = '~/some/path/here'
+" "call vundle#rc(path)
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/vundle'
+map <Leader>i :PluginInstall<CR>
+
+" scripts from http://vim-scripts.org/vim/scripts.html
+Plugin 'CtrlP.vim'
+map <Leader>p :CtrlP<CR>
+nnoremap <Leader>. :CtrlPTag<CR>
+
+Plugin 'bufexplorer.zip'
+map <Leader>t :BufExplorer<CR>
+
+Plugin 'SuperTab'
+
+Plugin 'The-NERD-Commenter'
+
+Plugin 'The-NERD-tree'
+map <Leader>6 :NERDTreeToggle<CR>
+
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+Bundle "honza/vim-snippets"
+imap <S-space> <Plug>snipMateNextOrTrigger
+smap <S-space> <Plug>snipMateNextOrTrigger
+
 set ls=2            " allways show status line
 set tabstop=2       " numbers of spaces of tab character
 set shiftwidth=2    " numbers of spaces to (auto)indent
@@ -12,25 +45,17 @@ set ttyfast         " smoother changes
 set expandtab       " space instead of tab
 set nowrap          " don't wrap lines, let them continue
 
-" <C-p>
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-map <Leader>p :CtrlP<CR>
-
 " indent stuff
 filetype indent on
 map <Leader>f gg=G``
 
-" map BufExplorere to F5
-map <Leader>t :BufExplorer<CR>
-
 " List contents of all registers (that typically contain pasteable text).
 nnoremap <silent> "" :registers "*+.<CR>
 
-" dir browser
-map <Leader>6 :Explore<CR>
 
 " reload .vimrc
-map <Leader>v :source $MYVIMRC<CR>
+map <Leader>v :source $MYVIMRC<CR>:CtrlPClearAllCaches<CR>
+map <Leader>V :!ctags .<CR>
 
 " git
 map <Leader>gs :!clear; git status<CR>
