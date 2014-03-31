@@ -32,8 +32,8 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
-"imap <S><S> <Plug>snipMateNextOrTrigger
-"smap <S><S> <Plug>snipMateNextOrTrigger
+" use tab or <Leader>\
+inoremap <Leader>\ <C-x><C-o>
 
 " use cs"' to change from " to '
 " cs change surrounding
@@ -49,6 +49,7 @@ set title           " show title in console title bar
 set ttyfast         " smoother changes
 set expandtab       " space instead of tab
 set nowrap          " don't wrap lines, let them continue
+set omnifunc=syntaxcomplete#Complete " set autocomplete
 
 " indent stuff
 filetype indent on
