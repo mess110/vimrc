@@ -17,6 +17,9 @@ cp -R .byobu ~
 # Configure Conky (also uses bin/weather)
 cp .conkyrc ~
 
+# ctags
+cp .ctags ~
+
 git config --global user.name "Cristian Mircea Messel"
 # git config --global user.email mess110@gmail.com
 git config --global core.editor "vim"
