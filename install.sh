@@ -8,6 +8,8 @@ chmod +x bin/*
 
 # Configure vim
 rm -rf ~/.vimrc
+rm -rf ~/.vim/
+
 cp .vimrc ~
 cp -R .vim ~
 
