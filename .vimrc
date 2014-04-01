@@ -54,6 +54,7 @@ set omnifunc=syntaxcomplete#Complete " set autocomplete
 " indent stuff
 filetype indent on
 map <Leader>f gg=G``
+let g:html_indent_inctags = "html,body,head,tbody"
 
 " reload .vimrc
 map <Leader>v :source $MYVIMRC<CR>:CtrlPClearAllCaches<CR>
