@@ -81,3 +81,6 @@ set list
 
 " no more shift for :
 nnoremap ; :
+
+" execute the current file
+nnoremap <Leader>e :!%:p<CR>
