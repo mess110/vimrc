@@ -84,3 +84,16 @@ nnoremap ; :
 
 " execute the current file
 nnoremap <Leader>e :!%:p<CR>
+
+" keep selection while indenting files
+vnoremap > >gv
+vnoremap < <gv
+
+set foldlevelstart=20
+set foldmethod=indent
+
+"" Adjust the highlighting
+highlight Folded guibg=grey guifg=blue
+
+"" Map folding to Spacebar
+nnoremap <Space> za
