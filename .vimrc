@@ -35,6 +35,8 @@ Bundle "honza/vim-snippets"
 " use tab or <Leader>\
 inoremap <Leader>\ <C-x><C-o>
 
+Plugin 'Syntastic'
+
 " use cs"' to change from " to '
 " cs change surrounding
 Plugin 'surround.vim'
@@ -97,3 +99,5 @@ highlight Folded guibg=grey guifg=blue
 
 "" Map folding to Spacebar
 nnoremap <Space> za
+
+nnoremap <Leader>c :!rake spec<CR>
