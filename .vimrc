@@ -1,9 +1,10 @@
-filetype plugin on
-syntax on
+set nocompatible
+filetype off
 
 set rtp+=~/.vim/bundle/vundle/set rtp+=~/.vim/bundle/vundle/
 let g:vundle_default_git_proto = 'git'
 call vundle#rc()
+
 " alternatively, pass a path where Vundle should install plugins
 " "let path = '~/some/path/here'
 " "call vundle#rc(path)
@@ -12,34 +13,33 @@ call vundle#rc()
 Plugin 'gmarik/vundle'
 map <Leader>i :PluginInstall<CR>
 
-" scripts from http://vim-scripts.org/vim/scripts.html
+Bundle 'kchmck/vim-coffee-script'
 Plugin 'CtrlP.vim'
-map <Leader>p :CtrlP<CR>
-nnoremap <Leader>. :CtrlPTag<CR>
-
 Plugin 'bufexplorer.zip'
-map <Leader>t :BufExplorer<CR>
-
-" autocomplete with Ctrl+n
-
 Plugin 'The-NERD-Commenter'
-" <Leader>c<space>
-
 Plugin 'The-NERD-tree'
-map <Leader>6 :NERDTreeToggle<CR>
-
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
-" use tab or <Leader>\
-inoremap <Leader>\ <C-x><C-o>
-
 Plugin 'Syntastic'
-
 " use cs"' to change from " to '
 " cs change surrounding
 Plugin 'surround.vim'
+
+filetype plugin indent on
+syntax on
+
+" scripts from http://vim-scripts.org/vim/scripts.html
+map <Leader>p :CtrlP<CR>
+nnoremap <Leader>. :CtrlPTag<CR>
+
+map <Leader>t :BufExplorer<CR>
+
+map <Leader>6 :NERDTreeToggle<CR>
+
+" use tab or <Leader>\ for snippet suggestion
+inoremap <Leader>\ <C-x><C-o>
 
 set ls=2            " allways show status line
 set tabstop=2       " numbers of spaces of tab character
@@ -101,3 +101,5 @@ highlight Folded guibg=grey guifg=blue
 nnoremap <Space> za
 
 nnoremap <Leader>c :!rake spec<CR>
+
+nnoremap <Leader>n :nohlsearch<CR>

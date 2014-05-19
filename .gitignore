@@ -3,3 +3,4 @@
 *~
 tmp/
 .vim/.netrwhist
+.byobu/.ssh-agent
