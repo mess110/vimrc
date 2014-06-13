@@ -1,0 +1,33 @@
+########################################
+# Ruby snippets - for Rails, see below #
+########################################
+
+# Class Comment
+snippet ##
+	# ${1:Document the responsibility of the class}
+	#
+	# == Heading
+	#
+	# ${2:Use headings to break up descriptions}
+	#
+	# == Formatting
+	#
+	# ${3}
+	# Embody +parameters+ or +options+ in Teletype Text tags. You can also use
+	# *bold* or *italics* but must use HTML tags for <b>multiple words</b>,
+	# <i>like this</i> and <tt>like this</tt>.
+# Method Comment
+snippet ###
+	# ${1:Desribe the behaviour of the method}
+	#
+	# ==== Attributes
+	#
+	# * +${2:first_attribute}+ - ${3:Document the first attribute}
+	#
+	# ==== Options
+	#
+	# * +:${4:conditions}+ - ${5:An SQL fragment like "administrator = 1"}
+	#
+	# ==== Examples
+	#
+	# ${6:base = Base.new("Example String")}
