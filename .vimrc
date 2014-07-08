@@ -16,6 +16,12 @@ map <Leader>i :PluginInstall<CR>
 Plugin 'textobj-user'
 Plugin 'textobj-indent'
 
+" git
+Plugin 'fugitive.vim'
+
+" theme
+Plugin 'itchyny/landscape.vim'
+
 Bundle 'kchmck/vim-coffee-script'
 Plugin 'CtrlP.vim'
 Plugin 'bufexplorer.zip'
