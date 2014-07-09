@@ -72,11 +72,12 @@ map <Leader>v :source $MYVIMRC<CR>:CtrlPClearAllCaches<CR>
 map <Leader>V :!ctags .<CR>
 
 " git
-map <Leader>gs :!clear; git status<CR>
-map <Leader>gc :!clear; git commit<CR>
-map <Leader>gd :!clear; git diff<CR>
-map <Leader>gg :!clear; git grep 
-map <Leader>ga :!git add `git ls-files --modified`<CR>
+map <Leader>gs :Gstatus<CR>
+map <Leader>gc :Gcommit<CR>
+map <Leader>ga :Gwrite<CR>
+map <Leader>gco :Gread<CR>
+map <Leader>gb :Gblame<CR>
+map <Leader>gd :Gdiff<CR>
 
 " make the 81st column stand out
 highlight ColorColumn ctermbg=magenta
