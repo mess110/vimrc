@@ -16,6 +16,8 @@ map <Leader>i :PluginInstall<CR>
 Plugin 'textobj-user'
 Plugin 'textobj-indent'
 
+Bundle 'mileszs/ack.vim'
+
 " git
 Plugin 'fugitive.vim'
 
