@@ -1,3 +1,11 @@
 --recurse=yes
 --tag-relative=yes
 --exclude=.git
+--exclude=node_modules
+--exclude=release
+--exclude=build
+
+--langdef=coffee
+--langmap=coffee:.coffee
+--regex-coffee=/^[ \t]*([A-Za-z.]+)[ \t]+=.*->.*$/\1/f,function/
+--regex-coffee=/^[ \t]*([A-Za-z.]+)[ \t]+=[^->\n]*$/\1/v,variable/
