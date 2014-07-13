@@ -128,17 +128,16 @@ syntax enable
 Plugin 'Solarized'
 let w:solarized_style="dark"
 let g:solarized_termcolors=16
-"set t_Co=16
-let g:solarized_termtrans =   0
-let g:solarized_degrade   =   0
-let g:solarized_bold      =   1
-let g:solarized_underline =   1
-let g:solarized_italic    =   1
-let g:solarized_contrast  =   "normal"
-let g:solarized_visibility=   "normal"
+let g:solarized_termtrans=0
+let g:solarized_degrade=0
+let g:solarized_bold=1
+let g:solarized_underline=1
+let g:solarized_italic=1
+let g:solarized_contrast="normal"
+let g:solarized_visibility="normal"
 colorscheme solarized
 
-" set cursorline
+set cursorline
 
 highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
