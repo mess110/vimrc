@@ -20,9 +20,11 @@ Bundle 'mileszs/ack.vim'
 
 " git
 Plugin 'fugitive.vim'
-
-" theme
-Plugin 'itchyny/landscape.vim'
+map <Leader>gs :Gstatus<CR>
+" use - to stage/unstange changes in git status window
+" ctrl+n/p to navigate through files in git status window
+map <Leader>gb :Gblame<CR>
+map <Leader>gd :Gdiff<CR>
 
 Bundle 'kchmck/vim-coffee-script'
 Plugin 'CtrlP.vim'
@@ -73,14 +75,6 @@ let g:html_indent_inctags = "html,body,head,tbody"
 map <Leader>v :source $MYVIMRC<CR>:CtrlPClearAllCaches<CR>
 map <Leader>V :!ctags .<CR>
 
-" git
-map <Leader>gs :Gstatus<CR>
-map <Leader>gc :Gcommit<CR>
-map <Leader>ga :Gwrite<CR>
-map <Leader>gco :Gread<CR>
-map <Leader>gb :Gblame<CR>
-map <Leader>gd :Gdiff<CR>
-
 " make the 81st column stand out
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
@@ -128,3 +122,25 @@ inoremap <leader>s <C-c>:w<cr>
 "" qq to record q to stop Q to apply
 nnoremap Q @q
 vnoremap Q :norm @q<cr>
+
+" theme
+syntax enable
+Plugin 'Solarized'
+let w:solarized_style="dark"
+let g:solarized_termcolors=16
+"set t_Co=16
+let g:solarized_termtrans =   0
+let g:solarized_degrade   =   0
+let g:solarized_bold      =   1
+let g:solarized_underline =   1
+let g:solarized_italic    =   1
+let g:solarized_contrast  =   "normal"
+let g:solarized_visibility=   "normal"
+colorscheme solarized
+
+" set cursorline
+
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
