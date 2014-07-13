@@ -27,7 +27,6 @@ map <Leader>gb :Gblame<CR>
 map <Leader>gd :Gdiff<CR>
 
 Bundle 'kchmck/vim-coffee-script'
-Plugin 'CtrlP.vim'
 Plugin 'bufexplorer.zip'
 Plugin 'The-NERD-Commenter'
 Plugin 'The-NERD-tree'
@@ -44,8 +43,11 @@ filetype plugin indent on
 syntax on
 
 " scripts from http://vim-scripts.org/vim/scripts.html
+Plugin 'CtrlP.vim'
 map <Leader>p :CtrlP<CR>
 nnoremap <Leader>. :CtrlPTag<CR>
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 
 map <Leader>t :BufExplorer<CR>
 
