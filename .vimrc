@@ -123,23 +123,18 @@ inoremap <leader>s <C-c>:w<cr>
 nnoremap Q @q
 vnoremap Q :norm @q<cr>
 
-" theme
-syntax enable
-Plugin 'Solarized'
-let w:solarized_style="dark"
-let g:solarized_termcolors=16
-let g:solarized_termtrans=0
-let g:solarized_degrade=0
-let g:solarized_bold=1
-let g:solarized_underline=1
-let g:solarized_italic=1
-let g:solarized_contrast="normal"
-let g:solarized_visibility="normal"
-colorscheme solarized
-
-set cursorline
-
 highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+
+" theme
+Plugin 'Solarized'
+syntax on
+let g:solarized_termcolors=16
+let w:solarized_style="dark"
+colorscheme solarized
+" no idea why this is needed but this fixes Comment color
+highlight Comment cterm=bold
+
+set cursorline
