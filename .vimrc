@@ -18,6 +18,8 @@ Plugin 'textobj-indent'
 
 Bundle 'mileszs/ack.vim'
 
+Plugin 'git@github.com:mattn/flappyvird-vim.git'
+
 " git
 Plugin 'fugitive.vim'
 map <Leader>gs :Gstatus<CR>
