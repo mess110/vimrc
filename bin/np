@@ -1,0 +1,66 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require 'uri'
+require 'net/http'
+require 'json'
+require 'pp'
+
+class Api
+  BASE_URL = "http://json.northpole.ro"
+
+  def initialize
+    uri = URI.parse(BASE_URL)
+    @http = Net::HTTP.new(uri.host, uri.port)
+  end
+
+  def request req, params
+    klass = constantize("Net::HTTP::#{req.capitalize}")
+    request = klass.new("/storage.json")
+    request.body = params.to_json
+    @http.request(request).body
+  end
+
+  # http://apidock.com/rails/Inflector/constantize
+  def constantize(camel_cased_word)
+    unless /\A(?:::)?([A-Z]\w*(?:::[A-Z]\w*)*)\z/ =~ camel_cased_word
+      raise NameError, "#{camel_cased_word.inspect} is not a valid constant name!"
+    end
+
+    Object.module_eval("::#{$1}", __FILE__, __LINE__)
+  end
+
+end
+
+class Np
+  def initialize args
+    help if args.length != 2
+    req = args[0]
+    params = JSON.parse(args[1]) rescue help("invalid json #{params}")
+    help unless ['get', 'post', 'put'].include?(req)
+    log Api.new.request(req, params.merge(config)), params
+  end
+
+  def log body, params
+    json = JSON.parse(body)
+    s = params == {} ? json.collect{ |e| e['category'] }.uniq.reject{ |e| e == nil } : json
+    pp s
+  end
+
+  def config
+    rc_path = File.join(Dir.home, '.nprc')
+    auth = {api_key: 'guest', secret: 'guest'}
+    system "echo '#{auth.to_json}' > #{rc_path}" unless File.exists?(rc_path)
+    JSON.parse(File.read(rc_path)) rescue help("invalid #{rc_path} contents")
+  end
+
+  def help s=false
+    puts "\n#{s}\n" if s
+    puts "\nexample usage:\n\n"
+    puts '  np get {}'
+    puts '  np get|post|put \'{"json":"string"}\''
+    exit 0
+  end
+end
+
+Np.new(ARGV)
