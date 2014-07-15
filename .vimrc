@@ -126,6 +126,8 @@ inoremap <leader>s <C-c>:w<cr>
 "" qq to record q to stop Q to apply
 nnoremap Q @q
 vnoremap Q :norm @q<cr>
+" batch operations
+nnoremap <Leader>b :bufdo execute "normal! @q"<CR>
 
 highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
