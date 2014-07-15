@@ -34,11 +34,12 @@ end
 
 class Np
   def initialize args
+    args.push('{}') if args.length == 1
     help if args.length != 2
     req = args[0]
     params = JSON.parse(args[1]) rescue help("invalid json #{params}")
     help unless ['get', 'post', 'put'].include?(req)
-    log Api.new.request(req, params.merge(config)), params
+    log(Api.new.request(req, params.merge(config)), params)
   end
 
   def log body, params
@@ -55,10 +56,12 @@ class Np
   end
 
   def help s=false
-    puts "\n#{s}\n" if s
-    puts "\nexample usage:\n\n"
-    puts '  np get {}'
-    puts '  np get|post|put \'{"json":"string"}\''
+    puts "\n  #{s}" if s
+    puts "\n  cli for json.northpole.ro"
+    puts "\n  example usage:\n\n"
+    puts '    np get \'{}\''
+    puts '    np get|post|put \'{"json":"string"}\''
+    puts "\n"
     exit 0
   end
 end
