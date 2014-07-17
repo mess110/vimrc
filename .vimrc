@@ -26,7 +26,7 @@ map <Leader>gs :Gstatus<CR>
 " use - to stage/unstange changes in git status window
 " ctrl+n/p to navigate through files in git status window
 map <Leader>gb :Gblame<CR>
-map <Leader>gd :Gdiff<CR>
+map <Leader>gd :Git diff<CR>
 
 Bundle 'kchmck/vim-coffee-script'
 Plugin 'bufexplorer.zip'
