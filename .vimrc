@@ -18,6 +18,9 @@ Plugin 'textobj-indent'
 
 Bundle 'mileszs/ack.vim'
 
+" use + to toggle booleans
+Plugin 'Toggle'
+
 Plugin 'git@github.com:mattn/flappyvird-vim.git'
 
 " git
