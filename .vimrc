@@ -85,6 +85,7 @@ map <Leader>V :!ctags .<CR>
 " make the 81st column stand out
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
+set cursorline
 
 " Highlight matches when jumping to next
 set incsearch
@@ -161,7 +162,8 @@ syntax on
 let g:solarized_termcolors=16
 let w:solarized_style="dark"
 colorscheme solarized
-" no idea why this is needed but this fixes Comment color
-highlight Comment cterm=bold
 
-set cursorline
+highlight Comment cterm=bold
+highlight vimLineComment cterm=bold
+highlight htmlSpecialTagName cterm=bold
+highlight MatchParen ctermbg=0 ctermfg=none
