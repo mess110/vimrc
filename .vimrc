@@ -18,6 +18,8 @@ Plugin 'textobj-indent'
 
 Bundle 'mileszs/ack.vim'
 
+Bundle 'severin-lemaignan/vim-minimap'
+
 " use + to toggle booleans
 Plugin 'Toggle'
 
@@ -43,6 +45,8 @@ Plugin 'Syntastic'
 " use cs"' to change from " to '
 " cs change surrounding
 Plugin 'surround.vim'
+
+Bundle 'groenewege/vim-less'
 
 filetype plugin indent on
 syntax on
