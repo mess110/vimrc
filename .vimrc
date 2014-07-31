@@ -20,6 +20,7 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 Plugin 'textobj-user'
 Plugin 'textobj-indent'
 
+
 Bundle 'mileszs/ack.vim'
 
 Bundle 'severin-lemaignan/vim-minimap'
@@ -81,13 +82,14 @@ set nowrap          " don't wrap lines, let them continue
 set omnifunc=syntaxcomplete#Complete " set autocomplete
 
 set pastetoggle=<Leader>]
+nnoremap P "+p
 
 " indent stuff
 filetype indent on
 map <Leader>f gg=G``
 let g:html_indent_inctags = "html,body,head,tbody"
 
-autocmd filetype python, coffee set expandtab
+autocmd filetype python,coffee set expandtab
 
 " reload .vimrc
 map <Leader>v :source $MYVIMRC<CR>:CtrlPClearAllCaches<CR>
