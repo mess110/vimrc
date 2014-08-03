@@ -30,6 +30,8 @@ Plugin 'Toggle'
 
 Plugin 'git@github.com:mattn/flappyvird-vim.git'
 
+Plugin 'https://github.com/rhysd/clever-f.vim'
+
 " git
 Plugin 'fugitive.vim'
 map <Leader>gs :Gstatus<CR>
