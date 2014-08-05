@@ -193,3 +193,8 @@ highlight Comment cterm=bold
 highlight vimLineComment cterm=bold
 highlight htmlSpecialTagName cterm=bold
 highlight MatchParen ctermbg=0 ctermfg=none
+
+function! PasteAsCoffee()
+  :read !xsel --clipboard --output | js2coffee
+endfunction
+:command! PasteAsCoffee :call PasteAsCoffee()
