@@ -1,22 +1,9 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/set rtp+=~/.vim/bundle/vundle/
-let g:vundle_default_git_proto = 'git'
-call vundle#rc()
-
-" alternatively, pass a path where Vundle should install plugins
-" "let path = '~/some/path/here'
-" "call vundle#rc(path)
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/vundle'
-map <Leader>i :PluginInstall<CR>
-
-" Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
-
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
 Plugin 'textobj-user'
 Plugin 'textobj-indent'
 
@@ -32,14 +19,7 @@ Plugin 'git@github.com:mattn/flappyvird-vim.git'
 
 Plugin 'https://github.com/rhysd/clever-f.vim'
 
-" git
 Plugin 'fugitive.vim'
-map <Leader>gs :Gstatus<CR>
-" use - to stage/unstange changes in git status window
-" ctrl+n/p to navigate through files in git status window
-map <Leader>gb :Gblame<CR>
-map <Leader>gd :Git diff<CR>
-
 Bundle 'kchmck/vim-coffee-script'
 Plugin 'bufexplorer.zip'
 Plugin 'The-NERD-Commenter'
@@ -54,12 +34,29 @@ Plugin 'Syntastic'
 Plugin 'surround.vim'
 
 Bundle 'groenewege/vim-less'
+Plugin 'CtrlP.vim'
 
-filetype plugin indent on
+Plugin 'itchyny/lightline.vim'
+Plugin 'Solarized'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+map <Leader>i :PluginInstall<CR>
+
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+map <Leader>gs :Gstatus<CR>
+" use - to stage/unstange changes in git status window
+" ctrl+n/p to navigate through files in git status window
+map <Leader>gb :Gblame<CR>
+map <Leader>gd :Git diff<CR>
+
 syntax on
 
 " scripts from http://vim-scripts.org/vim/scripts.html
-Plugin 'CtrlP.vim'
 map <Leader>p :CtrlP<CR>
 nnoremap <Leader>. :CtrlPTag<CR>
 let g:ctrlp_working_path_mode = 'ra'
@@ -165,7 +162,6 @@ highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Re
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 
 " theme
-Plugin 'itchyny/lightline.vim'
 let g:lightline = {
   \ 'colorscheme': 'powerline',
   \ 'active': {
@@ -183,7 +179,6 @@ let g:lightline = {
   \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
   \ }
   \ }
-Plugin 'Solarized'
 syntax on
 let g:solarized_termcolors=16
 let w:solarized_style="dark"
