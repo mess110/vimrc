@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-sudo apt-get install vim git ack-grep xsel
+sudo apt-get install vim git ack-grep xsel byobu conky
