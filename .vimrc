@@ -137,7 +137,8 @@ highlight Folded guibg=grey guifg=blue
 "" Map folding to Spacebar
 nnoremap <Space> za
 
-nnoremap <Leader>c :!rake spec<CR>
+nnoremap <Leader>C :!rake spec<CR>
+nnoremap <Leader>c :!rspec %<CR>
 
 nnoremap <Leader>n :nohlsearch<CR>
 
