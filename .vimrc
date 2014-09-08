@@ -8,7 +8,7 @@ Plugin 'textobj-user'
 Plugin 'textobj-indent'
 
 
-Bundle 'mileszs/ack.vim'
+" Bundle 'mileszs/ack.vim'
 
 Bundle 'severin-lemaignan/vim-minimap'
 
@@ -21,6 +21,7 @@ Plugin 'https://github.com/rhysd/clever-f.vim'
 
 Plugin 'git@github.com:Shougo/unite.vim.git'
 Plugin 'git@github.com:kannokanno/unite-todo.git'
+Plugin 'Shougo/vimproc.vim'
 
 Plugin 'fugitive.vim'
 Bundle 'kchmck/vim-coffee-script'
@@ -37,7 +38,7 @@ Plugin 'Syntastic'
 Plugin 'surround.vim'
 
 Bundle 'groenewege/vim-less'
-Plugin 'CtrlP.vim'
+"Plugin 'CtrlP.vim'
 
 Plugin 'itchyny/lightline.vim'
 Plugin 'Solarized'
@@ -60,12 +61,27 @@ map <Leader>gd :Git diff<CR>
 syntax on
 
 " scripts from http://vim-scripts.org/vim/scripts.html
-map <Leader>p :CtrlP<CR>
-nnoremap <Leader>. :CtrlPTag<CR>
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+" map <Leader>p :CtrlP<CR>
+" map <Leader>p  :Unite -auto-preview -no-split -start-insert file_rec/async<CR>
+"map <Leader>p  :Unite -auto-preview -no-split -start-insert file_rec<CR>
 
-map <Leader>t :BufExplorer<CR>
+" ctrl-p replacement
+nnoremap <Leader>p :<C-u>Unite -buffer-name=files -auto-preview -start-insert -no-split file_rec/async:!<CR>
+" search
+nnoremap <Leader>f :<C-u>Unite -auto-preview -no-split grep:.<CR>
+" buf explorer
+nnoremap <Leader>t :Unite -quick-match buffer<CR>
+" paste history
+let g:unite_source_history_yank_enable = 1
+nnoremap <Leader>y :Unite -no-split history/yank<cr>
+
+call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern', 'node_modules/\|bower_components/')
+
+"nnoremap <Leader>. :CtrlPTag<CR>
+"let g:ctrlp_working_path_mode = 'ra'
+"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+
+"map <Leader>t :BufExplorer<CR>
 
 map <Leader>6 :NERDTreeToggle<CR>
 
@@ -88,7 +104,7 @@ nnoremap P "+p
 
 " indent stuff
 filetype indent on
-map <Leader>f gg=G``
+map <Leader>a gg=G``
 let g:html_indent_inctags = "html,body,head,tbody"
 
 autocmd filetype python,coffee set expandtab
@@ -164,6 +180,28 @@ highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Re
 highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+
+" unite
+call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+      \ 'ignore_pattern', join([
+      \ '\.git/',
+      \ ], '\|'))
+
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+
+autocmd FileType unite call s:unite_settings()
+
+function! s:unite_settings()
+  let b:SuperTabDisabled=1
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+  imap <silent><buffer><expr> <C-x> unite#do_action('split')
+  imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+  imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+
+  nmap <buffer> <ESC> <Plug>(unite_exit)
+endfunction
 
 " theme
 let g:lightline = {
