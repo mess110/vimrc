@@ -9,8 +9,8 @@ require 'pp'
 class Api
   BASE_URL = "http://json.northpole.ro"
 
-  def initialize
-    uri = URI.parse(BASE_URL)
+  def initialize url
+    uri = URI.parse(url)
     @http = Net::HTTP.new(uri.host, uri.port)
   end
 
@@ -39,7 +39,7 @@ class Np
     req = args[0]
     params = JSON.parse(args[1]) rescue help("invalid json #{params}")
     help unless ['get', 'post', 'put'].include?(req)
-    log(Api.new.request(req, params.merge(config)), params)
+    log(Api.new(config['url']).request(req, params.merge(config['config'])), params)
   end
 
   def log body, params
@@ -50,12 +50,13 @@ class Np
 
   def config
     rc_path = File.join(Dir.home, '.nprc')
-    auth = {api_key: 'guest', secret: 'guest'}
+    auth = {config: {api_key: 'guest', secret: 'guest'}, url: Api::BASE_URL}
     system "echo '#{auth.to_json}' > #{rc_path}" unless File.exists?(rc_path)
     JSON.parse(File.read(rc_path)) rescue help("invalid #{rc_path} contents")
   end
 
   def help s=false
+    config
     puts "\n  #{s}" if s
     puts "\n  cli for json.northpole.ro"
     puts "\n  example usage:\n\n"
