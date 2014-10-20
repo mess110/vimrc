@@ -42,6 +42,9 @@ Plugin 'CtrlP.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'Solarized'
 
+" search using silversearcher
+Bundle 'rking/ag.vim'
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -88,8 +91,13 @@ nnoremap P "+p
 
 " indent stuff
 filetype indent on
-map <Leader>f gg=G``
+map <Leader>F gg=G``
 let g:html_indent_inctags = "html,body,head,tbody"
+
+" The Silver Searcher
+let g:aghighlight=1
+" go for preview
+nnoremap <leader>f :Ag<SPACE>
 
 autocmd filetype python,coffee set expandtab
 
