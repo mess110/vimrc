@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# This tool is used to pretty print json. Credit goes to:
+# http://stackoverflow.com/questions/352098/how-can-i-pretty-print-json?page=1&tab=votes#tab-top
+#
+# Example usage:
+#
+#  echo '{}' | ppjson
+#
+
+python -m json.tool
