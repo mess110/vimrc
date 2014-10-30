@@ -36,6 +36,9 @@ Plugin 'Syntastic'
 " cs change surrounding
 Plugin 'surround.vim'
 
+Bundle 'repeat.vim'
+Bundle 'https://github.com/tpope/vim-unimpaired.git'
+
 Bundle 'groenewege/vim-less'
 Plugin 'CtrlP.vim'
 
@@ -98,6 +101,8 @@ let g:html_indent_inctags = "html,body,head,tbody"
 let g:aghighlight=1
 " go for preview
 nnoremap <leader>f :Ag<SPACE>
+" replace highlighted search
+nnoremap <leader>r :%s///g<LEFT><LEFT>
 
 autocmd filetype python,coffee set expandtab
 
