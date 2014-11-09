@@ -36,6 +36,8 @@ Plugin 'Syntastic'
 " cs change surrounding
 Plugin 'surround.vim'
 
+Bundle 'https://github.com/JarrodCTaylor/vim-shell-executor'
+
 Bundle 'repeat.vim'
 Bundle 'https://github.com/tpope/vim-unimpaired.git'
 
@@ -61,7 +63,7 @@ map <Leader>gs :Gstatus<CR>
 " use - to stage/unstange changes in git status window
 " ctrl+n/p to navigate through files in git status window
 map <Leader>gb :Gblame<CR>
-map <Leader>gd :Git diff<CR>
+map <Leader>gd :Git diff<CR><CR>
 
 syntax on
 
@@ -210,3 +212,7 @@ function! PasteAsCoffee()
   :read !xsel --clipboard --output | js2coffee
 endfunction
 :command! PasteAsCoffee :call PasteAsCoffee()
+
+" disable press enter to continue prompt
+set shortmess=a
+set cmdheight=2
