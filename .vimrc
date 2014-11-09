@@ -212,7 +212,3 @@ function! PasteAsCoffee()
   :read !xsel --clipboard --output | js2coffee
 endfunction
 :command! PasteAsCoffee :call PasteAsCoffee()
-
-" disable press enter to continue prompt
-set shortmess=a
-set cmdheight=2
