@@ -71,13 +71,13 @@ home ${alignr}${fs_used_perc /home}%
 ${fs_used /home}${alignr}${fs_size /home}
 ${fs_bar /home}
 
-montezuma ${alignr}${fs_used_perc /media/kiki/montezuma}%
-${fs_used /media/kiki/montezuma}${alignr}${fs_size /media/kiki/montezuma}
-${fs_bar /media/kiki/montezuma}
+montezuma ${alignr}${fs_used_perc /mnt/montezuma}%
+${fs_used /mnt/montezuma}${alignr}${fs_size /mnt/montezuma}
+${fs_bar /mnt/montezuma}
 
-walrus ${alignr}${fs_used_perc /media/kiki/walrus}%
-${fs_used /media/kiki/walrus}${alignr}${fs_size /media/kiki/walrus}
-${fs_bar /media/kiki/walrus}
+walrus ${alignr}${fs_used_perc /mnt/walrus}%
+${fs_used /mnt/walrus}${alignr}${fs_size /mnt/walrus}
+${fs_bar /mnt/walrus}
 
 
 ${alignc}${addr eth0}
