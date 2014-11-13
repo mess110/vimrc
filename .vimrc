@@ -108,6 +108,9 @@ nnoremap <leader>r :%s///g<LEFT><LEFT>
 
 autocmd filetype python,coffee set expandtab
 
+" associate jbuilder with ruby syntax highlighting
+au BufRead,BufNewFile *.jbuilder setfiletype ruby
+
 " reload .vimrc
 map <Leader>v :source $MYVIMRC<CR>:CtrlPClearAllCaches<CR>
 map <Leader>V :!ctags .<CR>
@@ -212,3 +215,7 @@ function! PasteAsCoffee()
   :read !xsel --clipboard --output | js2coffee
 endfunction
 :command! PasteAsCoffee :call PasteAsCoffee()
+
+" disable press enter to continue prompt
+"set shortmess=a
+"set cmdheight=2
