@@ -178,12 +178,12 @@ vnoremap Q :norm @q<cr>
 " batch operations
 nnoremap <Leader>b :bufdo execute "normal! @q"<CR>
 
-highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+"highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+"highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+"highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+"highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 
-" theme
+"" theme
 let g:lightline = {
   \ 'colorscheme': 'powerline',
   \ 'active': {
@@ -201,6 +201,11 @@ let g:lightline = {
   \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
   \ }
   \ }
+
+"set t_Co=256
+"set background=dark
+"colorscheme solarized
+
 syntax on
 let g:solarized_termcolors=16
 let w:solarized_style="dark"
