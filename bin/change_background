@@ -5,12 +5,19 @@ import urllib
 import urllib2
 import json
 import os
+import sys
 
 from random import choice
 from subprocess import call
 
 
-url = 'http://www.reddit.com/r/earthporn.json'
+if len(sys.argv) > 1:
+    subreddit = sys.argv[1]
+else:
+    subreddit = 'earthporn'
+
+
+url = "http://www.reddit.com/r/{0}.json".format(subreddit)
 headers = {
   'User-Agent' : 'PrettyBackgroundBot/0.1'
 }
