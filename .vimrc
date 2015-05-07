@@ -50,6 +50,9 @@ Plugin 'Solarized'
 " search using silversearcher
 Bundle 'rking/ag.vim'
 
+Plugin 'szw/vim-ctrlspace'
+set hidden
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -76,6 +79,9 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 map <Leader>t :BufExplorer<CR>
 
 map <Leader>6 :NERDTreeToggle<CR>
+
+let NERDSpaceDelims=1
+let NERDDefaultNesting=0
 
 " use tab or <Leader>\ for snippet suggestion
 inoremap <Leader>\ <C-x><C-o>
