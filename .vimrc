@@ -60,7 +60,6 @@ map <Leader>i :PluginInstall<CR>
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 map <Leader>gs :Gstatus<CR>
 " use - to stage/unstange changes in git status window
@@ -174,9 +173,10 @@ nnoremap <C-k> <C-W>k "Ctrl-k to move up a split
 nnoremap <C-l> <C-W>l "Ctrl-l to move right a split
 nnoremap <C-h> <C-W>h "Ctrl-h to move left a split
 
-nnoremap <leader>s :w<cr>
-"" works in insert as well
-inoremap <leader>s <C-c>:w<cr>
+"" split vertical window
+nnoremap <leader>w <C-w>v<C-w>l
+"" split horizontal window
+nnoremap <leader>s <C-w>s<C-w>j
 
 "" qq to record q to stop Q to apply
 nnoremap Q @q
