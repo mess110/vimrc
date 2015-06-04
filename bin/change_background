@@ -1,15 +1,30 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 import platform
+# TODO use only one of these. Don't be lazy
 import urllib
 import urllib2
 import json
 import os
 import sys
+import argparse
 
 from random import choice
 from subprocess import call
 
+
+class MyException(Exception):
+    pass
+
+parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter, description=\
+"""
+The default subreddit is 'earthporn'.
+You can specify a different one by typing it after the program name.
+
+curl https://raw.githubusercontent.com/mess110/vimrc/master/bin/change_background > change_background; chmod +x change_background;
+""")
+args = parser.parse_args()
 
 if len(sys.argv) > 1:
     subreddit = sys.argv[1]
@@ -27,17 +42,24 @@ operating_system = platform.system().lower()
 desktop_session = os.environ.get('DESKTOP_SESSION').lower()
 
 
-def earthporn_frontpage():
+def subreddit_frontpage():
     req = urllib2.Request(url, None, headers)
     response = urllib2.urlopen(req)
     return json.loads(response.read())['data']['children']
 
 
 def get_random_link():
-    link = choice(earthporn_frontpage())['data']
+    items = subreddit_frontpage()
+
+    if not items:
+        raise MyException("No items found in subreddit")
+
+    link = choice(items)['data']
     url = str(link['url'])
-    if url.startswith('http://imgur') and not extension_exists(url):
+
+    if 'imgur' in url and not extension_exists(url):
         link['url'] += '.png'
+
     return link
 
 
@@ -46,22 +68,28 @@ def extension_exists(url):
 
 
 def set_wallpapper():
+    link = get_random_link()
+
     if operating_system == 'linux':
-        print desktop_session
         if desktop_session == 'gnome' or desktop_session == 'gnome-shell':
-            link = get_random_link()
             file_path = os.path.join(directory, link['name'])
-            print file_path
+            print link['title']
             urllib.urlretrieve (link['url'], file_path)
             call(["gsettings", "set", "org.gnome.desktop.background", "picture-uri", "file://" + file_path])
         else:
-            print('Unkown desktop manager')
+            raise MyException("Unknown desktop manager")
     elif operating_system == 'windows':
-        pass
+        raise MyException("No windows support. Yet.")
     else:
-        print('OS not supported')
+        raise MyException("OS not supported. yet")
 
 
 if not os.path.exists(directory):
       os.makedirs(directory)
-set_wallpapper()
+
+
+if __name__ == "__main__":
+    try:
+        set_wallpapper()
+    except MyException as e:
+        print e.args[0]
