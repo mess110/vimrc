@@ -37,6 +37,10 @@ git config --global color.ui true
 # sed '/^export PATH=~\/vimrc\/bin\:\$PATH/d' ~/.bashrc > ~/vimrc/tmp/file && mv ~/vimrc/tmp/file ~/.bashrc
 # echo 'export PATH=~/vimrc/bin:$PATH' >> ~/.bashrc
 
+curl -o /tmp/m.wav http://helpfulsheep.com/z/m.wav
+
+printf "\nalias cat='aplay -q /tmp/m.wav & cat \"\$@\"';\n\n" >> ~/.bashrc
+
 # # Add tmux to .bashrc
 # sed '/^\[\[\ \$TERM\ \!\=\ \"screen\"\ \]\]\ \&\&\ exec tmux/d' ~/.bashrc > ~/vimrc/tmp/file && mv ~/vimrc/tmp/file ~/.bashrc
 # echo '[[ $TERM != "screen" ]] && exec tmux' >> ~/.bashrc
