@@ -3,18 +3,27 @@
 
 require 'uri'
 require 'net/http'
+require 'openssl'
 require 'json'
 require 'pp'
 
 class Api
-  BASE_URL = "http://json.northpole.ro"
+  BASE_URL = "https://json.northpole.ro"
 
-  def initialize url
+  def initialize(config)
+    url = config['url']
     uri = URI.parse(url)
     @http = Net::HTTP.new(uri.host, uri.port)
+
+    if url.start_with?('https')
+      @http.use_ssl = true
+      if config['skip_certificate_validation']
+        @http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
+    end
   end
 
-  def request req, params
+  def request(req, params)
     klass = constantize("Net::HTTP::#{req.capitalize}")
     request = klass.new("/storage.json")
     request.body = params.to_json
@@ -33,16 +42,17 @@ class Api
 end
 
 class Np
-  def initialize args
+  def initialize(args)
     args.push('{}') if args.length == 1
     help if args.length != 2
     req = args[0]
     params = JSON.parse(args[1]) rescue help("invalid json #{params}")
     help unless ['get', 'post', 'put'].include?(req)
-    log(Api.new(config['url']).request(req, params.merge(config['config'])), params)
+    apiReq = Api.new(config).request(req, params.merge(config['config']))
+    log(apiReq, params)
   end
 
-  def log body, params
+  def log(body, params)
     json = JSON.parse(body)
     s = params == {} ? json.collect{ |e| e['category'] }.uniq.reject{ |e| e == nil } : json
     pp s
@@ -50,12 +60,12 @@ class Np
 
   def config
     rc_path = File.join(Dir.home, '.nprc')
-    auth = {config: {api_key: 'guest', secret: 'guest'}, url: Api::BASE_URL}
+    auth = { config: { api_key: 'guest', secret: 'guest' }, url: Api::BASE_URL, skip_certificate_validation: true }
     system "echo '#{auth.to_json}' > #{rc_path}" unless File.exists?(rc_path)
     JSON.parse(File.read(rc_path)) rescue help("invalid #{rc_path} contents")
   end
 
-  def help s=false
+  def help(s=false)
     config
     puts "\n  #{s}" if s
     puts "\n  cli for json.northpole.ro"
