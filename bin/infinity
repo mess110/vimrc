@@ -10,5 +10,5 @@ echo "Every $1 second(s)"
 while :
 do
   eval $2
-  sleep 1
+  sleep $1
 done
