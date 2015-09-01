@@ -19,9 +19,6 @@ Plugin 'git@github.com:mattn/flappyvird-vim.git'
 
 Plugin 'https://github.com/rhysd/clever-f.vim'
 
-Plugin 'git@github.com:Shougo/unite.vim.git'
-Plugin 'git@github.com:kannokanno/unite-todo.git'
-
 Plugin 'fugitive.vim'
 Bundle 'kchmck/vim-coffee-script'
 Plugin 'bufexplorer.zip'
@@ -49,6 +46,8 @@ Plugin 'Solarized'
 
 " search using silversearcher
 Bundle 'rking/ag.vim'
+
+Plugin 'Raimondi/delimitMate'
 
 Plugin 'szw/vim-ctrlspace'
 set hidden
