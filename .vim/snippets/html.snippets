@@ -1,0 +1,239 @@
+
+snippet md-progress-linear
+	<md-progress-linear md-mode="buffer" value="${1}" md-buffer-value="${2}"></md-progress-linear>
+	<!--md-mode	can be select from one of four modes: determinate, indeterminate, buffer or query..-->
+
+
+snippet md-chip
+	<md-chip>${1}</md-chip>
+
+snippet md-chips
+	<md-chips ng-model="myItems" placeholder="Add an item" readonly="isReadOnly">
+	</md-chips>
+
+snippet md-contact-chips
+	<md-contact-chips ng-model="ctrl.contacts" md-contacts="ctrl.querySearch($query)" md-contact-name="name" md-contact-image="image" md-contact-email="email" placeholder="To">
+	</md-contact-chips>
+
+
+snippet md-content
+	<md-content layout-padding>
+	    Lorem ipsum dolor sit amet, ne quod novum mei.${1}
+	</md-content>
+
+
+snippet md-radio-button
+	<md-radio-button ng-model="${1}" ng-value="${2}" aria-label="${3}">${4}</md-radio-button>
+
+snippet md-toolbar
+	<div layout="column" layout-fill>
+	  <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.5">
+	 	<md-button class="md-icon-button" aria-label="Settings">
+	      <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+	    </md-button>
+	    <h2>
+	      <span>Toolbar with Icon Buttons</span>
+	    </h2>
+	    <span flex></span>
+	    <md-button class="md-icon-button" aria-label="Favorite">
+	      <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+	    </md-button>
+	    <md-button class="md-icon-button" aria-label="More">
+	      <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+	    </md-button>
+	  </md-toolbar>
+	  <!--Note: for scrollShrink to work, the toolbar must be a sibling of a md-content element, placed before it.-->
+	  <md-content>
+	    Hello!
+	  </md-content>
+	</div>
+
+
+snippet md-autocomplete
+	<md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in getMatches(searchText)" md-item-text="item.display">
+	  <span md-highlight-text="searchText">{{item.display}}</span>
+	</md-autocomplete>
+
+
+snippet md-slider
+	<md-slider md-discrete ng-model="myDiscreteValue" step="${1}" min="${2}" max="${3}"></md-slider>
+
+snippet md-tooltip
+	<md-tooltip md-visible="true" md-delay="400" md-direction="bottom" md-autohide="true">
+	  ${1}
+	</md-tooltip>
+
+
+snippet md-tab
+	<md-tab label="" disabled md-on-select="" md-on-deselect="">
+	  <md-tab-label>
+	    <h3>${1}</h3>
+	  </md-tab-label>
+	  <md-tab-body>
+	    <p>
+	      ${2}
+	    </p>
+	  </md-tab-body>
+	</md-tab>
+
+
+snippet md-checkbox
+	<md-checkbox ng-model="${1}" aria-label="${2}">${3}</md-checkbox>
+
+snippet md-button
+	<md-button href="${1}">${2}</md-button>
+
+snippet md-tab
+	<md-tabs md-selected="selectedIndexInteger">
+	  ${1}
+	</md-tabs>
+	<!-- md-tabs attributes you can use:
+	md-selected - integer - Index of the active/selected tab
+	md-no-ink - boolean - If present, disables ink ripple effects.
+	md-no-bar - boolean -If present, disables the selection ink bar.
+	md-align-tabs string - Attribute to indicate position of tab buttons: bottom or top; default is top
+	md-stretch-tabs string - Attribute to indicate whether or not to stretch tabs: auto, always, or never; default is auto
+	md-dynamic-height - boolean - When enabled, the tab wrapper will resize based on the contents of the selected tab
+	md-center-tabs - boolean - When enabled, tabs will be centered provided there is no need for pagination
+	md-no-pagination - boolean - When enabled, pagination will remain off
+	md-swipe-content - boolean - When enabled, swipe gestures will be enabled for the content area to jump between tabs
+	md-no-disconnect - boolean - If your tab content has background tasks (ie. event listeners), you will want to include this to prevent the scope from being disconnected
+	md-autoselect - boolean - When present, any tabs added after the initial load will be automatically selected
+	-->
+
+
+snippet md-whiteframe
+	<md-whiteframe class="md-whiteframe-z1" layout layout-align="center center">
+	  ${1}
+	</md-whiteframe>
+
+snippet md-switch
+	<md-switch ng-model="${1}" aria-label="${2}">
+	  ${3}
+	</md-switch>
+
+
+snippet md-select
+	<md-select ng-model="${1}"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
+	  <md-select-label>Select a state</md-select-label>
+	  <md-option ng-value="opt" ng-repeat="opt in options">{{ opt }}</md-option>
+	</md-select>
+
+
+snippet md-menu
+	 <md-menu md-offset="0 0">
+	 <!-- Trigger element is a md-button with an icon -->
+	 <md-button ng-click="$mdOpenMenu()" class="md-icon-button" aria-label="Open sample menu">
+	   <md-icon md-svg-icon="call:phone"></md-icon>
+	 </md-button>
+	 <md-menu-content>
+	   <md-menu-item><md-button ng-click="doSomething()">Do Something</md-button></md-menu-item>
+	 </md-menu-content>
+	</md-menu>
+
+snippet md-grid-list
+	<md-grid-list md-cols="5" md-gutter="1em" md-row-height="4:3">
+	  <md-grid-tile>${1}</md-grid-tile>
+	</md-grid-list>
+
+
+snippet md-list
+	<md-radio-group ng-model="${1}">
+		${2}
+	</md-radio-group>
+
+
+snippet md-highlight-text
+	<input placeholder="Enter a search term..." ng-model="searchTerm" type="text">
+	<ul>
+	  <li ng-repeat="result in results" md-highlight-text="searchTerm">
+	    {{result.text}}
+	  </li>
+	</ul>
+
+
+snippet md-grid-tile
+	<md-grid-tile>
+	  <md-grid-tile-footer>
+	    <h3>This is a footer</h3>
+	  </md-grid-tile-footer>
+	</md-grid-tile>
+
+
+snippet md-sidenav
+	<div layout="row" ng-controller="MyController">
+	  <md-sidenav md-component-id="left" class="md-sidenav-left">
+	    Left Nav!
+	  </md-sidenav>
+	  <md-content>
+	    Center Content
+	    <md-button ng-click="openLeftMenu()">
+	      Open Left Menu
+	    </md-button>
+	  </md-content>
+	  <md-sidenav md-component-id="right" md-is-locked-open="$mdMedia('min-width: 333px')" class="md-sidenav-right">
+	    <form>
+	      <md-input-container>
+	        <label for="testInput">Test input</label>
+	        <input id="testInput" type="text" ng-model="data" md-sidenav-focus>
+	      </md-input-container>
+	    </form>
+	  </md-sidenav>
+	</div>
+
+
+snippet md-list
+	<md-list>
+	  ${1}
+	</md-list>
+
+snippet md-swipe-right
+	<div md-swipe-right="onSwipeRight()">${1}</div>
+
+snippet md-progress-circular
+	<md-progress-circular md-mode="determinate" value="${1}" ng-value="${2}" md-diameter="48"></md-progress-circular>
+	<!--For operations where the user is asked to wait a moment while something finishes up, and it’s not necessary to expose what's happening behind the scenes and how long it will take, use an md-mode="indeterminate" indicator.-->
+
+snippet md-divider
+	<md-divider></md-divider>
+
+snippet md-chip-remove
+	<label>${1}</label>
+	<input name="${2}" ng-model="${3}" placeholder="${4}" required md-maxlength="${5}" minlength="${6}">
+
+
+snippet md-chip-remove
+	<md-chips><button md-chip-remove>${1}</button></md-chips>
+
+snippet md-card
+	<md-card>
+	 <img src="card-image.png" class="md-card-image" alt="image caption">
+	 <md-card-content>
+	   <h2>Card headline</h2>
+	   <p>Card content</p>
+	 </md-card-content>
+	 <md-card-footer>
+	   Card footer
+	 </md-card-footer>
+	</md-card>
+
+
+snippet md-icon
+	<md-icon md-svg-src="${1}" alt="${2}"></md-icon>
+
+snippet md-highlight-text
+	<md-input-container>
+		${1}
+	</md-input-container>
+
+
+snippet md-swipe-left
+	<div md-swipe-left="onSwipeLeft()">${1}</div>
+
+snippet md-subheader
+	<md-subheader>${1}</md-subheader><!--You can use md-no-sticky class-->
+
+snippet md-list-item
+	<md-list-item class="md-2-line" ng-repeat="${1}">
+	  ${2}
+	</md-list-item>
