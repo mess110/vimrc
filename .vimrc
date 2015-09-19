@@ -19,8 +19,11 @@ Plugin 'git@github.com:mattn/flappyvird-vim.git'
 
 Plugin 'https://github.com/rhysd/clever-f.vim'
 
+Plugin 'othree/html5.vim'
+
 Plugin 'fugitive.vim'
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'git@github.com:leafgarland/typescript-vim.git'
 Plugin 'bufexplorer.zip'
 Plugin 'The-NERD-Commenter'
 Plugin 'The-NERD-tree'
