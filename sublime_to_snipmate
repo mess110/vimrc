@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+# Used to generate snipmate snippets from
+# https://github.com/devotis/sublime-angular-material-snippets
+
+require 'active_support/all'
+
+output = ''
+
+Dir['directives/*'].each do |directive|
+  xml = File.read(directive)
+  hash = Hash.from_xml(xml).with_indifferent_access[:snippet]
+  snippet_name = hash[:tabTrigger]
+
+  output += "\nsnippet #{snippet_name}\n"
+  hash[:content].lines.each do |f|
+    f = f.gsub(/\$([0-9]*)/, '${\1}')
+    f = f.gsub('${}', '$')
+    output += "	#{f}" if f.present?
+  end
+  output += "\n"
+end
+
+File.write('html.snippets', output)
