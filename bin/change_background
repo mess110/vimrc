@@ -71,13 +71,13 @@ def set_wallpapper():
     link = get_random_link()
 
     if operating_system == 'linux':
-        if desktop_session == 'gnome' or desktop_session == 'gnome-shell':
+        if desktop_session in ['gnome', 'gnome-shell', 'ubuntu']:
             file_path = os.path.join(directory, link['name'])
             print link['title']
             urllib.urlretrieve (link['url'], file_path)
             call(["gsettings", "set", "org.gnome.desktop.background", "picture-uri", "file://" + file_path])
         else:
-            raise MyException("Unknown desktop manager")
+            raise MyException("Unknown desktop manager: %s" % desktop_session)
     elif operating_system == 'windows':
         raise MyException("No windows support. Yet.")
     else:
