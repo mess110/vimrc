@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sudo docker start postgres_01
-sudo docker start mongo_01
-sudo docker start redis_01
+docker start postgres_01
+docker start mongo_01
+docker start redis_01
