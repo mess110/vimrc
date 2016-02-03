@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import platform
-# TODO use only one of these. Don't be lazy
-import urllib
 import urllib2
 import json
 import os
@@ -22,9 +20,15 @@ parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter, 
 The default subreddit is 'earthporn'.
 You can specify a different one by typing it after the program name.
 
+Example:
+
+    change_background wallpappers
+
+Install instructions:
+
 curl https://raw.githubusercontent.com/mess110/vimrc/master/bin/change_background > change_background; chmod +x change_background;
 """)
-args = parser.parse_args()
+# args = parser.parse_args()
 
 if len(sys.argv) > 1:
     subreddit = sys.argv[1]
@@ -73,8 +77,12 @@ def set_wallpapper():
     if operating_system == 'linux':
         if desktop_session in ['gnome', 'gnome-shell', 'ubuntu']:
             file_path = os.path.join(directory, link['name'])
-            print link['title']
-            urllib.urlretrieve (link['url'], file_path)
+
+            wallpapper = urllib2.urlopen(link['url'])
+            output = open(file_path,'wb')
+            output.write(wallpapper.read())
+            output.close()
+
             call(["gsettings", "set", "org.gnome.desktop.background", "picture-uri", "file://" + file_path])
         else:
             raise MyException("Unknown desktop manager: %s" % desktop_session)
