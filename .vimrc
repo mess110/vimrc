@@ -3,10 +3,10 @@ filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+
 Plugin 'gmarik/Vundle.vim'
 Plugin 'textobj-user'
 Plugin 'textobj-indent'
-
 
 Bundle 'mileszs/ack.vim'
 
@@ -53,6 +53,9 @@ Bundle 'rking/ag.vim'
 Plugin 'Raimondi/delimitMate'
 
 Plugin 'szw/vim-ctrlspace'
+
+Bundle 'malkomalko/projections.vim'
+
 set hidden
 
 call vundle#end()            " required
@@ -114,6 +117,7 @@ nnoremap <leader>f :Ag<SPACE>
 nnoremap <leader>r :%s///g<LEFT><LEFT>
 
 autocmd filetype python,coffee set expandtab
+autocmd filetype html setlocal ts=4 sw=4 expandtab
 
 " associate jbuilder with ruby syntax highlighting
 au BufRead,BufNewFile *.jbuilder setfiletype ruby

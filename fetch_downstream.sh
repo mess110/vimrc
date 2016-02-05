@@ -3,15 +3,16 @@
 # vim
 rm -rf .vim/
 cp -R ../.vim .
-
-rm .vimrc
 cp ../.vimrc .
+
+# bowerrc
+cp ../.bowerrc .
 
 # byobu
 rm -rf .byobu
 cp -R ../.byobu .
 
-# Configure Conky (also uses bin/weather)
+# conky (also uses bin/weather)
 cp ../.conkyrc .
 
 # ctags
