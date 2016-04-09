@@ -124,7 +124,7 @@ au BufRead,BufNewFile *.jbuilder setfiletype ruby
 
 " reload .vimrc
 map <Leader>v :source $MYVIMRC<CR>:CtrlPClearAllCaches<CR>
-map <Leader>V :!ctags --exclude=bower_components --exclude=node_modules -R .<CR>
+map <Leader>V :!ctags --exclude=bower_components --exclude=node_modules --exclude=public --exclude=tmp --exclude=.git --exclude=log -R .<CR>
 
 " make the 81st column stand out
 highlight ColorColumn ctermbg=magenta
