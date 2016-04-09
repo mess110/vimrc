@@ -118,6 +118,7 @@ nnoremap <leader>r :%s///g<LEFT><LEFT>
 
 autocmd filetype python,coffee set expandtab
 autocmd filetype html setlocal ts=4 sw=4 expandtab
+autocmd BufNewFile,BufRead *.md set filetype=markdown
 
 " associate jbuilder with ruby syntax highlighting
 au BufRead,BufNewFile *.jbuilder setfiletype ruby
