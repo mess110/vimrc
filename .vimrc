@@ -102,7 +102,6 @@ set nowrap          " don't wrap lines, let them continue
 set omnifunc=syntaxcomplete#Complete " set autocomplete
 
 set pastetoggle=<Leader>]
-nnoremap P "+p
 
 " indent stuff
 filetype indent on
@@ -190,6 +189,12 @@ nnoremap Q @q
 vnoremap Q :norm @q<cr>
 " batch operations
 nnoremap <Leader>b :bufdo execute "normal! @q"<CR>
+
+" copy to clipboard
+noremap <space>y "+y
+" paste from clipboard
+noremap <space>p "+p
+noremap <space>P "+P
 
 "highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 "highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
