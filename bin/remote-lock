@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+
+# needed when calling from remote terminals
+export DISPLAY=:0
+# TODO: find out if this works
+export HISTFILE=/dev/null
+
+lock () {
+    xdotool key Ctrl+alt+l
+}
+
+unlock () {
+    xdotool type $1
+    xdotool key Return
+}
+
+# help
+if [ "$#" -lt 1 ]; then
+  echo "Example usage:\n\n  remote-lock lock\n  remote-lock unlock PASSWORD"
+  exit
+fi
+
+# if there are 2 arguments, it is an unlock command
+if [ ! -z $2 ]
+then
+  unlock $2
+else
+  lock
+fi
