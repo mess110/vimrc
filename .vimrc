@@ -83,6 +83,14 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 map <Leader>t :BufExplorer<CR>
 
 map <Leader>6 :NERDTreeToggle<CR>
+" Netrw options
+let g:netrw_altv = 1
+let g:netrw_banner = 0
+let g:netrw_browse_split = 2
+let g:netrw_liststyle = 3
+let g:netrw_winsize = -28
+let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro rnu'  " --> I want line numbers on the netrw buffer
+nnoremap <silent> <leader>7 :Explore<cr>
 
 let NERDSpaceDelims=1
 let NERDDefaultNesting=0
