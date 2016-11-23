@@ -10,7 +10,7 @@ Plugin 'textobj-indent'
 
 Bundle 'mileszs/ack.vim'
 
-Bundle 'severin-lemaignan/vim-minimap'
+" Bundle 'severin-lemaignan/vim-minimap'
 
 " use + to toggle booleans
 Plugin 'Toggle'
@@ -22,8 +22,10 @@ Plugin 'https://github.com/rhysd/clever-f.vim'
 Plugin 'othree/html5.vim'
 
 Plugin 'fugitive.vim'
+Plugin 'pangloss/vim-javascript'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'git@github.com:leafgarland/typescript-vim.git'
+" Bundle 'git@github.com:myw/vim-polymer.git'
 Plugin 'bufexplorer.zip'
 Plugin 'The-NERD-Commenter'
 Plugin 'The-NERD-tree'
@@ -90,7 +92,7 @@ let g:netrw_browse_split = 2
 let g:netrw_liststyle = 3
 let g:netrw_winsize = -28
 let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro rnu'  " --> I want line numbers on the netrw buffer
-nnoremap <silent> <leader>7 :Explore<cr>
+nnoremap <silent> <leader>7 :Vexplore<cr>
 
 let NERDSpaceDelims=1
 let NERDDefaultNesting=0
@@ -113,7 +115,7 @@ set pastetoggle=<Leader>]
 
 " indent stuff
 filetype indent on
-map <Leader>F gg=G``
+map <leader>F gg=G``
 let g:html_indent_inctags = "html,body,head,tbody"
 
 " The Silver Searcher
@@ -195,8 +197,10 @@ nnoremap <leader>s <C-w>s<C-w>j
 "" qq to record q to stop Q to apply
 nnoremap Q @q
 vnoremap Q :norm @q<cr>
+
 " batch operations
-nnoremap <Leader>b :bufdo execute "normal! @q"<CR>
+" I sometimes trigger this by mistake. Now it serves as an example
+" nnoremap <Leader>b :bufdo execute "normal! @q"<CR>
 
 " copy to clipboard
 noremap <space>y "+y
