@@ -1,0 +1,469 @@
+
+snippet paper-drawer-panel
+	<paper-drawer-panel>
+		<paper-header-panel drawer>
+			<paper-toolbar>${1:Menu}</paper-toolbar>
+			${0}
+		</paper-header-panel>
+		<paper-header-panel main>
+			<paper-toolbar>
+				<paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+				<div class="flex">${2:My App}</div>
+			</paper-toolbar>
+		</paper-header-panel>
+	</paper-drawer-panel>
+
+
+snippet iron-autogrow-textarea
+	<iron-autogrow-textarea>
+		<textarea></textarea>
+	</iron-autogrow-textarea>
+
+
+snippet iron-input
+	<input is="iron-input" bind-value="{{${1:myValue}}}">
+
+
+snippet paper-dialog
+	<paper-dialog>
+		<h2>${1:Dialog Title}</h2>
+		<paper-dialog-scrollable>
+			${0}
+		</paper-dialog-scrollable>
+	</paper-dialog>
+
+
+snippet pb
+	/**
+	 * A comment describing this behavior...
+	 * @polymerBehavior ${1}
+	 */
+	<script>
+		${1} = {
+		};
+	</script>
+
+
+snippet paper-header-panel
+	<paper-header-panel class="flex">
+		<paper-toolbar>${1}</paper-toolbar>
+		<div>${0}</div>
+	</paper-header-panel>
+
+
+snippet iron-form
+	<form is="iron-form" id="${1:form}" method="${2:post}" action="${3:/form/handler}">
+		${0}
+	</form>
+
+
+snippet paper-progress
+	<paper-progress value="${1:10}"></paper-progress>
+
+
+snippet paper-tooltip
+	<paper-tooltip
+	  for="${1}"
+	  position="${2:bottom}"
+	  offset="${3:14}">
+	  ${0}
+	</paper-tooltip>
+
+
+snippet ce
+	var ${4:tmpl} = document.querySelector('${5:template}');
+	var ${1:WidgetProto} = Object.create(HTMLElement.prototype);
+	${1:WidgetProto}.createdCallback = function() {
+		var root = this.createShadowRoot();
+		root.appendChild(document.importNode(${4:tmpl}.content, true));
+	};
+	var ${2:Widget} = document.registerElement('${3:my-widget}', {
+		prototype: ${1:WidgetProto}
+	});
+
+
+snippet carbon-route
+	<carbon-route route="{{${1:route}}}" pattern="/:${2:page}" data="{{${3:data}}}" tail="{{${4:tail}}}"></carbon-route>
+
+
+snippet iron-ajax
+	<iron-ajax
+	 	${1:auto}
+	 	url="${2}"
+	 	handle-as="${3:json}"
+	 	on-response="${4:handleResponse}"></iron-ajax>
+
+
+snippet arrsel
+	<array-selector id="${1:selector}" 
+		items="{{${2:array}}}" selected="{{${3:selected}}}" 
+		${4:multi} ${5:toggle}>
+	</array-selector>
+	${0}
+
+
+snippet domb
+	<template is="dom-bind">
+		${0}
+	</template>
+
+
+snippet paper-toast
+	<paper-toast text="${1:Your draft has been discarded.}">${0}</paper-toast>
+
+
+snippet iron-pages
+	<iron-pages selected="${1:0}">
+		<section>${2}</section>
+		<section>${3}</section>
+		<section>${4}</section>
+	</iron-pages>
+
+
+snippet paper-radio-button
+	<paper-radio-button></paper-radio-button>
+
+
+snippet iron-icon
+	<iron-icon icon="${0}"></iron-icon>
+
+
+snippet paper-toolbar
+	<paper-toolbar class="${1:tall}">
+		${0}
+	</paper-toolbar>
+
+
+snippet paper-dialog
+	<paper-dialog>
+		<h2>${1:Dialog Title}</h2>
+		${0}
+	</paper-dialog>
+
+
+snippet hi
+	<link rel="import" href="${1:bower_components}/${0}/${0}.html">
+
+
+snippet paper-radio-group
+	<paper-radio-group selected="${1:small}">
+		<paper-radio-button name="${2:small}">${3:Small}</paper-radio-button>
+		<paper-radio-button name="${4:medium}">${5:Medium}</paper-radio-button>
+		<paper-radio-button name="${6:large}">${7:Large}</paper-radio-button>
+	</paper-radio-group>
+
+
+snippet pe
+	<!--
+	A comment describing this element
+	Example:
+	    <my-elem></my-elem>
+	Example:
+	    <my-elem>
+	      <h2>Hello my-elem</h2>
+	    </my-elem>
+	@demo demo/index.html
+	-->
+	<dom-module id="${1}">
+		<template>
+			<style>
+				:host {
+					display: block;
+				}
+			</style>
+			${4}
+		</template>
+		<script>
+			Polymer({
+				is: '${1}'
+			});
+		</script>
+	</dom-module>
+
+
+snippet hii
+	<link rel="import" href="${1:bower_components}/iron-${2}/iron-${2}.html">
+
+
+snippet paper-slider
+	<paper-slider min="${1:10}" max="${2:200}" value="${3:110}"></paper-slider>
+
+
+snippet paper-item
+	<paper-item>${0}</paper-item>
+
+
+snippet carbon-location
+	<carbon-location route="{{${1:route}}}" ${2:use-hash-as-path}></carbon-location>
+
+
+snippet paper-input
+	<paper-input label="${0}"></paper-input>
+
+
+snippet domi
+	<template is="dom-if" if={{${1:isEnabled}}}>
+		${0}
+	</template>
+
+
+snippet neon-animated-pages
+	<neon-animated-pages selected="${1:0}" entry-animation="${2:slide-from-right-animation}" exit-animation="${3:slide-left-animation}">
+	    <neon-animatable>${4}</neon-animatable>
+	    <neon-animatable>${5}</neon-animatable>
+	    <neon-animatable>${6}</neon-animatable>
+	</neon-animated-pages>
+
+
+snippet ph
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<meta charset="utf-8">
+		<title>${1}</title>
+		<meta name="description" content="${2}">
+		<!-- Mobile -->
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<!-- Chrome / Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="theme-color" content="black">
+		<link rel="icon" href="icon.png">
+		<!-- Safari / iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png">
+		<!-- Web Components -->
+		<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	</head>
+	<body unresolved>
+		${0}
+	</body>
+	</html>
+
+
+snippet pes
+	<!--
+	A comment describing this element.
+	Example:
+	    <my-elem></my-elem>
+	Example:
+	    <my-elem>
+	      <h2>Hello my-elem</h2>
+	    </my-elem>
+	@demo demo/index.html
+	-->
+	<dom-module id="${1}">
+		<link rel="import" type="css" href="${1}.css">
+		<template>
+			${4}
+		</template>
+		<script>
+			Polymer({
+				is: '${1}'
+			});
+		</script>
+	</dom-module>
+
+
+snippet iron-collapse
+	<iron-collapse id="${1:collapse}">
+		Content goes here...
+	</iron-collapse>
+
+
+snippet paper-fab
+	<paper-fab icon="${1:add}"></paper-fab>
+
+
+snippet iron-doc-viewer
+	<iron-doc-viewer descriptor="{{${1:elementDescriptor}}}"></iron-doc-viewer>
+
+
+snippet app-location
+	<app-location route="{{${1:route}}}" ${2:use-hash-as-path}></app-location>
+
+
+snippet paper-card
+	<paper-card heading="${1:Card title}"${2: image="${3}"} elevation="${4:1}" animated-shadow="${5:false}">
+	  <div class="card-content">${6}</div>
+	  <div class="card-actions">
+	    ${7}
+	  </div>
+	</paper-card>
+
+
+snippet paper-ripple
+	<paper-ripple></paper-ripple>
+
+
+snippet iron-iconset
+	<iron-iconset name="${1:my-icons}" src="${2:my-icons.png}" width="${3:96}" size="${4:24}"
+			icons="${5:location place starta stopb bus car train walk}">
+	</iron-iconset>
+
+
+snippet fba
+	<firebase-auth 
+		id="${1:firebaseAuth}" 
+		user="{{${2:user}}}"
+		status-known="{{${3:statusKnown}}}" 
+		location="https://${4:<YOUR-FIREBASE-APP>}.firebaseio.com" 
+		provider="{{${5:provider}}}" 
+		on-error="${6:errorHandler}" 
+		on-user-created="${7:userSuccessHandler}" 
+		on-password-changed="${7:userSuccessHandler}" 
+		on-password-reset="${7:userSuccessHandler}" 
+		on-user-removed="${7:userSuccessHandler}">
+	</firebase-auth>
+	${0}
+
+
+snippet paper-menu
+	<paper-menu${1: multi}>
+		<paper-item>${2:Item 1}</paper-item>
+		<paper-item>${3:Item 2}</paper-item>
+	</paper-menu>
+
+
+snippet app-route
+	<app-route route="{{${1:route}}}" pattern="/:${2:page}" data="{{${3:data}}}" tail="{{${4:tail}}}"></app-route>
+
+
+snippet paper-scroll-header-panel
+	<paper-scroll-header-panel ${1:condenses} class="flex">
+		<paper-toolbar>
+			<div>${2:My App}</div>
+		</paper-toolbar>
+		<div>${3:Page content}</div>
+	</paper-scroll-header-panel>
+
+
+snippet hip
+	<link rel="import" href="${1:bower_components}/paper-${2}/paper-${2}.html">
+
+
+snippet paper-autogrow-textarea
+	<paper-autogrow-textarea id="${1:a1}">
+		<textarea id="${2:t1}"></textarea>
+	<paper-autogrow-textarea>
+
+
+snippet iron-meta
+	<iron-meta key="${1:info}"></iron-meta>
+
+
+snippet paper-material
+	<paper-material elevation="${1:1}">
+		${0}
+	</paper-material>
+
+
+snippet iron-a11y-keys
+	<iron-a11y-keys target="${1:\{\{\}\}}" keys="${2:up down left right}" on-keys-pressed="{{${3:arrowHandler}}}"></iron-a11y-keys>
+
+
+snippet paper-spinner
+	<paper-spinner${1: active}></paper-spinner>
+
+
+snippet paper-tabs
+	<paper-tabs selected="${1:0}">
+		<paper-tab>${2:TAB 1}</paper-tab>
+		<paper-tab>${3:TAB 2}</paper-tab>
+		<paper-tab>${4:TAB 3}</paper-tab>
+	</paper-tabs>
+
+
+snippet paper-icon-button
+	<paper-icon-button icon="${0}"></paper-icon-button>
+
+
+snippet iron-image
+	<iron-image src="${1}" ${2:preload} sizing="${3:cover}"></iron-image>
+
+
+snippet paper-tab
+	<paper-tab>${0}</paper-tab>
+
+
+snippet iron-selector
+	<iron-selector selected="${1:0}">
+		${0}
+	</iron-selector>
+
+
+snippet paper-toggle-button
+	<paper-toggle-button${1: checked}></paper-toggle-button>
+
+
+snippet pefs
+	<link rel="import" href="${1}/polymer/polymer.html">
+	<!--
+	A comment describing this element
+	Example:
+	    <my-elem></my-elem>
+	Example:
+	    <my-elem>
+	      <h2>Hello my-elem</h2>
+	    </my-elem>
+	@demo demo/index.html
+	-->
+	<dom-module id="${1}">
+		<template>
+			<style>
+				:host {
+					display: block;
+				}
+			</style>
+			${4}
+		</template>
+		<script>
+			(function() {
+				'use strict';
+				Polymer({
+					is: '${1}'
+				});
+			})();
+		</script>
+	</dom-module>
+
+
+snippet template
+	<template${1}>${0}</template>
+
+
+snippet iron-iconset-svg
+	<iron-iconset-svg name="${1:my-icons}" size="${0:24}">
+		${0}
+	</iron-iconset-svg>
+
+
+snippet iron-localstorage
+	<iron-localstorage name="${1:my-app-storage}" value="{{${0:value}}}"></iron-localstorage>
+
+
+snippet paper-checkbox
+	<paper-checkbox${1: checked}></paper-checkbox>
+
+
+snippet webcomponents
+	<script src="${0:bower_components}/webcomponentsjs/webcomponents-lite.js"></script>
+
+
+snippet domr
+	<template is="dom-repeat" items={{${1:array}}} 
+		as=${2:item} index-as=${3:index}
+		filter="${4:isHandler}" sort="${5:sortHandler}" observe="${6:itemField1 itemField2}">
+		<!-- {{${2:item}}} and {{${3:index}}} can be used in this binding scope -->
+		${0}
+	</template>
+
+
+snippet iron-media-query
+	<iron-media-query query="${1:min-width: 640px}" query-matches="{{${2:largeScreen}}}">
+	</iron-media-query>
+
+
+snippet paper-button
+	<paper-button${1: raised}>${0}</paper-button>
+

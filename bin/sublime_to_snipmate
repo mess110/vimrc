@@ -6,10 +6,13 @@
 
 require 'active_support/all'
 
+file_name = 'new.snippets'
 output = ''
+snippets = Dir['*.sublime-snippet']
+puts "Found #{snippets.size} snippets in current directory"
 
-Dir['directives/*'].each do |directive|
-  xml = File.read(directive)
+snippets.each do |snippet|
+  xml = File.read(snippet)
   hash = Hash.from_xml(xml).with_indifferent_access[:snippet]
   snippet_name = hash[:tabTrigger]
 
@@ -22,4 +25,5 @@ Dir['directives/*'].each do |directive|
   output += "\n"
 end
 
-File.write('html.snippets', output)
+puts "Writing output to #{file_name}"
+File.write(file_name, output)
