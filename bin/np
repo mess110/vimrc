@@ -53,6 +53,7 @@ class Np
   end
 
   def log(body, params)
+    puts body
     json = JSON.parse(body)
     s = params == {} ? json.collect{ |e| e['category'] }.uniq.reject{ |e| e == nil } : json
     pp s
