@@ -119,7 +119,7 @@ map <leader>F gg=G``
 let g:html_indent_inctags = "html,body,head,tbody"
 
 " The Silver Searcher
-let g:aghighlight=1
+let g:ag_highlight=1
 " go for preview
 nnoremap <leader>f :Ag<SPACE>
 " replace highlighted search
