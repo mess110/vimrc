@@ -116,6 +116,7 @@ set pastetoggle=<Leader>]
 " indent stuff
 filetype indent on
 map <leader>F gg=G``
+autocmd FileType json nnoremap<buffer> <leader>F :%!python -m json.tool<CR>
 let g:html_indent_inctags = "html,body,head,tbody"
 
 " The Silver Searcher
