@@ -27,13 +27,14 @@ own_window yes
 #own_window_type desktop
 own_window_type normal
 #own_window_type dock
-
-own_window_transparent yes
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+own_window_transparent no
 own_window_argb_visual yes
-own_window_argb_value 255
+own_window_argb_value 127
+
 alignment br
-minimum_size 240,1200
+minimum_size 240,2000
 gap_x 20
 gap_y 50
 border_width 20
@@ -87,7 +88,4 @@ ${upspeedgraph eth0 92B6F1 CCDFFF}
 ${downspeed eth0}${alignr}${totaldown eth0}
 ${downspeedgraph eth0 92B6F1 CCDFFF}
 
-${execi 300 ~/vimrc/bin/weather 08534}
-
-
-
+${alignc}${execi 300 ~/vimrc/bin/weather 08534}
