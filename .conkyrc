@@ -23,14 +23,16 @@ text_buffer_size 2048
 #############################
 own_window_class Conky
 own_window yes
+
 #own_window_type desktop
-#own_window_type normal
-own_window_type dock
-own_window_transparent no
+own_window_type normal
+#own_window_type dock
+
+own_window_transparent yes
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 own_window_argb_visual yes
 own_window_argb_value 255
-alignment tl
+alignment br
 minimum_size 240,1200
 gap_x 20
 gap_y 50
@@ -73,13 +75,9 @@ home ${alignr}${fs_used_perc /home}%
 ${fs_used /home}${alignr}${fs_size /home}
 ${fs_bar /home}
 
-montezuma ${alignr}${fs_used_perc /mnt/montezuma}%
-${fs_used /mnt/montezuma}${alignr}${fs_size /mnt/montezuma}
-${fs_bar /mnt/montezuma}
-
-walrus ${alignr}${fs_used_perc /mnt/walrus}%
-${fs_used /mnt/walrus}${alignr}${fs_size /mnt/walrus}
-${fs_bar /mnt/walrus}
+terra ${alignr}${fs_used_perc /media/kiki/terra}%
+${fs_used /media/kiki/terra}${alignr}${fs_size /media/kiki/terra}
+${fs_bar /media/kiki/terra}
 
 
 ${alignc}${addr eth0}
