@@ -24,9 +24,9 @@ text_buffer_size 2048
 own_window_class Conky
 own_window yes
 
-#own_window_type desktop
-own_window_type normal
-#own_window_type dock
+# own_window_type desktop
+# own_window_type normal
+own_window_type dock
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
 own_window_transparent no
@@ -64,21 +64,24 @@ ${top name 3} $alignr ${top pid 3} ${top cpu 3}
 ${top name 4} $alignr ${top pid 4} ${top cpu 4}
 ${top name 5} $alignr ${top pid 5} ${top cpu 5}
 
+
+
 ram ${alignr} ${memperc}%
 ${mem} ${alignr}${memmax}
 ${membar}
-
 swap ${alignr} ${swapperc}%
 ${swap} ${alignr}${swapmax}
 ${swapbar}
 
+
+
 home ${alignr}${fs_used_perc /home}%
 ${fs_used /home}${alignr}${fs_size /home}
 ${fs_bar /home}
-
 terra ${alignr}${fs_used_perc /media/kiki/terra}%
 ${fs_used /media/kiki/terra}${alignr}${fs_size /media/kiki/terra}
 ${fs_bar /media/kiki/terra}
+
 
 
 ${alignc}${addr eth0}
@@ -89,3 +92,5 @@ ${downspeed eth0}${alignr}${totaldown eth0}
 ${downspeedgraph eth0 92B6F1 CCDFFF}
 
 ${alignc}${execi 300 ~/vimrc/bin/weather 08534}
+
+${alignc}1 BTC = ${execi 10 ~/vimrc/bin/btc-ticker} USD

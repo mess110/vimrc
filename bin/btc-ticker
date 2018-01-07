@@ -1,0 +1,3 @@
+#!/bin/bash
+
+curl -s 'http://coinmarketcap.northpole.ro/api/btc.json' | python3 -c "import sys, json; print(json.load(sys.stdin)['price'])"
