@@ -3,7 +3,8 @@ import json
 import urllib2
 import datetime
 
-url = "http://api.openweathermap.org/data/2.5/forecast/daily?units=metric&lat=46.7667&lon=23.5833"
+# url = "http://api.openweathermap.org/data/2.5/forecast/daily?units=metric&lat=46.7667&lon=23.5833&appid=77c3afc9bca1d25b627f4d92fecd216d"
+url = "http://api.openweathermap.org/data/2.5/forecast/daily?units=metric&q=Cluj-Napoca&APPID=77c3afc9bca1d25b627f4d92fecd216d"
 headers = {
   'User-Agent' : 'ConkyWeatherBot/0.1'
 }
@@ -24,15 +25,18 @@ def get_temp(j, i=0):
 
 def get_desc(j, i=0):
     return str(j['list'][i]['weather'][0]['description'])
-    
+
 
 req = urllib2.Request(url, None, headers)
-response = urllib2.urlopen(req)
-j = json.loads(response.read())
-if str(j['cod']) == '200':
-    print city_name(j)
-    print ''
-    for i in range(0, 5):
-       print "  " + get_day_forecast(j,i) + " " + get_temp(j,i)  + ' ' + get_desc(j,i)
-else:
-    print 'No Weather Info'
+try:
+    response = urllib2.urlopen(req)
+    j = json.loads(response.read())
+    if str(j['cod']) == '200':
+        print city_name(j)
+        print ''
+        for i in range(0, 5):
+           print "  " + get_day_forecast(j,i) + " " + get_temp(j,i)  + ' ' + get_desc(j,i)
+    else:
+        print 'No Weather Info'
+except urllib2.HTTPError:
+    print 'Invalid APPID'
