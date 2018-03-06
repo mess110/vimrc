@@ -1,0 +1,80 @@
+#!/usr/bin/env ruby
+
+require 'openssl'
+require 'digest'
+
+def pack data
+  [data].pack('H*')
+end
+
+def unpack data
+  data.unpack('H*')
+end
+
+def aes256_encrypt(key, data)
+  raise 'encryption input needs to be string' if data.class != String
+  aes = OpenSSL::Cipher.new('AES-256-CBC')
+  aes.encrypt
+  aes.key = Digest::SHA256.digest(key)
+  result = aes.update(data) + aes.final
+  unpack(result)
+end
+
+def aes256_decrypt(key, data)
+  raise 'decryption input needs to be string' if data.class != String
+  aes = OpenSSL::Cipher.new('AES-256-CBC')
+  aes.decrypt
+  aes.key = Digest::SHA256.digest(key)
+  aes.update(pack(data)) + aes.final
+end
+
+def generate_key
+  random_key = OpenSSL::Cipher.new('AES-256-CBC').random_key
+  unpack(random_key)[0]
+end
+
+def help
+  puts 'Example usage:'
+  puts ''
+  puts '  enc k > ~/.encrc'
+  puts '  enc e `cat ~/.encrc` file_path'
+  puts ''
+  puts '  enc d key data'
+  puts '  enc k new'
+  puts '  enc k '
+  puts ''
+end
+
+encrc_path = File.expand_path('~/.encrc')
+
+case ARGV[0]
+when 'wk', 'nk'
+  File.write(encrc_path, generate_key)
+  puts File.read(encrc_path)
+when 'gk'
+  puts generate_key
+when 'k'
+  puts File.read(encrc_path)
+when 'e', 'd'
+  if ARGV.size == 2
+    if File.file?(encrc_path)
+      ARGV.insert(1, File.read(encrc_path))
+    end
+  end
+
+  if ARGV.size != 3
+    help
+    exit 1
+  end
+
+  key = File.file?(ARGV[1]) ? File.read(ARGV[1]) : ARGV[1]
+  content = File.file?(ARGV[2]) ? File.read(ARGV[2]) : ARGV[2]
+
+  if ARGV[0] == 'e'
+    puts aes256_encrypt(key, content)
+  else
+    puts aes256_decrypt(key, content)
+  end
+else
+  help
+end

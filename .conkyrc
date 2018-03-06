@@ -1,6 +1,3 @@
-######################
-# - Conky settings - #
-######################
 update_interval 1
 total_run_times 0
 net_avg_samples 1
@@ -33,7 +30,7 @@ own_window_transparent no
 own_window_argb_visual yes
 own_window_argb_value 127
 
-alignment br
+alignment tl
 minimum_size 240,2000
 gap_x 20
 gap_y 50
@@ -51,12 +48,15 @@ color1 ffffff
 color2 ffffff
 
 TEXT
+# ${image ~/.conky/icons/logo.png -p 18,0 -s 45x45}
 ${alignc}${nodename}
+${alignc}${execi 3000 ~/vimrc/bin/weather}
 
-cpu0 ${cpu cpu0}% ${alignr}${execi 30 sensors | grep 'Core 0' | cut -c17-21}°C
-cpu1 ${cpu cpu1}% ${alignr}${execi 30 sensors | grep 'Core 1' | cut -c17-21}°C
-cpu2 ${cpu cpu2}% ${alignr}${execi 30 sensors | grep 'Core 2' | cut -c17-21}°C
-cpu3 ${cpu cpu3}% ${alignr}${execi 30 sensors | grep 'Core 3' | cut -c17-21}°C
+
+${font Poky:pixelsize=14}P${font} CPU0   ${cpu cpu0}% ${alignr}${execi 30 sensors | grep 'Core 0' | cut -c17-23}
+${font Poky:pixelsize=14}P${font} CPU1   ${cpu cpu1}% ${alignr}${execi 30 sensors | grep 'Core 1' | cut -c17-23}
+${font Poky:pixelsize=14}P${font} CPU2   ${cpu cpu2}% ${alignr}${execi 30 sensors | grep 'Core 2' | cut -c17-23}
+${font Poky:pixelsize=14}P${font} CPU3   ${cpu cpu3}% ${alignr}${execi 30 sensors | grep 'Core 3' | cut -c17-23}
 ${cpugraph}
 ${top name 1} $alignr ${top pid 1} ${top cpu 1}
 ${top name 2} $alignr ${top pid 2} ${top cpu 2}
@@ -65,32 +65,32 @@ ${top name 4} $alignr ${top pid 4} ${top cpu 4}
 ${top name 5} $alignr ${top pid 5} ${top cpu 5}
 
 
-
-ram ${alignr} ${memperc}%
+${font Poky:pixelsize=14}a${font} RAM ${alignr} ${memperc}%
 ${mem} ${alignr}${memmax}
 ${membar}
-swap ${alignr} ${swapperc}%
+
+${font Poky:pixelsize=14}a${font} SWAP ${alignr} ${swapperc}%
 ${swap} ${alignr}${swapmax}
 ${swapbar}
 
 
-
-home ${alignr}${fs_used_perc /home}%
+${font Poky:pixelsize=14}y${font} home ${alignr}${fs_used_perc /home}%
 ${fs_used /home}${alignr}${fs_size /home}
 ${fs_bar /home}
-terra ${alignr}${fs_used_perc /media/kiki/terra}%
+
+${font Poky:pixelsize=14}y${font} terra ${alignr}${fs_used_perc /media/kiki/terra}%
 ${fs_used /media/kiki/terra}${alignr}${fs_size /media/kiki/terra}
 ${fs_bar /media/kiki/terra}
 
 
+${alignc}${font Poky:pixelsize=14}w${font} ${addr enp3s0}
 
-${alignc}${addr eth0}
+${upspeed enp3s0}${alignr}${totalup enp3s0}
+${upspeedgraph enp3s0 92B6F1 CCDFFF}
+${downspeed enp3s0}${alignr}${totaldown enp3s0}
+${downspeedgraph enp3s0 92B6F1 CCDFFF}
 
-${upspeed eth0}${alignr}${totalup eth0}
-${upspeedgraph eth0 92B6F1 CCDFFF}
-${downspeed eth0}${alignr}${totaldown eth0}
-${downspeedgraph eth0 92B6F1 CCDFFF}
-
-${alignc}${execi 300 ~/vimrc/bin/weather 08534}
 
 ${alignc}1 BTC = ${execi 10 ~/vimrc/bin/btc-ticker} USD
+
+${voffset 200}

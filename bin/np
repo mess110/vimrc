@@ -53,7 +53,6 @@ class Np
   end
 
   def log(body, params)
-    puts body
     json = JSON.parse(body)
     s = params == {} ? json.collect{ |e| e['category'] }.uniq.reject{ |e| e == nil } : json
     pp s
@@ -61,7 +60,7 @@ class Np
 
   def config
     rc_path = File.join(Dir.home, '.nprc')
-    auth = { config: { api_key: 'guest', secret: 'guest' }, url: Api::BASE_URL, skip_certificate_validation: true }
+    auth = { config: { api_key: 'guest', secret: 'guest' }, url: Api::BASE_URL, skip_certificate_validation: false }
     system "echo '#{auth.to_json}' > #{rc_path}" unless File.exists?(rc_path)
     JSON.parse(File.read(rc_path)) rescue help("invalid #{rc_path} contents")
   end

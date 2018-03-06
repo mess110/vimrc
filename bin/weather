@@ -1,41 +1,33 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import json
 import urllib2
 import datetime
+import os
+import sys
 
-# url = "http://api.openweathermap.org/data/2.5/forecast/daily?units=metric&lat=46.7667&lon=23.5833&appid=77c3afc9bca1d25b627f4d92fecd216d"
-url = "http://api.openweathermap.org/data/2.5/forecast/daily?units=metric&q=Cluj-Napoca&APPID=77c3afc9bca1d25b627f4d92fecd216d"
+if 'CONKY_QUERY' not in os.environ:
+    print 'CONKY_QUERY env variable missing'
+    sys.exit(1)
+if 'CONKY_APP_ID' not in os.environ:
+    print 'CONKY_APP_ID env variable missing'
+    sys.exit(1)
+
+query = os.environ['CONKY_QUERY']
+app_id = os.environ['CONKY_APP_ID']
+
+url = "http://api.openweathermap.org/data/2.5/weather?q=" + query + "&units=metric&APPID=" + app_id
 headers = {
   'User-Agent' : 'ConkyWeatherBot/0.1'
 }
-
-def celsius(fahrenheit):
-    return (int(fahrenheit) - 32) * 5 / 9
-
-def city_name(j):
-    return str(j['city']['name'])
-
-def get_day_forecast(j, i=0):
-    ts = int(j['list'][i]['dt'])
-    d = datetime.datetime.fromtimestamp(ts)
-    return d.strftime("%a")
-
-def get_temp(j, i=0):
-    return str(j['list'][i]['temp']['day']) + 'C'
-
-def get_desc(j, i=0):
-    return str(j['list'][i]['weather'][0]['description'])
-
 
 req = urllib2.Request(url, None, headers)
 try:
     response = urllib2.urlopen(req)
     j = json.loads(response.read())
     if str(j['cod']) == '200':
-        print city_name(j)
-        print ''
-        for i in range(0, 5):
-           print "  " + get_day_forecast(j,i) + " " + get_temp(j,i)  + ' ' + get_desc(j,i)
+        print str(j['name']) + ': ' + str(str(j['main']['temp']) + '°C')
     else:
         print 'No Weather Info'
 except urllib2.HTTPError:
