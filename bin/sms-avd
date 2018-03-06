@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+cat <<EOF
+Example usage:
+
+  sms-avd "hello world" 911
+
+EOF
+
+body="${1:-default value}"
+number=${2-911}
+
+echo "Sending '${body}' to ${number}"
+
+telnet localhost 5554 <<EOF
+auth `cat ~/.emulator_console_auth_token`
+sms send `echo $number` `echo $body`
+EOF
