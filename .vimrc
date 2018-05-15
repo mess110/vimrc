@@ -25,7 +25,6 @@ Plugin 'fisadev/vim-isort'
 Plugin 'fugitive.vim'
 Plugin 'pangloss/vim-javascript'
 Bundle 'kchmck/vim-coffee-script'
-Bundle 'git@github.com:leafgarland/typescript-vim.git'
 " Bundle 'git@github.com:myw/vim-polymer.git'
 Plugin 'bufexplorer.zip'
 Plugin 'The-NERD-Commenter'
@@ -34,7 +33,6 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
-Bundle 'magarcia/vim-angular2-snippets'
 Plugin 'Syntastic'
 " use cs"' to change from " to '
 " cs change surrounding
