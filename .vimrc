@@ -51,9 +51,6 @@ Plugin 'CtrlP.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'Solarized'
 
-" search using silversearcher
-Bundle 'rking/ag.vim'
-
 Plugin 'Raimondi/delimitMate'
 
 Plugin 'szw/vim-ctrlspace'
@@ -138,12 +135,14 @@ map <leader>F gg=G``
 autocmd FileType json nnoremap<buffer> <leader>F :%!python -m json.tool<CR>
 let g:html_indent_inctags = "html,body,head,tbody"
 
-" The Silver Searcher
-let g:ag_highlight=1
-" go for preview
-nnoremap <leader>f :Ag<SPACE>
+" File content search
+nnoremap <leader>f :Ack!<SPACE>
+let g:ack_mappings = { "o": "<CR><C-W>j" }
 " replace highlighted search
 nnoremap <leader>r :%s///g<LEFT><LEFT>
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 " File associations
 
@@ -194,9 +193,6 @@ highlight Folded guibg=grey guifg=blue
 
 "" Map folding to Spacebar
 nnoremap <Space> za
-
-nnoremap <Leader>C :!rake spec<CR>
-nnoremap <Leader>c :!rspec %<CR>
 
 nnoremap <Leader>n :nohlsearch<CR>
 
