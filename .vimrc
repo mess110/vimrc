@@ -1,3 +1,17 @@
+" Shortcuts:
+"
+" <Leader>v  - reload vim and generate ctags for searching
+" <Leader>6  - file explorer
+" /          - search by highlight
+" <Leader>r  - replace highlighted
+" <Leader>f  - search file contents
+" <Leader>t  - search buffers
+" <Leader>p  - search by filename
+" <Leader>mm - show minimap
+" <Leader>mc - close minimap
+" qq         - define macro
+" q          - end define macro
+"
 " scripts from http://vim-scripts.org/vim/scripts.html
 
 set nocompatible
@@ -12,7 +26,7 @@ Plugin 'textobj-indent'
 
 Bundle 'mileszs/ack.vim'
 
-" Bundle 'severin-lemaignan/vim-minimap'
+Plugin 'severin-lemaignan/vim-minimap'
 
 " use + to toggle booleans
 Plugin 'Toggle'
@@ -83,8 +97,7 @@ map <Leader>gd :Git diff<CR><CR>
 
 syntax on
 
-" Navigation
-
+" set showtabline=0
 " search open buffers
 map <Leader>t :CtrlSpace<CR>
 " search by filename
