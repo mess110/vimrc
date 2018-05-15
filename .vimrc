@@ -16,32 +16,20 @@
 
 set nocompatible
 filetype off
-
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
 Plugin 'gmarik/Vundle.vim'
 Plugin 'textobj-user'
 Plugin 'textobj-indent'
-
 Bundle 'mileszs/ack.vim'
-
 Plugin 'severin-lemaignan/vim-minimap'
-
-" use + to toggle booleans
 Plugin 'Toggle'
-
-Plugin 'git@github.com:mattn/flappyvird-vim.git'
-
 Plugin 'https://github.com/rhysd/clever-f.vim'
-
 Plugin 'othree/html5.vim'
-
 Plugin 'fisadev/vim-isort'
 Plugin 'fugitive.vim'
 Plugin 'pangloss/vim-javascript'
 Bundle 'kchmck/vim-coffee-script'
-" Bundle 'git@github.com:myw/vim-polymer.git'
 Plugin 'The-NERD-Commenter'
 Plugin 'The-NERD-tree'
 Bundle "MarcWeber/vim-addon-mw-utils"
@@ -49,40 +37,27 @@ Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
 Plugin 'Syntastic'
-" use cs"' to change from " to '
-" cs change surrounding
 Plugin 'surround.vim'
-
 Bundle 'https://github.com/JarrodCTaylor/vim-shell-executor'
-
 Bundle 'repeat.vim'
 Bundle 'https://github.com/tpope/vim-unimpaired.git'
-
 Bundle 'groenewege/vim-less'
-
 Plugin 'itchyny/lightline.vim'
-Plugin 'Solarized'
-
+Bundle 'https://github.com/lifepillar/vim-solarized8.git'
 Plugin 'Raimondi/delimitMate'
-
 Plugin 'szw/vim-ctrlspace'
-
 Bundle 'malkomalko/projections.vim'
-
-set hidden
-
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" Vim management
-"
-"   - install vundle plugins
-"   - edit vimrc
-"   - reload vim and run ctags
-"
 map <Leader>i :PluginInstall<CR>
 nmap <silent> <Leader>ev :e $MYVIMRC<CR>
 map <Leader>v :source $MYVIMRC<CR>:!ctags --exclude=bower_components --exclude=node_modules --exclude=public --exclude=tmp --exclude=.git --exclude=log --exclude=seeds -R .<CR><CR>
+
+" use + to toggle booleans
+
+" use cs"' to change from " to '
+" cs change surrounding
 
 " Git commands
 "
@@ -95,13 +70,12 @@ map <Leader>gs :Gstatus<CR>
 map <Leader>gb :Gblame<CR>
 map <Leader>gd :Git diff<CR><CR>
 
-syntax on
-
 " set showtabline=0
 " search open buffers
 map <Leader>t :CtrlSpace<CR>
 " search by filename
 map <Leader>p :CtrlSpace O<CR>
+set hidden " required for CtrlSpace
 
 " file explorer
 map <Leader>6 :NERDTreeToggle<CR>
@@ -117,17 +91,6 @@ let NERDDefaultNesting=0
 
 " use tab or <Leader>\ for snippet suggestion
 inoremap <Leader>\ <C-x><C-o>
-
-set ls=2            " allways show status line
-set tabstop=2       " numbers of spaces of tab character
-set shiftwidth=2    " numbers of spaces to (auto)indent
-set hls             " highlight searches
-set ruler           " show the cursor position all the time
-set number          " show line numbers
-set ttyfast         " smoother changes
-set expandtab       " space instead of tab
-set nowrap          " don't wrap lines, let them continue
-set omnifunc=syntaxcomplete#Complete " set autocomplete
 
 set pastetoggle=<Leader>]
 
@@ -145,6 +108,82 @@ nnoremap <leader>r :%s///g<LEFT><LEFT>
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+
+" no more shift for :
+nnoremap ; :
+
+" execute the current file
+nnoremap <Leader>e :!%:p<CR>
+
+" keep selection while indenting files
+vnoremap > >gv
+vnoremap < <gv
+
+set foldlevelstart=20
+set foldmethod=indent
+
+"" Adjust the highlighting
+highlight Folded guibg=grey guifg=blue
+
+"" Map folding to Spacebar
+nnoremap <Space> za
+
+nnoremap <Leader>n :nohlsearch<CR>
+
+"" split vertical window
+nnoremap <leader>w <C-w>v<C-w>l
+"" split horizontal window
+nnoremap <leader>s <C-w>s<C-w>j
+
+"" qq to record q to stop Q to apply
+nnoremap Q @q
+vnoremap Q :norm @q<cr>
+
+" batch operations
+" I sometimes trigger this by mistake. Now it serves as an example
+" nnoremap <Leader>b :bufdo execute "normal! @q"<CR>
+
+" copy to clipboard
+noremap <space>y "+y
+" paste from clipboard
+noremap <space>p "+p
+noremap <space>P "+P
+
+function! PasteAsCoffee()
+  :read !xsel --clipboard --output | js2coffee
+endfunction
+:command! PasteAsCoffee :call PasteAsCoffee()
+
+let g:lightline = {
+  \ 'colorscheme': 'solarized',
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+  \ },
+  \ 'component': {
+  \   'readonly': '%{&filetype=="help"?"":&readonly?"read-only":""}',
+  \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+  \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+  \ },
+  \ 'component_visible_condition': {
+  \   'readonly': '(&filetype!="help"&& &readonly)',
+  \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+  \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+  \ }
+  \ }
+
+""" Look & Feel
+
+set ls=2            " allways show status line
+set tabstop=2       " numbers of spaces of tab character
+set shiftwidth=2    " numbers of spaces to (auto)indent
+set hls             " highlight searches
+set ruler           " show the cursor position all the time
+set number          " show line numbers
+set ttyfast         " smoother changes
+set expandtab       " space instead of tab
+set nowrap          " don't wrap lines, let them continue
+set omnifunc=syntaxcomplete#Complete " set autocomplete
 
 " File associations
 
@@ -177,94 +216,17 @@ set noerrorbells         " don't beep
 set listchars=tab:>~,nbsp:_,trail:.
 set list
 
-" no more shift for :
-nnoremap ; :
-
-" execute the current file
-nnoremap <Leader>e :!%:p<CR>
-
-" keep selection while indenting files
-vnoremap > >gv
-vnoremap < <gv
-
-set foldlevelstart=20
-set foldmethod=indent
-
-"" Adjust the highlighting
-highlight Folded guibg=grey guifg=blue
-
-"" Map folding to Spacebar
-nnoremap <Space> za
-
-nnoremap <Leader>n :nohlsearch<CR>
-
-nnoremap <C-j> <C-W>j "Ctrl-j to move down a split
-nnoremap <C-k> <C-W>k "Ctrl-k to move up a split
-nnoremap <C-l> <C-W>l "Ctrl-l to move right a split
-nnoremap <C-h> <C-W>h "Ctrl-h to move left a split
-
-"" split vertical window
-nnoremap <leader>w <C-w>v<C-w>l
-"" split horizontal window
-nnoremap <leader>s <C-w>s<C-w>j
-
-"" qq to record q to stop Q to apply
-nnoremap Q @q
-vnoremap Q :norm @q<cr>
-
-" batch operations
-" I sometimes trigger this by mistake. Now it serves as an example
-" nnoremap <Leader>b :bufdo execute "normal! @q"<CR>
-
-" copy to clipboard
-noremap <space>y "+y
-" paste from clipboard
-noremap <space>p "+p
-noremap <space>P "+P
-
-"highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-"highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-"highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-"highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
-
-"" theme
-let g:lightline = {
-  \ 'colorscheme': 'powerline',
-  \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-  \ },
-  \ 'component': {
-  \   'readonly': '%{&filetype=="help"?"":&readonly?"read-only":""}',
-  \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-  \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-  \ },
-  \ 'component_visible_condition': {
-  \   'readonly': '(&filetype!="help"&& &readonly)',
-  \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-  \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-  \ }
-  \ }
-
-"set t_Co=256
-"set background=dark
-"colorscheme solarized
-
 syntax on
-let g:solarized_termcolors=16
-let w:solarized_style="dark"
-colorscheme solarized
+" let g:solarized_termcolors=16
+" let w:solarized_style="dark"
+set background=dark
+colorscheme solarized8
 
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 highlight Comment cterm=bold
 highlight vimLineComment cterm=bold
 highlight htmlSpecialTagName cterm=bold
 highlight MatchParen ctermbg=0 ctermfg=none
-
-function! PasteAsCoffee()
-  :read !xsel --clipboard --output | js2coffee
-endfunction
-:command! PasteAsCoffee :call PasteAsCoffee()
-
-" disable press enter to continue prompt
-" set shortmess=a
-" set cmdheight=2
