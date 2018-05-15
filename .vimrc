@@ -42,7 +42,9 @@ Bundle 'https://github.com/JarrodCTaylor/vim-shell-executor'
 Bundle 'repeat.vim'
 Bundle 'https://github.com/tpope/vim-unimpaired.git'
 Bundle 'groenewege/vim-less'
-Plugin 'itchyny/lightline.vim'
+" Plugin 'itchyny/lightline.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Bundle 'Solarized'
 Plugin 'Raimondi/delimitMate'
 Plugin 'szw/vim-ctrlspace'
@@ -70,7 +72,7 @@ map <Leader>gs :Gstatus<CR>
 map <Leader>gb :Gblame<CR>
 map <Leader>gd :Git diff<CR><CR>
 
-set showtabline=2
+" set showtabline=2
 " search open buffers
 map <Leader>t :CtrlSpace<CR>
 " search by filename
@@ -217,17 +219,21 @@ set listchars=tab:>~,nbsp:_,trail:.
 set list
 
 syntax on
+let g:airline_solarized_bg='dark'
 let g:solarized_termcolors=16
 let w:solarized_style="dark"
 set background=dark
 colorscheme solarized
 
-highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
-highlight Comment cterm=bold
-highlight vimLineComment cterm=bold
+highlight DiffAdd            cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete         cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange         cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText           cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+highlight Comment            cterm=bold
+highlight vimLineComment     cterm=bold
 highlight htmlSpecialTagName cterm=bold
-highlight MatchParen ctermbg=0 ctermfg=none
-highlight SpecialKey term=bold ctermfg=11 gui=bold guifg=Yellow
+highlight MatchParen         ctermbg=0 ctermfg=none
+highlight SpecialKey         term=bold ctermfg=11 gui=bold guifg=Yellow
+highlight TabLineFill        cterm=bold ctermfg=0 ctermbg=0
+highlight TabLine            cterm=bold ctermfg=white ctermbg=0
+highlight TabLineSel         cterm=bold ctermfg=black ctermbg=white
