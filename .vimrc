@@ -43,7 +43,7 @@ Bundle 'repeat.vim'
 Bundle 'https://github.com/tpope/vim-unimpaired.git'
 Bundle 'groenewege/vim-less'
 Plugin 'itchyny/lightline.vim'
-Bundle 'https://github.com/lifepillar/vim-solarized8.git'
+Bundle 'Solarized'
 Plugin 'Raimondi/delimitMate'
 Plugin 'szw/vim-ctrlspace'
 Bundle 'malkomalko/projections.vim'
@@ -217,10 +217,10 @@ set listchars=tab:>~,nbsp:_,trail:.
 set list
 
 syntax on
-" let g:solarized_termcolors=16
-" let w:solarized_style="dark"
+let g:solarized_termcolors=16
+let w:solarized_style="dark"
 set background=dark
-colorscheme solarized8
+colorscheme solarized
 
 highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
@@ -230,3 +230,4 @@ highlight Comment cterm=bold
 highlight vimLineComment cterm=bold
 highlight htmlSpecialTagName cterm=bold
 highlight MatchParen ctermbg=0 ctermfg=none
+highlight SpecialKey term=bold ctermfg=11 gui=bold guifg=Yellow
