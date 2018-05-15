@@ -70,7 +70,7 @@ map <Leader>gs :Gstatus<CR>
 map <Leader>gb :Gblame<CR>
 map <Leader>gd :Git diff<CR><CR>
 
-" set showtabline=0
+set showtabline=2
 " search open buffers
 map <Leader>t :CtrlSpace<CR>
 " search by filename
