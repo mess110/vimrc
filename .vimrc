@@ -1,3 +1,5 @@
+" scripts from http://vim-scripts.org/vim/scripts.html
+
 set nocompatible
 filetype off
 
@@ -63,20 +65,39 @@ set hidden
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+" Vim management
+"
+"   - install vundle plugins
+"   - edit vimrc
+"   - reload vim and run ctags
+"
 map <Leader>i :PluginInstall<CR>
+nmap <silent> <Leader>ev :e $MYVIMRC<CR>
+map <Leader>v :source $MYVIMRC<CR>:CtrlPClearAllCaches<CR>:!ctags --exclude=bower_components --exclude=node_modules --exclude=public --exclude=tmp --exclude=.git --exclude=log --exclude=seeds -R .<CR><CR>
 
-" Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-
+" Git commands
+"
+"   - show status
+"   - blame
+"   - diff
+"   - use '-' to stage/unstange changes in git status window
+"   - ctrl+n/p to navigate through files in git status window
 map <Leader>gs :Gstatus<CR>
-" use - to stage/unstange changes in git status window
-" ctrl+n/p to navigate through files in git status window
 map <Leader>gb :Gblame<CR>
 map <Leader>gd :Git diff<CR><CR>
 
 syntax on
 
-" scripts from http://vim-scripts.org/vim/scripts.html
+" Navigation
+"
+"  - CtrlP fuzzy search files
+"  - CtrlP fuzzy search ctags (file contents)
+"  - BufExplorer to view open files
+"  - NERDTree for file structure view
+"
+" Read more:
+"
+" https://github.com/kien/ctrlp.vim/blob/master/doc/ctrlp.txt#L178
 map <Leader>p :CtrlP<CR>
 nnoremap <Leader>. :CtrlPTag<CR>
 let g:ctrlp_working_path_mode = 'ra'
@@ -92,8 +113,6 @@ let g:netrw_browse_split = 2
 let g:netrw_liststyle = 3
 let g:netrw_winsize = -28
 let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro rnu'  " --> I want line numbers on the netrw buffer
-nnoremap <silent> <leader>7 :Vexplore<cr>
-
 let NERDSpaceDelims=1
 let NERDDefaultNesting=0
 
@@ -126,16 +145,12 @@ nnoremap <leader>f :Ag<SPACE>
 " replace highlighted search
 nnoremap <leader>r :%s///g<LEFT><LEFT>
 
+" File associations
+
 autocmd filetype python,coffee set expandtab
 autocmd filetype html setlocal ts=4 sw=4 expandtab
 autocmd BufNewFile,BufRead *.md set filetype=markdown
-
-" associate jbuilder with ruby syntax highlighting
-au BufRead,BufNewFile *.jbuilder setfiletype ruby
-
-" reload .vimrc
-map <Leader>v :source $MYVIMRC<CR>:CtrlPClearAllCaches<CR>
-map <Leader>V :!ctags --exclude=bower_components --exclude=node_modules --exclude=public --exclude=tmp --exclude=.git --exclude=log --exclude=seeds -R .<CR>
+autocmd BufRead,BufNewFile *.jbuilder setfiletype ruby " jbuilder to ruby
 
 " make the 81st column stand out
 highlight ColorColumn ctermbg=magenta
@@ -253,5 +268,5 @@ endfunction
 :command! PasteAsCoffee :call PasteAsCoffee()
 
 " disable press enter to continue prompt
-"set shortmess=a
-"set cmdheight=2
+" set shortmess=a
+" set cmdheight=2
