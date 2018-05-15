@@ -19,17 +19,14 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
+Plugin 'szw/vim-ctrlspace'
+Plugin 'severin-lemaignan/vim-minimap'
 Plugin 'textobj-user'
 Plugin 'textobj-indent'
 Bundle 'mileszs/ack.vim'
-Plugin 'severin-lemaignan/vim-minimap'
 Plugin 'Toggle'
 Plugin 'https://github.com/rhysd/clever-f.vim'
-Plugin 'othree/html5.vim'
-Plugin 'fisadev/vim-isort'
 Plugin 'fugitive.vim'
-Plugin 'pangloss/vim-javascript'
-Bundle 'kchmck/vim-coffee-script'
 Plugin 'The-NERD-Commenter'
 Plugin 'The-NERD-tree'
 Bundle "MarcWeber/vim-addon-mw-utils"
@@ -41,14 +38,16 @@ Plugin 'surround.vim'
 Bundle 'https://github.com/JarrodCTaylor/vim-shell-executor'
 Bundle 'repeat.vim'
 Bundle 'https://github.com/tpope/vim-unimpaired.git'
-Bundle 'groenewege/vim-less'
 " Plugin 'itchyny/lightline.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Bundle 'Solarized'
 Plugin 'Raimondi/delimitMate'
-Plugin 'szw/vim-ctrlspace'
-Bundle 'malkomalko/projections.vim'
+Plugin 'othree/html5.vim'
+Plugin 'fisadev/vim-isort'
+Plugin 'pangloss/vim-javascript'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'groenewege/vim-less'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -72,7 +71,7 @@ map <Leader>gs :Gstatus<CR>
 map <Leader>gb :Gblame<CR>
 map <Leader>gd :Git diff<CR><CR>
 
-" set showtabline=2
+set showtabline=0
 " search open buffers
 map <Leader>t :CtrlSpace<CR>
 " search by filename
@@ -234,6 +233,3 @@ highlight vimLineComment     cterm=bold
 highlight htmlSpecialTagName cterm=bold
 highlight MatchParen         ctermbg=0 ctermfg=none
 highlight SpecialKey         term=bold ctermfg=11 gui=bold guifg=Yellow
-highlight TabLineFill        cterm=bold ctermfg=0 ctermbg=0
-highlight TabLine            cterm=bold ctermfg=white ctermbg=0
-highlight TabLineSel         cterm=bold ctermfg=black ctermbg=white
