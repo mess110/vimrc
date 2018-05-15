@@ -28,7 +28,6 @@ Plugin 'fugitive.vim'
 Plugin 'pangloss/vim-javascript'
 Bundle 'kchmck/vim-coffee-script'
 " Bundle 'git@github.com:myw/vim-polymer.git'
-Plugin 'bufexplorer.zip'
 Plugin 'The-NERD-Commenter'
 Plugin 'The-NERD-tree'
 Bundle "MarcWeber/vim-addon-mw-utils"
@@ -46,7 +45,6 @@ Bundle 'repeat.vim'
 Bundle 'https://github.com/tpope/vim-unimpaired.git'
 
 Bundle 'groenewege/vim-less'
-Plugin 'CtrlP.vim'
 
 Plugin 'itchyny/lightline.vim'
 Plugin 'Solarized'
@@ -70,7 +68,7 @@ filetype plugin indent on    " required
 "
 map <Leader>i :PluginInstall<CR>
 nmap <silent> <Leader>ev :e $MYVIMRC<CR>
-map <Leader>v :source $MYVIMRC<CR>:CtrlPClearAllCaches<CR>:!ctags --exclude=bower_components --exclude=node_modules --exclude=public --exclude=tmp --exclude=.git --exclude=log --exclude=seeds -R .<CR><CR>
+map <Leader>v :source $MYVIMRC<CR>:!ctags --exclude=bower_components --exclude=node_modules --exclude=public --exclude=tmp --exclude=.git --exclude=log --exclude=seeds -R .<CR><CR>
 
 " Git commands
 "
@@ -86,22 +84,13 @@ map <Leader>gd :Git diff<CR><CR>
 syntax on
 
 " Navigation
-"
-"  - CtrlP fuzzy search files
-"  - CtrlP fuzzy search ctags (file contents)
-"  - BufExplorer to view open files
-"  - NERDTree for file structure view
-"
-" Read more:
-"
-" https://github.com/kien/ctrlp.vim/blob/master/doc/ctrlp.txt#L178
-map <Leader>p :CtrlP<CR>
-nnoremap <Leader>. :CtrlPTag<CR>
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 
-map <Leader>t :BufExplorer<CR>
+" search open buffers
+map <Leader>t :CtrlSpace<CR>
+" search by filename
+map <Leader>p :CtrlSpace O<CR>
 
+" file explorer
 map <Leader>6 :NERDTreeToggle<CR>
 " Netrw options
 let g:netrw_altv = 1
