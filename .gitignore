@@ -5,3 +5,4 @@ tmp/
 .vim/.netrwhist
 .byobu/.ssh-agent
 gnome-terminal-colors-solarized/
+bin/plata
