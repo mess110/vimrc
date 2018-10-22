@@ -53,7 +53,7 @@ filetype plugin indent on    " required
 
 map <Leader>i :PluginInstall<CR>
 nmap <silent> <Leader>ev :e $MYVIMRC<CR>
-map <Leader>v :source $MYVIMRC<CR>:!ctags --exclude=bower_components --exclude=node_modules --exclude=public --exclude=tmp --exclude=.git --exclude=log --exclude=seeds -R .<CR><CR>
+map <Leader>v :source $MYVIMRC<CR>:!ctags --exclude=bower_components --exclude=node_modules --exclude=public --exclude=tmp --exclude=.git --exclude=log --exclude=seeds --exclude=*.min.js -R .<CR><CR>
 
 " use + to toggle booleans
 
