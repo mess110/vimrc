@@ -2,60 +2,127 @@
 
 require 'openssl'
 require 'digest'
+require 'base64'
 
-def pack data
-  [data].pack('H*')
+module Utils
+  def pack data
+    [data].pack('H*')
+  end
+
+  def unpack data
+    data.unpack('H*')
+  end
+
+  def validate_input(data)
+    raise 'input needs to be string' if data.class != String
+  end
 end
 
-def unpack data
-  data.unpack('H*')
+module RSA
+  extend Utils
+
+  def self.encrypt(pub_key_path, data)
+    validate_input(data)
+
+    expanded_path = File.expand_path(pub_key_path)
+    public_key = OpenSSL::PKey::RSA.new(File.read(expanded_path))
+    Base64.encode64(public_key.public_encrypt(data))
+  end
+
+  def self.decrypt(priv_key_path, data, password = '')
+    validate_input(data)
+
+    expanded_path = File.expand_path(priv_key_path)
+    private_key = OpenSSL::PKey::RSA.new(File.read(expanded_path), password)
+    private_key.private_decrypt(Base64.decode64(data))
+  end
 end
 
-def aes256_encrypt(key, data)
-  raise 'encryption input needs to be string' if data.class != String
-  aes = OpenSSL::Cipher.new('AES-256-CBC')
-  aes.encrypt
-  aes.key = Digest::SHA256.digest(key)
-  result = aes.update(data) + aes.final
-  unpack(result)
+module AES
+  extend Utils
+
+  def self.encrypt(key, data)
+    validate_input(data)
+
+    aes = OpenSSL::Cipher.new('AES-256-CBC')
+    aes.encrypt
+    aes.key = Digest::SHA256.digest(key)
+    result = aes.update(data) + aes.final
+    unpack(result)
+  end
+
+  def self.decrypt(key, data)
+    validate_input(data)
+
+    aes = OpenSSL::Cipher.new('AES-256-CBC')
+    aes.decrypt
+    aes.key = Digest::SHA256.digest(key)
+    aes.update(pack(data)) + aes.final
+  end
+
+  def self.generate_key
+    random_key = OpenSSL::Cipher.new('AES-256-CBC').random_key
+    unpack(random_key)[0]
+  end
 end
 
-def aes256_decrypt(key, data)
-  raise 'decryption input needs to be string' if data.class != String
-  aes = OpenSSL::Cipher.new('AES-256-CBC')
-  aes.decrypt
-  aes.key = Digest::SHA256.digest(key)
-  aes.update(pack(data)) + aes.final
+def help_aes
+  puts <<-HELP_TEXT
+AES --------------------------------------------------------------------------------
+
+Example AES usage:
+
+  enc k > ~/.encrc
+  enc k > ~/.encrc'
+  enc e `cat ~/.encrc` file_path
+
+  enc d key data
+  enc k new
+  enc k
+
+HELP_TEXT
 end
 
-def generate_key
-  random_key = OpenSSL::Cipher.new('AES-256-CBC').random_key
-  unpack(random_key)[0]
+def help_rsa
+  puts <<-HELP_TEXT
+RSA --------------------------------------------------------------------------------
+
+Automatically picks the private key ~/.ssh/id_rsa and the public key
+~/.ssh/id_rsa.pem
+
+If you need to convert your public key from .pub to .pem:
+
+  ssh-keygen -f id_rsa.pub -e -m pem > id_rsa.pem
+
+Example RSA usage:
+
+  enc rsae data
+  enc rsad data
+  enc rsad password data
+
+HELP_TEXT
 end
 
 def help
-  puts 'Example usage:'
-  puts ''
-  puts '  enc k > ~/.encrc'
-  puts '  enc e `cat ~/.encrc` file_path'
-  puts ''
-  puts '  enc d key data'
-  puts '  enc k new'
-  puts '  enc k '
-  puts ''
+  puts <<-HELP_TEXT
+enc - CLI to facilitate AES/RSA encryption/decryption
+
+HELP_TEXT
+  help_aes
+  help_rsa
 end
 
 encrc_path = File.expand_path('~/.encrc')
 
 case ARGV[0]
-when 'wk', 'nk'
-  File.write(encrc_path, generate_key)
+when 'wk', 'nk' # write key/new key
+  File.write(encrc_path, AES::generate_key)
   puts File.read(encrc_path)
-when 'gk'
-  puts generate_key
-when 'k'
+when 'gk' # generate key
+  puts AES::generate_key
+when 'k' # print key
   puts File.read(encrc_path)
-when 'e', 'd'
+when 'e', 'd' # encrypt/decrypt
   if ARGV.size == 2
     if File.file?(encrc_path)
       ARGV.insert(1, File.read(encrc_path))
@@ -63,17 +130,43 @@ when 'e', 'd'
   end
 
   if ARGV.size != 3
-    help
+    help_aes
     exit 1
   end
 
-  key = File.file?(ARGV[1]) ? File.read(ARGV[1]) : ARGV[1]
-  content = File.file?(ARGV[2]) ? File.read(ARGV[2]) : ARGV[2]
+  cmd = ARGV[0]
+  input_key = ARGV[1]
+  input_data = ARGV[2]
 
-  if ARGV[0] == 'e'
-    puts aes256_encrypt(key, content)
+  key = File.file?(input_key) ? File.read(input_key) : input_key
+  content = File.file?(input_data) ? File.read(input_data) : input_data
+
+  if cmd == 'e'
+    puts AES::encrypt(key, content)
   else
-    puts aes256_decrypt(key, content)
+    puts AES::decrypt(key, content)
+  end
+when 'rsae', 'rsad' # rsa encrypt/decrypt
+  if ARGV.size == 2
+    ARGV.insert(1, nil)
+  end
+
+  if ARGV.size != 3
+    help_rsa
+    exit 1
+  end
+
+  cmd = ARGV[0]
+  password = ARGV[1]
+  input_data = ARGV[2]
+  content = File.file?(input_data) ? File.read(input_data) : input_data
+  pub_key_path = '~/.ssh/id_rsa.pem'
+  priv_key_path = '~/.ssh/id_rsa'
+
+  if cmd == 'rsae'
+    puts RSA::encrypt(pub_key_path, content)
+  else
+    puts RSA::decrypt(priv_key_path, content, password)
   end
 else
   help
