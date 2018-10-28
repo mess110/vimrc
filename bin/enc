@@ -16,12 +16,18 @@ module Utils
   def validate_input(data)
     raise 'input needs to be string' if data.class != String
   end
+
+  def pls_confirm(s)
+    print(s)
+    result = STDIN.gets.strip.downcase
+    ['y', '1', 'yes', 'true'].include?(result)
+  end
 end
 
 module RSA
   extend Utils
 
-  def self.encrypt(pub_key_path, data)
+  def self.encrypt(data, pub_key_path)
     validate_input(data)
 
     expanded_path = File.expand_path(pub_key_path)
@@ -29,7 +35,7 @@ module RSA
     Base64.encode64(public_key.public_encrypt(data))
   end
 
-  def self.decrypt(priv_key_path, data, password = '')
+  def self.decrypt(data, priv_key_path, password = '')
     validate_input(data)
 
     expanded_path = File.expand_path(priv_key_path)
@@ -41,7 +47,7 @@ end
 module AES
   extend Utils
 
-  def self.encrypt(key, data)
+  def self.encrypt(data, key)
     validate_input(data)
 
     aes = OpenSSL::Cipher.new('AES-256-CBC')
@@ -51,7 +57,7 @@ module AES
     unpack(result)
   end
 
-  def self.decrypt(key, data)
+  def self.decrypt(data, key)
     validate_input(data)
 
     aes = OpenSSL::Cipher.new('AES-256-CBC')
@@ -66,29 +72,30 @@ module AES
   end
 end
 
-def help_aes
-  puts <<-HELP_TEXT
+module CLI
+  extend Utils
+
+  def self.help_aes
+    puts <<-HELP_TEXT
 AES --------------------------------------------------------------------------------
 
 Example AES usage:
 
-  enc k > ~/.encrc
-  enc k > ~/.encrc'
-  enc e `cat ~/.encrc` file_path
+  enc wk # generate and write a new key
+  enc gk # generate a key
+  enc k  # print the key
 
-  enc d key data
-  enc k new
-  enc k
+  enc e data
+  enc d data
+  enc e data key
+  enc d data key
 
-HELP_TEXT
-end
+    HELP_TEXT
+  end
 
-def help_rsa
-  puts <<-HELP_TEXT
+  def self.help_rsa
+    puts <<-HELP_TEXT
 RSA --------------------------------------------------------------------------------
-
-Automatically picks the private key ~/.ssh/id_rsa and the public key
-~/.ssh/id_rsa.pem
 
 If you need to convert your public key from .pub to .pem:
 
@@ -97,77 +104,104 @@ If you need to convert your public key from .pub to .pem:
 Example RSA usage:
 
   enc rsae data
+  enc rsae data public_key_path
   enc rsad data
-  enc rsad password data
+  enc rsad data private_key_path password
 
-HELP_TEXT
-end
+Automatically picks the private key ~/.ssh/id_rsa and the public key
+~/.ssh/id_rsa.pem if they are not supplied
 
-def help
-  puts <<-HELP_TEXT
+    HELP_TEXT
+  end
+
+  def self.help
+    puts <<-HELP_TEXT
 enc - CLI to facilitate AES/RSA encryption/decryption
 
-HELP_TEXT
-  help_aes
-  help_rsa
-end
+    HELP_TEXT
+    help_aes
+    help_rsa
+  end
 
-encrc_path = File.expand_path('~/.encrc')
+  def self.write_new_key
+    if File.exists?(encrc_path) && pls_confirm("Override existing key #{encrc_path}? (y/n)")
+      puts "Overriding key #{encrc_path}"
+      File.write(encrc_path, AES::generate_key)
+    else
+      puts "Key #{encrc_path} left intact"
+    end
+    print_key
+  end
 
-case ARGV[0]
-when 'wk', 'nk' # write key/new key
-  File.write(encrc_path, AES::generate_key)
-  puts File.read(encrc_path)
-when 'gk' # generate key
-  puts AES::generate_key
-when 'k' # print key
-  puts File.read(encrc_path)
-when 'e', 'd' # encrypt/decrypt
-  if ARGV.size == 2
-    if File.file?(encrc_path)
-      ARGV.insert(1, File.read(encrc_path))
+  def self.print_key
+    puts File.read(encrc_path)
+  end
+
+  def self.print_new_key
+    puts AES::generate_key
+  end
+
+  def self.encrc_path
+    File.expand_path('~/.encrc')
+  end
+
+  def self.aes_encrypt_decrypt(args)
+    if args.size == 2
+      if File.file?(encrc_path)
+        args.push(File.read(encrc_path))
+      end
+    end
+
+    if args.size != 3
+      help_aes
+      exit 1
+    end
+
+    input_data = args[1]
+    input_key = args[2]
+
+    content = File.file?(input_data) ? File.read(input_data) : input_data
+    key = File.file?(input_key) ? File.read(input_key) : input_key
+
+    if args[0] == 'e'
+      puts AES::encrypt(content, key)
+    else
+      puts AES::decrypt(content, key)
     end
   end
 
-  if ARGV.size != 3
-    help_aes
-    exit 1
+  def self.rsa_encrypt_decrypt(args)
+    if args.size < 2 || args.size > 4
+      help_rsa
+      exit 1
+    end
+
+    input_data = args[1]
+    key_path = args[2]
+    password = args[3]
+
+    content = File.file?(input_data) ? File.read(input_data) : input_data
+
+    if args[0] == 'rsae'
+      puts RSA::encrypt(content, key_path || '~/.ssh/id_rsa.pem')
+    else
+      puts RSA::decrypt(content, key_path || '~/.ssh/id_rsa', password)
+    end
   end
+end
 
-  cmd = ARGV[0]
-  input_key = ARGV[1]
-  input_data = ARGV[2]
-
-  key = File.file?(input_key) ? File.read(input_key) : input_key
-  content = File.file?(input_data) ? File.read(input_data) : input_data
-
-  if cmd == 'e'
-    puts AES::encrypt(key, content)
-  else
-    puts AES::decrypt(key, content)
-  end
-when 'rsae', 'rsad' # rsa encrypt/decrypt
-  if ARGV.size == 2
-    ARGV.insert(1, nil)
-  end
-
-  if ARGV.size != 3
-    help_rsa
-    exit 1
-  end
-
-  cmd = ARGV[0]
-  password = ARGV[1]
-  input_data = ARGV[2]
-  content = File.file?(input_data) ? File.read(input_data) : input_data
-  pub_key_path = '~/.ssh/id_rsa.pem'
-  priv_key_path = '~/.ssh/id_rsa'
-
-  if cmd == 'rsae'
-    puts RSA::encrypt(pub_key_path, content)
-  else
-    puts RSA::decrypt(priv_key_path, content, password)
-  end
+cmd = ARGV[0]
+case cmd
+when 'wk', 'nk'
+  CLI::write_new_key
+when 'gk'
+  CLI::print_new_key
+when 'k'
+  CLI::print_key
+when 'e', 'd'
+  CLI::aes_encrypt_decrypt(ARGV)
+when 'rsae', 'rsad'
+  CLI::rsa_encrypt_decrypt(ARGV)
 else
-  help
+  CLI::help
 end
