@@ -61,8 +61,15 @@ def get_random_link():
     link = choice(items)['data']
     url = str(link['url'])
 
+    print(link['name'])
+    print(link['url'])
+
     if 'imgur' in url and not extension_exists(url):
         link['url'] += '.png'
+
+    if 'gfycat.com' in url:
+        base_part = url.split('/')[-1]
+        link['url'] = 'https://thumbs.gfycat.com/' + base_part + '-poster.jpg'
 
     return link
 
