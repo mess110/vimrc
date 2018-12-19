@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+xrandr --output HDMI-0 --rotate left
+xrandr --output DP-1 --left-of HDMI-0
