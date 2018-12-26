@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+# xrandr --output DP-1 --primary
 xrandr --output HDMI-0 --rotate left
 xrandr --output DP-1 --left-of HDMI-0
 xrandr --output HDMI-0 --pos 1920x-400
