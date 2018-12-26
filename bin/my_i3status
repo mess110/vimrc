@@ -22,6 +22,7 @@ do
   weather=`weather`
   volume=`awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master)`
   uptime=`awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime`
-  echo "$vpn $eth$enp$wlan | $btc BTC | ♪ $volume | $weather | $date" || exit 1
+  disk1=`df -h / | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g'`
+  echo "$vpn $eth$enp$wlan | $disk1 GB | $btc BTC | ♪ $volume | $weather | $date" || exit 1
   sleep 5
 done
