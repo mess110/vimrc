@@ -13,11 +13,17 @@ set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+font pango:monospace 10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
+
+# colors
+set $bgcolor 393939
+set $fgcolor C0C0C0
+set $txtcolor C0C0C0
+set $urgent EF6155
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -174,12 +180,32 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3status
+        position top
+
+        font pango:monospace 12
+
+        colors {
+                background #$bgcolor
+                statusline #$txtcolor
+                separator #$txtcolor
+                focused_workspace  #$fgcolor #$fgcolor #$bgcolor
+                inactive_workspace #$bgcolor #$bgcolor #$txtcolor
+        }
 }
 
-bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 1+ unmute"
-bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 1- unmute"
-bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle"
+bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 2+ unmute"
+bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 2- unmute"
+# bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle"
 
 # Disable border
 new_window 1pixel
 hide_edge_borders both
+
+# exec google-chrome
+# exec-always nm-applet
+# assign [class="Chrome"] 1
+# exec --no-startup-id i3-msg 'workspace 1:Web; exec /usr/bin/firefox'
+
+exec monitors
+exec --no-startup-id i3-msg 'workspace 1; exec google-chrome https://coinmarketcap.com'
+exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal'

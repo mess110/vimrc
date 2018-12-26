@@ -14,4 +14,5 @@ ctrl+space to select text
 
 ```
 cd /usr/bin && ln -s $HOME/vimrc/bin/i3exit i3exit
+cd /usr/bin && ln -s $HOME/vimrc/bin/monitors monitors
 ```
