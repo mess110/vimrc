@@ -61,8 +61,7 @@ def get_random_link():
     link = choice(items)['data']
     url = str(link['url'])
 
-    print(link['name'])
-    print(link['url'])
+    print("Found link %s with name %s" % (url, link['name']))
 
     if 'imgur' in url and not extension_exists(url):
         link['url'] += '.png'
@@ -78,21 +77,35 @@ def extension_exists(url):
     return url.endswith('.jpg') or url.endswith('.jpeg') or url.endswith('.png')
 
 
+def download_url(link):
+    file_path = os.path.join(directory, link['name'])
+    wallpapper = urllib2.urlopen(link['url'])
+    output = open(file_path, 'wb')
+    output.write(wallpapper.read())
+    output.close()
+    return file_path
+
+
+def set_linux_wallpapper(link):
+    if desktop_session in ['gnome', 'gnome-shell', 'ubuntu']:
+        file_path = download_url(link)
+        call(["gsettings", "set", "org.gnome.desktop.background", "picture-uri", "file://" + file_path])
+    elif desktop_session in ['i3']:
+        file_path = download_url(link)
+        output = call(['which', 'feh'])
+        if output != 0:
+            raise MyException("feh not installed")
+
+        call(['feh', '--bg-fill', file_path])
+    else:
+        raise MyException("Unknown desktop manager: %s" % desktop_session)
+
+
 def set_wallpapper():
     link = get_random_link()
 
     if operating_system == 'linux':
-        if desktop_session in ['gnome', 'gnome-shell', 'ubuntu']:
-            file_path = os.path.join(directory, link['name'])
-
-            wallpapper = urllib2.urlopen(link['url'])
-            output = open(file_path,'wb')
-            output.write(wallpapper.read())
-            output.close()
-
-            call(["gsettings", "set", "org.gnome.desktop.background", "picture-uri", "file://" + file_path])
-        else:
-            raise MyException("Unknown desktop manager: %s" % desktop_session)
+        set_linux_wallpapper(link)
     elif operating_system == 'windows':
         raise MyException("No windows support. Yet.")
     else:
