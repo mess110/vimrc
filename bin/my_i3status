@@ -1,0 +1,27 @@
+#!/bin/bash
+# shell script to prepend i3status with more stuff
+
+function join_by { local IFS="$1"; shift; echo "$*"; }
+
+i3status | while :
+do
+  # read line
+  date=`date +"%F %R"`
+  vpn_file=`/proc/sys/net/ipv4/conf/tun0`
+  if [ ! -f "$vpn_file" ]
+  then
+    vpn=''
+  else
+    vpn='vpn active |'
+  fi
+  enp=`ip addr show enp3s0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
+  eth=`ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
+  wlan=`ip addr show wlan0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
+  # TODO: battery
+  btc=`btc-ticker`
+  weather=`weather`
+  volume=`awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master)`
+  uptime=`awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime`
+  echo "$vpn $eth$enp$wlan | $btc BTC | ♪ $volume | $weather | $date" || exit 1
+  sleep 5
+done

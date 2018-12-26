@@ -6,4 +6,4 @@ sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /et
 sudo apt-get update
 sudo apt-get upgrade
 
-sudo apt-get install vim git ack-grep xsel byobu conky conky-all gnome-shell google-chrome-stable zsh silversearcher-ag lm-sensors exuberant-ctags feh
+sudo apt-get install vim git ack-grep xsel byobu conky conky-all gnome-shell google-chrome-stable zsh silversearcher-ag lm-sensors exuberant-ctags feh jq
