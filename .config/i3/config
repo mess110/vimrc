@@ -124,7 +124,9 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+# calendar
 bindsym $mod+c exec zenity --calendar
+# toggle keyboard layout
 bindsym $mod+t exec i3togglelayout
 
 # reload the configuration file
@@ -193,7 +195,8 @@ bar {
                 background #$bgcolor
                 statusline #$txtcolor
                 separator #$txtcolor
-                focused_workspace  #$fgcolor #$fgcolor #$bgcolor
+                focused_workspace  #$fgcolor #$bgcolor #$txtcolor
+                # focused_workspace  #$fgcolor #$fgcolor #$bgcolor
                 inactive_workspace #$bgcolor #$bgcolor #$txtcolor
         }
 }
