@@ -1,19 +1,12 @@
 #!/bin/bash
 
-# vim
-rm -rf .vim/
-cp -R ../.vim .
-cp ../.vimrc .
+cp ~/.ctags .
 
-# bowerrc
-cp ../.bowerrc .
+cp ~/.vimrc .
 
-# byobu
+cp ~/.config/i3/config .config/i3/config
+cp ~/.config/i3status/config .config/i3status/config
+
 rm -rf .byobu
-cp -R ../.byobu .
+cp -R ~/.byobu .
 
-# conky (also uses bin/weather)
-cp ../.conkyrc .
-
-# ctags
-cp ../.ctags .

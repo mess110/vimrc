@@ -11,9 +11,3 @@ bindkey '^ ' autosuggest-accept
 ```
 
 ctrl+space to select text
-
-```
-cd /usr/bin && ln -s $HOME/vimrc/bin/i3exit i3exit
-cd /usr/bin && ln -s $HOME/vimrc/bin/monitors monitors
-cd /usr/bin && ln -s $HOME/vimrc/bin/i3togglelayout i3togglelayout
-```
