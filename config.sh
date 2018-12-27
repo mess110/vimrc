@@ -30,7 +30,6 @@ cp -R .byobu ~
 rm -rf gnome-terminal-colors-solarized
 git clone https://github.com/Anthony25/gnome-terminal-colors-solarized
 cd gnome-terminal-colors-solarized && ./install.sh
-./install.sh
 
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/monitors monitors
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/i3exit i3exit
