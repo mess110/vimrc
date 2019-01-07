@@ -203,6 +203,8 @@ bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 2+ unmute"
 bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 2- unmute"
 # bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle"
 
+bindsym $mod+equal exec google-chrome
+
 # Disable border
 new_window 1pixel
 hide_edge_borders both
@@ -211,5 +213,5 @@ for_window [class="Browser"] floating enable
 
 exec monitors
 exec change_background
-exec --no-startup-id i3-msg 'workspace 1; exec google-chrome https://coinmarketcap.com'
+exec --no-startup-id i3-msg 'workspace 1; exec google-chrome'
 exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal'
