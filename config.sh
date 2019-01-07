@@ -34,3 +34,4 @@ cd gnome-terminal-colors-solarized && ./install.sh
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/monitors monitors
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/i3exit i3exit
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/i3togglelayout i3togglelayout
+cd /usr/bin && sudo ln -s $HOME/vimrc/bin/change_background change_background

@@ -121,7 +121,7 @@ else:
     subreddit = 'earthporn'
 
 working_dir = os.path.dirname(os.path.abspath(__file__))
-directory = os.path.join(working_dir, 'tmp')
+directory = os.path.join('/tmp', 'change_background')
 if not os.path.exists(directory):
       os.makedirs(directory)
 
