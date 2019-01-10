@@ -1,3 +1,0 @@
-#!/bin/bash
-
-cd ~/pr0n/webtorrent-desktop && npm run start
