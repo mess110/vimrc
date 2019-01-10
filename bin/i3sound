@@ -14,5 +14,7 @@ if result > 66:
     print('🔊')
 elif result > 33:
     print('🔉')
-else:
+elif result > 0:
     print('🔈')
+else:
+    print('🔇')
