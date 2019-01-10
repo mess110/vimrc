@@ -37,7 +37,7 @@ class MyException(Exception):
     pass
 
 
-def get_subreddit_items():
+def get_subreddit_items(subreddit):
     request = urllib2.Request("https://www.reddit.com/r/%s.json" % subreddit, None, {
       'User-Agent' : 'PrettyBackgroundBot/0.1'
     })
@@ -45,8 +45,8 @@ def get_subreddit_items():
     return json.loads(response.read())['data']['children']
 
 
-def get_random_link():
-    items = get_subreddit_items()
+def get_random_link(subreddit):
+    items = get_subreddit_items(subreddit)
 
     if not items:
         raise MyException("No items found in subreddit")
@@ -70,7 +70,7 @@ def has_img_extension(url):
     return url.endswith('.jpg') or url.endswith('.jpeg') or url.endswith('.png')
 
 
-def download_url(link):
+def download_url(link, directory):
     file_path = os.path.join(directory, link['name'])
     wallpapper = urllib2.urlopen(link['url'])
     output = open(file_path, 'wb')
@@ -79,13 +79,13 @@ def download_url(link):
     return file_path
 
 
-def set_linux_wallpapper(link):
-    desktop_session = os.environ.get('DESKTOP_SESSION').lower()
+def set_linux_wallpapper(link, directory):
+    desktop_session = os.environ.get('DESKTOP_SESSION', '').lower()
     if desktop_session in ['gnome', 'gnome-shell', 'ubuntu']:
-        file_path = download_url(link)
+        file_path = download_url(link, directory)
         call(["gsettings", "set", "org.gnome.desktop.background", "picture-uri", "file://" + file_path])
     elif desktop_session in ['i3']:
-        file_path = download_url(link)
+        file_path = download_url(link, directory)
         output = call(['which', 'feh'])
         if output != 0:
             raise MyException("feh not installed")
@@ -95,41 +95,37 @@ def set_linux_wallpapper(link):
         raise MyException("Unknown desktop manager: %s" % desktop_session)
 
 
-def set_wallpapper():
+def set_wallpapper(subreddit):
+    working_dir = os.path.dirname(os.path.abspath(__file__))
+    directory = os.path.join('/tmp', 'change_background')
+    if not os.path.exists(directory):
+          os.makedirs(directory)
+
     operating_system = platform.system().lower()
-    link = get_random_link()
+    link = get_random_link(subreddit)
 
     if operating_system == 'linux':
-        set_linux_wallpapper(link)
+        set_linux_wallpapper(link, directory)
     elif operating_system == 'windows':
         raise MyException("No windows support. Yet.")
     else:
-        raise MyException("OS not supported. yet")
-
-
-parser = argparse.ArgumentParser()
-
-if len(sys.argv) > 1:
-    cmd = sys.argv[1]
-
-    if cmd in ['h', '-h', '--h', 'help', '-help', '--help']:
-        print(help_text)
-        sys.exit()
-    else:
-      subreddit = cmd
-else:
-    subreddit = 'earthporn'
-
-working_dir = os.path.dirname(os.path.abspath(__file__))
-directory = os.path.join('/tmp', 'change_background')
-if not os.path.exists(directory):
-      os.makedirs(directory)
+        raise MyException("OS not supported. Yet.")
 
 
 if __name__ == "__main__":
-    try:
-        set_wallpapper()
-    except MyException as e:
-        print e.args[0]
+    parser = argparse.ArgumentParser()
+
+    if len(sys.argv) > 1:
+        cmd = sys.argv[1]
+
+        if cmd in ['h', '-h', '--h', 'help', '-help', '--help']:
+            print(help_text)
+            sys.exit()
+        else:
+          subreddit = cmd
+    else:
+        subreddit = 'earthporn'
+
+    set_wallpapper(subreddit)
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
