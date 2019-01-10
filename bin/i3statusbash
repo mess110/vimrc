@@ -10,11 +10,12 @@ do
   then
     vpn=''
   else
-    vpn='vpn active'
+    vpn='vpn '
   fi
 
   layout=`setxkbmap -query | grep layout | awk '{print $2}'`
-  networks=`hostname -I`
+  # networks=`hostname -I`
+  networks=`nmcli connection show --active | awk '{print $(NF-1)}' | tail -n+2 | sed 'N;s/\n/ /'`
   # enp=`ip addr show enp3s0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
   # eth=`ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
   # wlan=`ip addr show wlan0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
@@ -35,10 +36,10 @@ do
   bluetooth_check=`hciconfig | awk '//{ print tolower($1)}' | tail -n 4 | head -n 1`
   if [ "$bluetooth_check" == "up" ]
   then
-    bluetooth='🔵🦷'
+    bluetooth='🔵🦷 | '
   else
     bluetooth=''
   fi
-  echo "$vpn $networks $bluetooth  💾 $disk1 $volume $layout $weather $date $battery" || exit 1
+  echo "🌍 $vpn$networks | $bluetooth💾 $disk1 | 🎹 $layout | $weather $date $volume" || exit 1
   sleep 5
 done

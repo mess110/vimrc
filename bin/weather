@@ -43,7 +43,7 @@ try:
         icon_string = ' '.join(map(lambda x: icons[str(x['description'])], j['weather']))
         location_name = str(j['name'])
         location_temp = str(j['main']['temp']) + '°C'
-        print "%s %s %s" % (location_name, location_temp, icon_string)
+        print "%s %s" % (icon_string, location_temp)
     else:
         print 'No Weather Info'
 except urllib2.HTTPError:
