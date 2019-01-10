@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import subprocess
+import re
+
+cmd = 'amixer sget Master'
+process = subprocess.Popen(cmd.split(' '), stdout=subprocess.PIPE)
+output, error = process.communicate()
+volume_full = output.split()[-3]
+result = int(re.sub('[^0-9]','', volume_full))
+
+if result > 66:
+    print('🔊')
+elif result > 33:
+    print('🔉')
+else:
+    print('🔈')

@@ -10,7 +10,7 @@ do
   then
     vpn=''
   else
-    vpn='vpn active |'
+    vpn='vpn active'
   fi
 
   layout=`setxkbmap -query | grep layout | awk '{print $2}'`
@@ -27,10 +27,18 @@ do
   fi
   # btc=`btc-ticker $`
   weather=`weather`
-  volume=`awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master)`
+  # volume_amount=`awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master)`
+  # volume="♪ $volume_amount"
+  volume=`i3sound`
   uptime=`awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime`
   disk1=`df -h / | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g'`
-  # echo "$vpn $networks| BTC $btc | GB $disk1 | ♪ $volume | $layout | $weather | $date | $battery" || exit 1
-  echo "$vpn $networks| GB $disk1 | ♪ $volume | $layout | $weather | $date | $battery" || exit 1
+  bluetooth_check=`hciconfig | awk '//{ print tolower($1)}' | tail -n 4 | head -n 1`
+  if [ "$bluetooth_check" == "up" ]
+  then
+    bluetooth='🔵🦷'
+  else
+    bluetooth=''
+  fi
+  echo "$vpn $networks $bluetooth  💾 $disk1 $volume $layout $weather $date $battery" || exit 1
   sleep 5
 done
