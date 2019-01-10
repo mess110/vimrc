@@ -1,12 +1,58 @@
 #!/bin/bash
 # shell script to replace i3status
 
+function hour_to_icon()
+{
+  hour=`date +"%I"`
+  case $hour in
+    01)
+      hour_icon="🕐"
+      ;;
+    02)
+      hour_icon="🕑"
+      ;;
+    03)
+      hour_icon="🕒"
+      ;;
+    04)
+      hour_icon="🕓"
+      ;;
+    05)
+      hour_icon="🕔"
+      ;;
+    06)
+      hour_icon="🕕"
+      ;;
+    07)
+      hour_icon="🕖"
+      ;;
+    08)
+      hour_icon="🕗"
+      ;;
+    09)
+      hour_icon="🕘"
+      ;;
+    10)
+      hour_icon="🕙"
+      ;;
+    11)
+      hour_icon="🕚"
+      ;;
+    12)
+      hour_icon="🕛"
+      ;;
+    *)
+      hour_icon="?$hour?"
+      ;;
+  esac
+}
+
 infinity 4 'sleep 1' | while :
 do
-  # read line
-  date=`date +"%A %F %R"`
-  vpn_file=`/proc/sys/net/ipv4/conf/tun0`
-  if [ ! -f "$vpn_file" ]
+  hour_to_icon
+  date=`date +"%A %F $hour_icon %R"`
+  vpn_file="/proc/sys/net/ipv4/conf/tun0"
+  if [ ! -f $vpn_file ]
   then
     vpn=''
   else
@@ -14,11 +60,7 @@ do
   fi
 
   layout=`setxkbmap -query | grep layout | awk '{print $2}'`
-  # networks=`hostname -I`
   networks=`nmcli connection show --active | awk '{print $(NF-1)}' | tail -n+2 | sed 'N;s/\n/ /'`
-  # enp=`ip addr show enp3s0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
-  # eth=`ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
-  # wlan=`ip addr show wlan0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
   if [ -d "/sys/class/power_supply/BAT0" ]
   then
     battery_status=`cat /sys/class/power_supply/BAT0/status`
@@ -26,10 +68,7 @@ do
   else
     battery="⚡"
   fi
-  # btc=`btc-ticker $`
   weather=`weather`
-  # volume_amount=`awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master)`
-  # volume="♪ $volume_amount"
   volume=`i3sound`
   uptime=`awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime`
   disk1=`df -h / | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g'`
