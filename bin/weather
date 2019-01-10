@@ -18,16 +18,32 @@ query = os.environ['CONKY_QUERY']
 app_id = os.environ['CONKY_APP_ID']
 
 url = "http://api.openweathermap.org/data/2.5/weather?q=" + query + "&units=metric&APPID=" + app_id
+
+# https://openweathermap.org/weather-conditions
+icons = {
+    'clear sky': '☀️',
+    'few clouds': '🌤️',
+    'broken clouds': '☁️',
+    'scattered clouds': '☁️',
+    'shower rain': '🌦️',
+    'rain': '🌧️',
+    'thunderstorm': '⛈️',
+    'snow': '🌨️',
+    'mist': '🌫️'
+}
 headers = {
-  'User-Agent' : 'ConkyWeatherBot/0.1'
+    'User-Agent' : 'ConkyWeatherBot/0.1'
 }
 
 req = urllib2.Request(url, None, headers)
 try:
     response = urllib2.urlopen(req)
     j = json.loads(response.read())
-    if str(j['cod']) == '200':
-        print str(j['name']) + ': ' + str(str(j['main']['temp']) + '°C')
+    if int(j['cod']) == 200:
+        icon_string = ' '.join(map(lambda x: icons[str(x['description'])], j['weather']))
+        location_name = str(j['name'])
+        location_temp = str(j['main']['temp']) + '°C'
+        print "%s %s %s" % (icon_string, location_name, location_temp)
     else:
         print 'No Weather Info'
 except urllib2.HTTPError:
