@@ -75,10 +75,10 @@ do
   bluetooth_check=`hciconfig | awk '//{ print tolower($1)}' | tail -n 4 | head -n 1`
   if [ "$bluetooth_check" == "up" ]
   then
-    bluetooth='🔵🦷 | '
+    bluetooth='🔵🦷   '
   else
     bluetooth=''
   fi
-  echo "🌍 $vpn$networks | $bluetooth💾 $disk1 | 🎹 $layout | $weather $date $volume" || exit 1
+  echo "$vpn   $bluetooth💾 $disk1   🎹 $layout   $weather   $date   $volume" || exit 1
   sleep 5
 done

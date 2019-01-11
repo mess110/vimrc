@@ -9,4 +9,3 @@ cp ~/.config/i3status/config .config/i3status/config
 
 rm -rf .byobu
 cp -R ~/.byobu .
-

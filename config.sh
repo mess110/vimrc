@@ -12,21 +12,6 @@ git config --global alias.lg "log  --date=iso --color --graph --pretty=format:'%
 git config --global core.excludesfile ~/vimrc/.gitignore_global
 git config --global color.ui true
 
-cp .ctags ~
-
-cp .vimrc ~
-
-mkdir -p ~/vimrc/tmp
-
-mkdir -p ~/.config/i3/
-cp .config/i3/config ~/.config/i3/config
-
-mkdir -p ~/.config/i3status/
-cp .config/i3status/config ~/.config/i3status/config
-
-rm -rf ~/.byobu
-cp -R .byobu ~
-
 rm -rf gnome-terminal-colors-solarized
 git clone https://github.com/Anthony25/gnome-terminal-colors-solarized
 cd gnome-terminal-colors-solarized && ./install.sh
