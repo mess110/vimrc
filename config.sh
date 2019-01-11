@@ -3,7 +3,7 @@
 sudo apt update
 sudo apt upgrade
 
-sudo apt install -y vim git ack-grep xsel byobu google-chrome-stable zsh silversearcher-ag lm-sensors exuberant-ctags feh jq amixer
+sudo apt install -y vim git ack-grep xsel byobu google-chrome-stable zsh silversearcher-ag lm-sensors exuberant-ctags feh jq scrot xautolock
 
 git config --global user.name "Cristian Mircea Messel"
 git config --global user.email mess110@gmail.com

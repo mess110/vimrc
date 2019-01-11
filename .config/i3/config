@@ -135,7 +135,6 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 # bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 # lock the screen
-bindsym Control+$mod+l exec i3lock --color=17181b
 
 # power options
 # set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
@@ -207,6 +206,12 @@ bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 2- unmute"
 bindsym $mod+equal exec google-chrome
 bindsym $mod+Tab workspace back_and_forth
 
+bindsym Control+$mod+l exec i3lock --color=17181b
+
+# Screen Shots
+bindsym Print exec scrot '%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures/'
+bindsym Control+Print exec gnome-screenshot -i
+
 # Disable border
 new_window 1pixel
 hide_edge_borders both
@@ -215,5 +220,6 @@ for_window [class="Browser"] floating enable
 
 exec monitors multiple
 exec change_background
+exec xautolock -time 1 -locker "i3lock --color=17181b" -detectsleep
 exec --no-startup-id i3-msg 'workspace 1; exec google-chrome'
 exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal'
