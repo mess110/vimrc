@@ -70,22 +70,30 @@ def has_img_extension(url):
     return url.endswith('.jpg') or url.endswith('.jpeg') or url.endswith('.png')
 
 
-def download_url(link, directory):
-    file_path = os.path.join(directory, link['name'])
+def tmp_directory():
+    directory = os.path.join('/tmp', 'change_background')
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    return directory
+
+
+def download_url(link):
+    file_path = os.path.join(tmp_directory(), link['name'])
+
     wallpapper = urllib2.urlopen(link['url'])
     output = open(file_path, 'wb')
     output.write(wallpapper.read())
     output.close()
+
     return file_path
 
 
-def set_linux_wallpapper(link, directory):
+def set_linux_wallpapper(link):
     desktop_session = os.environ.get('DESKTOP_SESSION', '').lower()
+    file_path = download_url(link)
     if desktop_session in ['gnome', 'gnome-shell', 'ubuntu']:
-        file_path = download_url(link, directory)
         call(["gsettings", "set", "org.gnome.desktop.background", "picture-uri", "file://" + file_path])
     elif desktop_session in ['i3']:
-        file_path = download_url(link, directory)
         output = call(['which', 'feh'])
         if output != 0:
             raise MyException("feh not installed")
@@ -97,15 +105,12 @@ def set_linux_wallpapper(link, directory):
 
 def set_wallpapper(subreddit):
     working_dir = os.path.dirname(os.path.abspath(__file__))
-    directory = os.path.join('/tmp', 'change_background')
-    if not os.path.exists(directory):
-          os.makedirs(directory)
 
     operating_system = platform.system().lower()
     link = get_random_link(subreddit)
 
     if operating_system == 'linux':
-        set_linux_wallpapper(link, directory)
+        set_linux_wallpapper(link)
     elif operating_system == 'windows':
         raise MyException("No windows support. Yet.")
     else:

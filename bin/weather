@@ -75,6 +75,7 @@ icons = {
 
 def format_icon(x):
     description = str(x['description'])
+    # print(x['description'])
     return icons.get(description, description)
 
 
@@ -100,10 +101,10 @@ def weather_conditions(query, app_id):
 
 if __name__ == '__main__':
     if 'CONKY_QUERY' not in os.environ:
-        print 'CONKY_QUERY env variable missing'
+        print 'CONKY_QUERY env variable missing 🌋'
         sys.exit(1)
     if 'CONKY_APP_ID' not in os.environ:
-        print 'CONKY_APP_ID env variable missing'
+        print 'CONKY_APP_ID env variable missing 🌋'
         sys.exit(1)
 
     query = os.environ['CONKY_QUERY']
