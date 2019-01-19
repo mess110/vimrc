@@ -131,12 +131,13 @@ bindsym $mod+Shift+r restart
 # lock the screen
 
 # power options
-set $mode_system System (F8) shutdown, (F11) logout, (F12) reboot
+set $mode_system System (F8) shutdown, (F9) toggleautolock, (F10) lock, (F11) logout, (F12) reboot
 mode "$mode_system" {
-    # bindsym F8 exec --no-startup-id i3exit lock, mode "default"
     # bindsym s exec --no-startup-id i3exit suspend, mode "default"
     # bindsym h exec --no-startup-id i3exit hibernate, mode "default"
     bindsym F8 exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym F9 exec --no-startup-id i3exit toggleautolock, mode "default"
+    bindsym F10 exec --no-startup-id i3exit lock, mode "default"
     bindsym F11 exec --no-startup-id i3exit logout, mode "default"
     bindsym F12 exec --no-startup-id i3exit reboot, mode "default"
 
@@ -192,8 +193,8 @@ bar {
         }
 }
 
-bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 2+ unmute && zenity --notification --text=`i3sound percent`"
-bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 2- unmute && zenity --notification --text=`i3sound percent`"
+bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 2+ unmute"
+bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 2- unmute"
 # bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle"
 
 bindsym F1 exec dmenu_run

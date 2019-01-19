@@ -1,12 +1,38 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 lock() {
   i3lock --color=17181b
 }
 
+toggleautolock() {
+  ps cax | grep xautolock > /dev/null
+  if [ $? -eq 0 ]
+  then
+    pkill -9 xautolock
+  else
+    i3-msg 'exec xautolock -time 15 -locker "i3lock --color=17181b" -detectsleep'
+  fi
+}
+
+showautolock() {
+  ps cax | grep xautolock > /dev/null
+  if [ $? -eq 0 ]
+  then
+    echo ''
+  else
+    echo ' 🔓'
+  fi
+}
+
 case "$1" in
   lock)
     lock
+    ;;
+  toggleautolock)
+    toggleautolock
+    ;;
+  showautolock)
+    showautolock
     ;;
   logout)
     i3-msg exit
@@ -24,7 +50,7 @@ case "$1" in
     systemctl poweroff
     ;;
   *)
-    echo "Usage: $0 {lock|logout|suspend|hibernate|reboot|shutdown}"
+    echo "Usage: $0 {lock|toggleautolock|showautolock|logout|suspend|hibernate|reboot|shutdown}"
     exit 2
 esac
 

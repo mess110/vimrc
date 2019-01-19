@@ -59,6 +59,8 @@ do
     vpn='vpn '
   fi
 
+  autolock=`i3exit showautolock`
+
   layout=`setxkbmap -query | grep layout | awk '{print $2}'`
   networks=`nmcli connection show --active | awk '{print $(NF-1)}' | tail -n+2 | sed 'N;s/\n/ /'`
   if [ -d "/sys/class/power_supply/BAT0" ]
@@ -79,6 +81,6 @@ do
   else
     bluetooth=''
   fi
-  echo "$vpn   $bluetooth💾 $disk1   🎹 $layout   $weather   $date   $volume" || exit 1
+  echo "$vpn   $bluetooth💾 $disk1   🎹 $layout   $weather   $date   $volume$autolock" || exit 1
   sleep 5
 done
