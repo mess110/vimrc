@@ -59,7 +59,7 @@ do
     vpn='vpn '
   fi
 
-  autolock=`i3exit showautolock`
+  autolock=`i3cyclebash showautolock`
 
   layout=`setxkbmap -query | grep layout | awk '{print $2}'`
   networks=`nmcli connection show --active | awk '{print $(NF-1)}' | tail -n+2 | sed 'N;s/\n/ /'`
