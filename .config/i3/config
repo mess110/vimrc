@@ -120,7 +120,7 @@ bindsym $mod+Shift+0 move container to workspace 10
 # calendar
 bindsym $mod+c exec zenity --calendar
 # toggle keyboard layout
-bindsym $mod+t exec i3togglelayout
+bindsym $mod+t exec i3cyclebash togglelayout
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -133,13 +133,13 @@ bindsym $mod+Shift+r restart
 # power options
 set $mode_system System (F8) shutdown, (F9) toggleautolock, (F10) lock, (F11) logout, (F12) reboot
 mode "$mode_system" {
-    # bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    # bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym F8 exec --no-startup-id i3exit shutdown, mode "default"
-    bindsym F9 exec --no-startup-id i3exit toggleautolock, mode "default"
-    bindsym F10 exec --no-startup-id i3exit lock, mode "default"
-    bindsym F11 exec --no-startup-id i3exit logout, mode "default"
-    bindsym F12 exec --no-startup-id i3exit reboot, mode "default"
+    # bindsym s exec --no-startup-id i3cyclebash suspend, mode "default"
+    # bindsym h exec --no-startup-id i3cyclebash hibernate, mode "default"
+    bindsym F8 exec --no-startup-id i3cyclebash shutdown, mode "default"
+    bindsym F9 exec --no-startup-id i3cyclebash toggleautolock, mode "default"
+    bindsym F10 exec --no-startup-id i3cyclebash lock, mode "default"
+    bindsym F11 exec --no-startup-id i3cyclebash logout, mode "default"
+    bindsym F12 exec --no-startup-id i3cyclebash reboot, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"

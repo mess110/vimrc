@@ -71,7 +71,7 @@ do
     battery="⚡"
   fi
   weather=`weather`
-  volume=`i3sound`
+  volume=`i3cycle volume`
   uptime=`awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime`
   disk1=`df -h / | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g'`
   bluetooth_check=`hciconfig | awk '//{ print tolower($1)}' | tail -n 4 | head -n 1`

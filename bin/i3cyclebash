@@ -24,6 +24,16 @@ showautolock() {
   fi
 }
 
+togglelayout() {
+  layout=`setxkbmap -query | grep layout | awk '{print $2}'`
+  if [ "$layout" = "us" ]
+  then
+    setxkbmap ro
+  else
+    setxkbmap us
+  fi
+}
+
 case "$1" in
   lock)
     lock
@@ -33,6 +43,9 @@ case "$1" in
     ;;
   showautolock)
     showautolock
+    ;;
+  togglelayout)
+    togglelayout
     ;;
   logout)
     i3-msg exit
@@ -50,7 +63,7 @@ case "$1" in
     systemctl poweroff
     ;;
   *)
-    echo "Usage: $0 {lock|toggleautolock|showautolock|logout|suspend|hibernate|reboot|shutdown}"
+    echo "Usage: $0 {lock|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown}"
     exit 2
 esac
 
