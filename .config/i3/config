@@ -214,7 +214,7 @@ bindsym Shift+F8 mode "$mode_system"
 bindsym Shift+F9 exec --no-startup-id i3cycle workspace_prev
 bindsym Shift+F10 exec --no-startup-id i3cycle workspace_next
 
-bindsym Ctrl+$mod+l exec i3lock --color=17181b
+bindsym Ctrl+$mod+l exec i3cyclebash lock
 bindsym $mod+Tab workspace back_and_forth
 
 # Screen Shots
@@ -233,6 +233,6 @@ assign [class="Wfica"] 6
 exec monitors multiple
 exec change_background
 exec nm-applet
-exec xautolock -time 15 -locker "i3lock --color=17181b" -detectsleep
+exec xautolock -time 15 -locker "i3cyclebash lock" -detectsleep
 exec --no-startup-id i3-msg 'workspace 1; exec google-chrome'
 exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal'
