@@ -1,0 +1,207 @@
+#!/bin/bash
+# shell script to replace i3status
+
+function hour_to_icon()
+{
+  hour=`date +"%I"`
+  case $hour in
+    01)
+      hour_icon="🕐"
+      ;;
+    02)
+      hour_icon="🕑"
+      ;;
+    03)
+      hour_icon="🕒"
+      ;;
+    04)
+      hour_icon="🕓"
+      ;;
+    05)
+      hour_icon="🕔"
+      ;;
+    06)
+      hour_icon="🕕"
+      ;;
+    07)
+      hour_icon="🕖"
+      ;;
+    08)
+      hour_icon="🕗"
+      ;;
+    09)
+      hour_icon="🕘"
+      ;;
+    10)
+      hour_icon="🕙"
+      ;;
+    11)
+      hour_icon="🕚"
+      ;;
+    12)
+      hour_icon="🕛"
+      ;;
+    *)
+      hour_icon="?$hour?"
+      ;;
+  esac
+}
+
+function statusbar() {
+  infinity 4 'sleep 1' | while :
+  do
+    hour_to_icon
+    date=`date +"%A %F $hour_icon %R"`
+    vpn_file="/proc/sys/net/ipv4/conf/tun0"
+    if [ ! -f $vpn_file ]
+    then
+      vpn=''
+    else
+      vpn='vpn '
+    fi
+
+    autolock=`$0 showautolock`
+    layout=`setxkbmap -query | grep layout | awk '{print $2}'`
+    networks=`nmcli connection show --active | awk '{print $(NF-1)}' | tail -n+2 | sed 'N;s/\n/ /'`
+    if [ -d "/sys/class/power_supply/BAT0" ]
+    then
+      battery_status=`cat /sys/class/power_supply/BAT0/status`
+      battery="$battery_status 🔋"
+    else
+      battery="⚡"
+    fi
+    weather=`weather`
+    volume=`i3cycle volume`
+    uptime=`awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime`
+    disk1=`df -h / | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g'`
+    bluetooth_check=`hciconfig | awk '//{ print tolower($1)}' | tail -n 4 | head -n 1`
+    if [ "$bluetooth_check" == "up" ]
+    then
+      bluetooth='🔵🦷   '
+    else
+      bluetooth=''
+    fi
+    echo "$vpn   $bluetooth💾 $disk1   🎹 $layout   $weather   $date   $volume$autolock" || exit 1
+    sleep 5
+  done
+}
+
+lock() {
+  i3lock --color=17181b
+}
+
+toggleautolock() {
+  ps cax | grep xautolock > /dev/null
+  if [ $? -eq 0 ]
+  then
+    pkill -9 xautolock
+  else
+    i3-msg "exec xautolock -time 15 -locker \"$1 lock\" -detectsleep"
+  fi
+}
+
+showautolock() {
+  ps cax | grep xautolock > /dev/null
+  if [ $? -eq 0 ]
+  then
+    echo ''
+  else
+    echo ' 🔓'
+  fi
+}
+
+togglelayout() {
+  layout=`setxkbmap -query | grep layout | awk '{print $2}'`
+  if [ "$layout" = "us" ]
+  then
+    setxkbmap ro
+  else
+    setxkbmap us
+  fi
+}
+
+monitors() {
+  xrandr --listmonitors | grep DP-1
+  greprc=$?
+
+  case ${2-help} in
+    single)
+      if [[ $greprc -eq 0 ]]
+      then
+        xrandr --output HDMI-0 --off
+      else
+        xrandr --output eDP1 --off
+      fi
+      ;;
+    multiple)
+      xrandr --auto
+
+      if [[ $greprc -eq 0 ]]
+      then
+        xrandr --output HDMI-0 --rotate left
+        xrandr --output DP-1 --left-of HDMI-0
+        xrandr --output HDMI-0 --pos 1920x-400
+      else
+        xrandr --output HDMI1 --left-of eDP1
+      fi
+      ;;
+    *)
+      cat << EOF
+xrandr wrapper for fast custom monitor setup
+
+Example usage:
+
+  monitors single
+  monitors multiple
+  monitors help
+
+Supports:
+
+  * single monitor
+  * 2 horizontal monitors
+  * 1 vertical 1 horizontal monitor
+EOF
+      ;;
+  esac
+}
+
+case "$1" in
+  lock)
+    lock
+    ;;
+  statusbar)
+    statusbar
+    ;;
+  monitors)
+    monitors
+    ;;
+  toggleautolock)
+    toggleautolock $0
+    ;;
+  showautolock)
+    showautolock
+    ;;
+  togglelayout)
+    togglelayout
+    ;;
+  logout)
+    i3-msg exit
+    ;;
+  suspend)
+    lock && systemctl suspend
+    ;;
+  hibernate)
+    lock && systemctl hibernate
+    ;;
+  reboot)
+    systemctl reboot
+    ;;
+  shutdown)
+    systemctl poweroff
+    ;;
+  *)
+    echo "Usage: $0 {lock|statusbar|monitors|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown}"
+    exit 2
+esac
+
+exit 0

@@ -17,8 +17,7 @@ rm -rf gnome-terminal-colors-solarized
 git clone https://github.com/Anthony25/gnome-terminal-colors-solarized
 cd gnome-terminal-colors-solarized && ./install.sh
 
-cd /usr/bin && sudo ln -s $HOME/vimrc/bin/i3cyclebash i3cyclebash
+cd /usr/bin && sudo ln -s $HOME/vimrc/bin/i3cyclebar i3cyclebar
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/i3cycle i3cycle
-cd /usr/bin && sudo ln -s $HOME/vimrc/bin/monitors monitors
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/change_background change_background
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/weather weather

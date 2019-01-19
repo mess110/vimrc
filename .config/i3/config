@@ -120,7 +120,7 @@ bindsym $mod+Shift+0 move container to workspace 10
 # calendar
 bindsym $mod+c exec zenity --calendar
 # toggle keyboard layout
-bindsym $mod+t exec i3cyclebash togglelayout
+bindsym $mod+t exec i3cyclebar togglelayout
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -133,13 +133,13 @@ bindsym $mod+Shift+r restart
 # power options
 set $mode_system System (F8) shutdown, (F9) toggleautolock, (F10) lock, (F11) logout, (F12) reboot
 mode "$mode_system" {
-    # bindsym s exec --no-startup-id i3cyclebash suspend, mode "default"
-    # bindsym h exec --no-startup-id i3cyclebash hibernate, mode "default"
-    bindsym F8 exec --no-startup-id i3cyclebash shutdown, mode "default"
-    bindsym F9 exec --no-startup-id i3cyclebash toggleautolock, mode "default"
-    bindsym F10 exec --no-startup-id i3cyclebash lock, mode "default"
-    bindsym F11 exec --no-startup-id i3cyclebash logout, mode "default"
-    bindsym F12 exec --no-startup-id i3cyclebash reboot, mode "default"
+    # bindsym s exec --no-startup-id i3cyclebar suspend, mode "default"
+    # bindsym h exec --no-startup-id i3cyclebar hibernate, mode "default"
+    bindsym F8 exec --no-startup-id i3cyclebar shutdown, mode "default"
+    bindsym F9 exec --no-startup-id i3cyclebar toggleautolock, mode "default"
+    bindsym F10 exec --no-startup-id i3cyclebar lock, mode "default"
+    bindsym F11 exec --no-startup-id i3cyclebar logout, mode "default"
+    bindsym F12 exec --no-startup-id i3cyclebar reboot, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -178,7 +178,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command ~/vimrc/bin/i3statusbash
+        status_command ~/vimrc/bin/i3cyclebar statusbar
         position top
 
         font pango:monospace 12
@@ -214,7 +214,7 @@ bindsym Shift+F8 mode "$mode_system"
 bindsym Shift+F9 exec --no-startup-id i3cycle workspace_prev
 bindsym Shift+F10 exec --no-startup-id i3cycle workspace_next
 
-bindsym Ctrl+$mod+l exec i3cyclebash lock
+bindsym Ctrl+$mod+l exec i3cyclebar lock
 bindsym $mod+Tab workspace back_and_forth
 
 # Screen Shots
@@ -230,9 +230,9 @@ assign [class="Pgadmin"] 5
 assign [class="Browser"] 6
 assign [class="Wfica"] 6
 
-exec monitors multiple
+exec i3cyclebar monitors multiple
 exec change_background
 exec nm-applet
-exec xautolock -time 15 -locker "i3cyclebash lock" -detectsleep
+exec i3cyclebar toggleautolock
 exec --no-startup-id i3-msg 'workspace 1; exec google-chrome'
 exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal'
