@@ -4,6 +4,7 @@ sudo apt update
 sudo apt upgrade
 
 sudo apt install -y vim git ack-grep xsel byobu google-chrome-stable zsh silversearcher-ag lm-sensors exuberant-ctags feh jq scrot xautolock pavucontrol
+pip3 install i3ipc
 
 git config --global user.name "Cristian Mircea Messel"
 git config --global user.email mess110@gmail.com
@@ -19,6 +20,7 @@ cd gnome-terminal-colors-solarized && ./install.sh
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/i3exit i3exit
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/i3togglelayout i3togglelayout
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/i3sound i3sound
+cd /usr/bin && sudo ln -s $HOME/vimrc/bin/i3cycle i3cycle
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/monitors monitors
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/change_background change_background
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/weather weather

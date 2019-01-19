@@ -35,43 +35,36 @@ set $urgent EF6155
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
-
-# kill focused window
-bindsym $mod+Shift+q kill
-bindsym $mod+F4 kill
-
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+# bindsym $mod+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+# bindsym $mod+h focus left
+# bindsym $mod+j focus down
+# bindsym $mod+k focus up
+# bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+# bindsym $mod+Left focus left
+# bindsym $mod+Down focus down
+# bindsym $mod+Up focus up
+# bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $mod+h move left
+bindsym $mod+j move down
+bindsym $mod+k move up
+bindsym $mod+l move right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Left move left
+bindsym $mod+Down move down
+bindsym $mod+Up move up
+bindsym $mod+Right move right
 
 # split in horizontal orientation
 # bindsym $mod+h split h
@@ -81,7 +74,7 @@ bindsym $mod+b split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+# bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -138,15 +131,14 @@ bindsym $mod+Shift+r restart
 # lock the screen
 
 # power options
-# set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
-set $mode_system System (l) lock, (e) logout, (r) reboot, (Shift+s) shutdown
+set $mode_system System (F8) shutdown, (F11) logout, (F12) reboot
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    # bindsym F8 exec --no-startup-id i3exit lock, mode "default"
     # bindsym s exec --no-startup-id i3exit suspend, mode "default"
     # bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym F8 exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym F11 exec --no-startup-id i3exit logout, mode "default"
+    bindsym F12 exec --no-startup-id i3exit reboot, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -200,14 +192,29 @@ bar {
         }
 }
 
-bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 2+ unmute"
-bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 2- unmute"
+bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 2+ unmute && zenity --notification --text=`i3sound percent`"
+bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 2- unmute && zenity --notification --text=`i3sound percent`"
 # bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle"
 
-bindsym $mod+equal exec google-chrome
-bindsym $mod+Tab workspace back_and_forth
+bindsym F1 exec dmenu_run
+#       F2 terminal new window
+#       F3 terminal prev window
+#       F4 terminal next window
+#       F5 refresh
+bindsym F6 exec google-chrome
+bindsym F7 exec i3-sensible-terminal
+bindsym F8 kill
+bindsym F9 exec --no-startup-id i3cycle window_prev
+bindsym F10 exec --no-startup-id i3cycle window_next
+#       F11 fullscreen
+#       F12 dev tools
 
-bindsym Control+$mod+l exec i3lock --color=17181b
+bindsym Shift+F8 mode "$mode_system"
+bindsym Shift+F9 exec --no-startup-id i3cycle workspace_prev
+bindsym Shift+F10 exec --no-startup-id i3cycle workspace_next
+
+bindsym Ctrl+$mod+l exec i3lock --color=17181b
+bindsym $mod+Tab workspace back_and_forth
 
 # Screen Shots
 bindsym Print exec scrot '%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures/'
@@ -218,6 +225,9 @@ new_window 1pixel
 hide_edge_borders both
 
 for_window [class="Browser"] floating enable
+assign [class="Pgadmin"] 5
+assign [class="Browser"] 6
+assign [class="Wfica"] 6
 
 exec monitors multiple
 exec change_background
