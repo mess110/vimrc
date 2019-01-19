@@ -110,13 +110,19 @@ showautolock() {
   fi
 }
 
+zenity_notification() {
+  which zenity > /dev/null && zenity --notification --text=$1
+}
+
 togglelayout() {
   layout=`setxkbmap -query | grep layout | awk '{print $2}'`
   if [ "$layout" = "us" ]
   then
     setxkbmap ro
+    zenity_notification "ro"
   else
     setxkbmap us
+    zenity_notification "us"
   fi
 }
 
