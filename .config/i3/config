@@ -88,7 +88,7 @@ floating_modifier $mod
 # focus the child container
 #bindsym $mod+d focus child
 
-set $mode_system System (F9) shutdown, (F10) reboot, (F11) logout, (F12) toggleautolock, (Pause) lock
+set $mode_system (F9) shutdown, (F10) reboot, (F11) logout, (F12) autolock, (Pause) lock
 mode "$mode_system" {
     # bindsym s exec --no-startup-id i3cyclebar suspend, mode "default"
     # bindsym h exec --no-startup-id i3cyclebar hibernate, mode "default"
@@ -128,10 +128,12 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-set $mode_launcher (r) resize, (t) keyboard layout, (c) calendar, (s) sound, (b) bluetooth
+set $mode_launcher (f)loating, (r)esize, (k)eyboard, (c)alendar, (s)ound, (b)luetooth
 mode "$mode_launcher" {
+        # toggle tiling / floating
+        bindsym f mode "default"; floating toggle
         bindsym r mode "resize"
-        bindsym t mode "default"; exec i3cyclebar togglelayout
+        bindsym k mode "default"; exec i3cyclebar togglelayout
         bindsym c mode "default"; exec zenity --calendar
         bindsym s mode "default"; exec pavucontrol
         bindsym b mode "default"; exec blueman-manager
@@ -165,9 +167,6 @@ bar {
 # bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-
-# toggle tiling / floating
-# bindsym Shift+space floating toggle
 
 # move focused window
 bindsym $mod+Left move left
