@@ -186,10 +186,10 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-bindsym XF86AudioPlay exec "zenity --notification --text=play"
-bindsym XF86AudioStop exec "zenity --notification --text=stop"
-bindsym XF86AudioPrev exec "zenity --notification --text=prev"
-bindsym XF86AudioNext exec "zenity --notification --text=next"
+# bindsym XF86AudioPlay exec "zenity --notification --text=play"
+# bindsym XF86AudioStop exec "zenity --notification --text=stop"
+# bindsym XF86AudioPrev exec "zenity --notification --text=prev"
+# bindsym XF86AudioNext exec "zenity --notification --text=next"
 
 bindsym XF86AudioRaiseVolume exec "amixer -D pulse set Master 5%+ unmute"
 bindsym XF86AudioLowerVolume exec "amixer -D pulse set Master 5%- unmute"
