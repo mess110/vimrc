@@ -100,6 +100,8 @@ def ordered_windows():
         for window in workspace.workspace():
             if window.id in map(lambda x: x.id, windows):
                 continue
+            if window.name is None:
+                continue
             windows.append(window)
             if window.focused:
                 focused_window_index = window_index
