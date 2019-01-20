@@ -128,6 +128,19 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
+set $mode_launcher (r) resize, (t) keyboard layout, (c) calendar, (s) sound, (b) bluetooth
+mode "$mode_launcher" {
+        bindsym r mode "resize"
+        bindsym t mode "default"; exec i3cyclebar togglelayout
+        bindsym c mode "default"; exec zenity --calendar
+        bindsym s mode "default"; exec pavucontrol
+        bindsym b mode "default"; exec blueman-manager
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
@@ -154,7 +167,7 @@ bar {
 bindsym $mod+Shift+r restart
 
 # toggle tiling / floating
-bindsym Shift+space floating toggle
+# bindsym Shift+space floating toggle
 
 # move focused window
 bindsym $mod+Left move left
@@ -195,9 +208,6 @@ bindsym XF86AudioRaiseVolume exec "amixer -D pulse set Master 5%+ unmute"
 bindsym XF86AudioLowerVolume exec "amixer -D pulse set Master 5%- unmute"
 bindsym XF86AudioMute exec "amixer -D pulse set Master 1+ toggle"
 
-bindsym $mod+r mode "resize"
-bindsym $mod+c exec zenity --calendar
-bindsym $mod+t exec i3cyclebar togglelayout
 bindsym $mod+e layout toggle tabbed split
 
 bindsym F1 exec dmenu_run
@@ -213,6 +223,7 @@ bindsym F10 exec --no-startup-id i3cycle window_next
 #       F11 fullscreen
 #       F12 dev tools
 
+bindsym Shift+F8 mode "$mode_launcher"
 bindsym Shift+F9 exec --no-startup-id i3cycle workspace_prev
 bindsym Shift+F10 exec --no-startup-id i3cycle workspace_next
 
