@@ -25,6 +25,10 @@ set $fgcolor C0C0C0
 set $txtcolor C0C0C0
 set $urgent EF6155
 
+# Disable border
+new_window 1pixel
+hide_edge_borders both
+
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
@@ -60,12 +64,6 @@ floating_modifier $mod
 # bindsym $mod+k move up
 # bindsym $mod+l move right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left move left
-bindsym $mod+Down move down
-bindsym $mod+Up move up
-bindsym $mod+Right move right
-
 # split in horizontal orientation
 # bindsym $mod+h split h
 # bindsym $mod+b split h
@@ -81,9 +79,6 @@ bindsym $mod+Right move right
 # bindsym $mod+w layout tabbed
 # bindsym $mod+e layout toggle split
 
-# toggle tiling / floating
-bindsym Shift+space floating toggle
-
 # change focus between tiling / floating windows
 # bindsym $mod+Shift+space focus mode_toggle
 
@@ -93,53 +88,15 @@ bindsym Shift+space floating toggle
 # focus the child container
 #bindsym $mod+d focus child
 
-# switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
-
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
-
-# calendar
-bindsym $mod+c exec zenity --calendar
-# toggle keyboard layout
-bindsym $mod+t exec i3cyclebar togglelayout
-
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-# lock the screen
-
-# power options
-set $mode_system System (F8) shutdown, (F9) toggleautolock, (F10) lock, (F11) logout, (F12) reboot
+set $mode_system System (F9) shutdown, (F10) reboot, (F11) logout, (F12) toggleautolock, (Pause) lock
 mode "$mode_system" {
     # bindsym s exec --no-startup-id i3cyclebar suspend, mode "default"
     # bindsym h exec --no-startup-id i3cyclebar hibernate, mode "default"
-    bindsym F8 exec --no-startup-id i3cyclebar shutdown, mode "default"
-    bindsym F9 exec --no-startup-id i3cyclebar toggleautolock, mode "default"
-    bindsym F10 exec --no-startup-id i3cyclebar lock, mode "default"
+    bindsym F9 exec --no-startup-id i3cyclebar shutdown, mode "default"
+    bindsym F10 exec --no-startup-id i3cyclebar reboot, mode "default"
     bindsym F11 exec --no-startup-id i3cyclebar logout, mode "default"
-    bindsym F12 exec --no-startup-id i3cyclebar reboot, mode "default"
+    bindsym F12 exec --no-startup-id i3cyclebar toggleautolock, mode "default"
+    bindsym Pause exec --no-startup-id i3cyclebar lock, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -171,8 +128,6 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "resize"
-
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
@@ -191,6 +146,46 @@ bar {
         }
 }
 
+
+
+# reload the configuration file
+# bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# toggle tiling / floating
+bindsym Shift+space floating toggle
+
+# move focused window
+bindsym $mod+Left move left
+bindsym $mod+Down move down
+bindsym $mod+Up move up
+bindsym $mod+Right move right
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
 bindsym XF86AudioPlay exec "zenity --notification --text=play"
 bindsym XF86AudioStop exec "zenity --notification --text=stop"
 bindsym XF86AudioPrev exec "zenity --notification --text=prev"
@@ -199,6 +194,11 @@ bindsym XF86AudioNext exec "zenity --notification --text=next"
 bindsym XF86AudioRaiseVolume exec "amixer -D pulse set Master 5%+ unmute"
 bindsym XF86AudioLowerVolume exec "amixer -D pulse set Master 5%- unmute"
 bindsym XF86AudioMute exec "amixer -D pulse set Master 1+ toggle"
+
+bindsym $mod+r mode "resize"
+bindsym $mod+c exec zenity --calendar
+bindsym $mod+t exec i3cyclebar togglelayout
+bindsym $mod+e layout toggle tabbed split
 
 bindsym F1 exec dmenu_run
 #       F2 terminal new window
@@ -213,26 +213,23 @@ bindsym F10 exec --no-startup-id i3cycle window_next
 #       F11 fullscreen
 #       F12 dev tools
 
-bindsym Shift+F8 mode "$mode_system"
 bindsym Shift+F9 exec --no-startup-id i3cycle workspace_prev
 bindsym Shift+F10 exec --no-startup-id i3cycle workspace_next
 
-bindsym Ctrl+$mod+l exec i3cyclebar lock
 bindsym $mod+Tab workspace back_and_forth
-
-# Screen Shots
+bindsym Ctrl+$mod+l exec i3cyclebar lock
+bindsym Pause mode "$mode_system"
 bindsym Print exec scrot '%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures/'
 bindsym Control+Print exec gnome-screenshot -i
-bindsym $mod+e layout toggle tabbed split
 
-# Disable border
-new_window 1pixel
-hide_edge_borders both
+
 
 for_window [class="Browser"] floating enable
 assign [class="Pgadmin"] 5
 assign [class="Browser"] 6
 assign [class="Wfica"] 6
+
+
 
 exec i3cyclebar monitors multiple
 exec change_background

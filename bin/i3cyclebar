@@ -130,7 +130,7 @@ monitors() {
   xrandr --listmonitors | grep DP-1
   greprc=$?
 
-  case ${2-help} in
+  case ${1-help} in
     single)
       if [[ $greprc -eq 0 ]]
       then
@@ -144,9 +144,8 @@ monitors() {
 
       if [[ $greprc -eq 0 ]]
       then
-        xrandr --output HDMI-0 --rotate left
         xrandr --output DP-1 --left-of HDMI-0
-        xrandr --output HDMI-0 --pos 1920x-400
+        xrandr --output HDMI-0 --rotate left --pos 1920x-400
       else
         xrandr --output HDMI1 --left-of eDP1
       fi
@@ -179,7 +178,7 @@ case "$1" in
     statusbar
     ;;
   monitors)
-    monitors
+    monitors $2
     ;;
   toggleautolock)
     toggleautolock $0
