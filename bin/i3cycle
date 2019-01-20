@@ -30,23 +30,24 @@ def show_volume():
         process = subprocess.Popen(cmd.split(' '), stdout=subprocess.PIPE)
         output, error = process.communicate()
         volume_full = str(output.split()[-3])
+        muted = b'[off]' in output.split()
         result = int(re.sub('[^0-9]','', volume_full))
-
+        amount = 0 if muted else result
         max_volume = 65035
 
         if output_format == 'icon':
-            if result > max_volume / 3 * 2:
+            if amount > max_volume / 3 * 2:
                 print('🔊')
-            elif result > max_volume / 3:
+            elif amount > max_volume / 3:
                 print('🔉')
-            elif result > 0:
+            elif amount > 0:
                 print('🔈')
             else:
                 print('🔇')
         elif output_format == 'raw':
-            print(result)
+            print(amount)
         else:
-            print('%s%%' % str((100 * result) / max_volume))
+            print('%s%%' % int((100 * amount) / max_volume))
     except IndexError as e:
         pass
     sys.exit(0)
@@ -60,7 +61,9 @@ def cycle_window(reverse):
     last_index = len(windows) - 1
     target_index = focused_window_index - 1 if reverse else focused_window_index + 1
     target_index = last_index if target_index < 0 else 0 if target_index > last_index else target_index
-    print("switching to window index %s" % target_index)
+    info_text = "switching_to_window_index_%s" % target_index
+    print(info_text)
+    # alert(info_text)
     i3.command('[con_id=%s] focus' % windows[target_index].id)
 
 

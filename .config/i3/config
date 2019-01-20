@@ -82,10 +82,10 @@ bindsym $mod+Right move right
 # bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+# bindsym $mod+Shift+space focus mode_toggle
 
 # focus the parent container
 # bindsym $mod+a focus parent
@@ -191,9 +191,14 @@ bar {
         }
 }
 
-bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 2+ unmute"
-bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 2- unmute"
-# bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle"
+bindsym XF86AudioPlay exec "zenity --notification --text=play"
+bindsym XF86AudioStop exec "zenity --notification --text=stop"
+bindsym XF86AudioPrev exec "zenity --notification --text=prev"
+bindsym XF86AudioNext exec "zenity --notification --text=next"
+
+bindsym XF86AudioRaiseVolume exec "amixer -D pulse set Master 5%+ unmute"
+bindsym XF86AudioLowerVolume exec "amixer -D pulse set Master 5%- unmute"
+bindsym XF86AudioMute exec "amixer -D pulse set Master 1+ toggle"
 
 bindsym F1 exec dmenu_run
 #       F2 terminal new window
