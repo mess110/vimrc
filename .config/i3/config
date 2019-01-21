@@ -88,7 +88,7 @@ floating_modifier $mod
 # focus the child container
 #bindsym $mod+d focus child
 
-set $mode_system (F9) shutdown, (F10) reboot, (F11) logout, (F12) autolock, (Pause) lock
+set $mode_system (F9) shutdown, (F10) reboot, (F11) logout, (F12) autolock, (Pause) lock, (w)ater, (m)ore
 mode "$mode_system" {
     # bindsym s exec --no-startup-id i3cyclebar suspend, mode "default"
     # bindsym h exec --no-startup-id i3cyclebar hibernate, mode "default"
@@ -97,6 +97,8 @@ mode "$mode_system" {
     bindsym F11 exec --no-startup-id i3cyclebar logout, mode "default"
     bindsym F12 exec --no-startup-id i3cyclebar toggleautolock, mode "default"
     bindsym Pause exec --no-startup-id i3cyclebar lock, mode "default"
+    bindsym w exec --no-startup-id i3cyclebar drink-water, mode "default"
+    bindsym m mode "$mode_launcher"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -131,12 +133,12 @@ mode "resize" {
 set $mode_launcher (f)loating, (r)esize, (k)eyboard, (c)alendar, (s)ound, (b)luetooth
 mode "$mode_launcher" {
         # toggle tiling / floating
-        bindsym f mode "default"; floating toggle
+        bindsym f floating toggle, mode "default"
         bindsym r mode "resize"
-        bindsym k mode "default"; exec i3cyclebar togglelayout
-        bindsym c mode "default"; exec zenity --calendar
-        bindsym s mode "default"; exec pavucontrol
-        bindsym b mode "default"; exec blueman-manager
+        bindsym k exec --no-startup-id i3cyclebar togglelayout, mode "default"
+        bindsym c exec --no-startup-id zenity --calendar, mode "default"
+        bindsym s exec --no-startup-id pavucontrol, mode "default"
+        bindsym b exec --no-startup-id blueman-manager, mode "default"
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -222,7 +224,7 @@ bindsym F10 exec --no-startup-id i3cycle window_next
 #       F11 fullscreen
 #       F12 dev tools
 
-bindsym Shift+F8 mode "$mode_launcher"
+bindsym Shift+F8 mode "$mode_system"
 bindsym Shift+F9 exec --no-startup-id i3cycle workspace_prev
 bindsym Shift+F10 exec --no-startup-id i3cycle workspace_next
 
