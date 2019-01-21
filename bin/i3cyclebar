@@ -98,22 +98,22 @@ function statusbar() {
     then
       vpn=''
     else
-      vpn='vpn '
+      vpn='vpn'
     fi
 
     autolock=`$0 showautolock`
     layout=`setxkbmap -query | grep layout | awk '{print $2}'`
-    networks=`nmcli connection show --active | awk '{print $(NF-1)}' | tail -n+2 | sed 'N;s/\n/ /'`
+    # networks=`nmcli connection show --active | awk '{print $(NF-1)}' | tail -n+2 | sed 'N;s/\n/ /'`
     if [ -d "/sys/class/power_supply/BAT0" ]
     then
-      battery_status=`cat /sys/class/power_supply/BAT0/status`
-      battery="$battery_status 🔋"
+      # battery_status=`cat /sys/class/power_supply/BAT0/status`
+      battery=" 🔋"
     else
-      battery="⚡"
+      battery=""
     fi
     weather=`$0 api-disk-cache 3600 'weather'`
     volume=`i3cycle volume icon`
-    uptime=`awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime`
+    # uptime=`awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime`
     disk1=`df -h / | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g'`
     bluetooth_check=`hciconfig | awk '//{ print tolower($1)}' | tail -n 4 | head -n 1`
     if [ "$bluetooth_check" == "up" ]
@@ -122,7 +122,7 @@ function statusbar() {
     else
       bluetooth=''
     fi
-    echo "$vpn   $bluetooth💾 $disk1   🎹 $layout   $weather   $date   $volume$autolock" || exit 1
+    echo "$vpn   $bluetooth💾 $disk1   🎹 $layout   $weather   $date   $volume$autolock$battery" || exit 1
     sleep 2.5
   done
 }
@@ -219,10 +219,10 @@ case "$1" in
     statusbar
     ;;
   monitors)
-    monitors $2
+    monitors "$2"
     ;;
   toggleautolock)
-    toggleautolock $0
+    toggleautolock "$0"
     ;;
   showautolock)
     showautolock
