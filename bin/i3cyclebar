@@ -1,6 +1,47 @@
 #!/bin/bash
 # shell script to replace i3status
 
+function write_to_disk()
+{
+  echo $TIME_NOW > $CMD_FILE_PATH
+  eval $CMD >> $CMD_FILE_PATH
+}
+
+function read_from_disk()
+{
+  OUTPUT=`sed -e 1d $CMD_FILE_PATH`
+  echo $OUTPUT
+}
+
+function api_disk_cache()
+{
+  if (( $# != 3 )); then
+    echo "Usage: `basename $0` $1 expire_seconds 'command'" >&2
+    exit 1
+  fi
+
+  EXPIRE_SECONDS=$2
+  CMD=$3
+  CMD_HASH=`echo -n "$CMD" | md5sum | awk '{print $1}'`
+  CMD_FILE_PATH="$HOME/.$CMD_HASH"
+  TIME_NOW=`date "+%s"`
+
+  if [ ! -f $CMD_FILE_PATH ]
+  then
+    write_to_disk
+  else
+    LAST_EXECUTE_TIME=`head -n 1 $CMD_FILE_PATH`
+    RUNTIME=$((TIME_NOW-LAST_EXECUTE_TIME))
+
+    if [ "$RUNTIME" -gt "$EXPIRE_SECONDS" ]
+    then
+      write_to_disk
+    fi
+  fi
+
+  read_from_disk
+}
+
 function hour_to_icon()
 {
   hour=`date +"%I"`
@@ -70,7 +111,7 @@ function statusbar() {
     else
       battery="⚡"
     fi
-    weather=`weather`
+    weather=`$0 api-disk-cache 3600 'weather'`
     volume=`i3cycle volume icon`
     uptime=`awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime`
     disk1=`df -h / | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g'`
@@ -82,7 +123,7 @@ function statusbar() {
       bluetooth=''
     fi
     echo "$vpn   $bluetooth💾 $disk1   🎹 $layout   $weather   $date   $volume$autolock" || exit 1
-    sleep 5
+    sleep 2.5
   done
 }
 
@@ -204,8 +245,11 @@ case "$1" in
   shutdown)
     systemctl poweroff
     ;;
+  api-disk-cache)
+    api_disk_cache "$1" "$2" "$3"
+    ;;
   *)
-    echo "Usage: $0 {lock|statusbar|monitors|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown}"
+    echo "Usage: $0 {lock|statusbar|monitors|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown|api-disk-cache}"
     exit 2
 esac
 
