@@ -11,7 +11,6 @@ function drink_icon()
 {
     LAST_DRINK=`(tail -n 1 ~/.drink-water.log 2> /dev/null || echo 0) | awk '{print $1}'`
     RUNTIME=$((TIME_NOW-LAST_DRINK))
-    DRINK_INTERVAL_SECONDS=3600
     if [ "$RUNTIME" -gt "$DRINK_INTERVAL_SECONDS" ]
     then
       drink=" 🥤🚰🥤"
@@ -233,6 +232,7 @@ EOF
 }
 
 TIME_NOW=`date "+%s"`
+DRINK_INTERVAL_SECONDS=7200 # seconds / 2 hours
 
 case "$1" in
   lock)
