@@ -187,48 +187,50 @@ togglelayout() {
   fi
 }
 
+# home
+monitorsSetup1() {
+  configuration=${1-single}
+  case $configuration in
+    single)
+      xrandr --auto --output HDMI-0 --off
+      ;;
+    multiple)
+      xrandr --auto
+      xrandr --output DP-1 --left-of HDMI-0
+      xrandr --output HDMI-0 --rotate left --pos 1920x-400
+      ;;
+    *)
+      echo "Unknown configuration $configuration"
+      ;;
+  esac
+}
+
+# work
+monitorsSetup2() {
+  configuration=${1-single}
+  case $configuration in
+    single)
+      xrandr --auto --output eDP1 --off
+      ;;
+    multiple)
+      xrandr --auto --output HDMI1 --left-of eDP1
+      ;;
+    *)
+      echo "Unknown configuration $configuration"
+      ;;
+  esac
+}
+
 monitors() {
   xrandr --listmonitors | grep DP-1
   greprc=$?
 
-  case ${1-help} in
-    single)
-      if [[ $greprc -eq 0 ]]
-      then
-        xrandr --output HDMI-0 --off
-      else
-        xrandr --output eDP1 --off
-      fi
-      ;;
-    multiple)
-      xrandr --auto
-
-      if [[ $greprc -eq 0 ]]
-      then
-        xrandr --output DP-1 --left-of HDMI-0
-        xrandr --output HDMI-0 --rotate left --pos 1920x-400
-      else
-        xrandr --output HDMI1 --left-of eDP1
-      fi
-      ;;
-    *)
-      cat << EOF
-xrandr wrapper for fast custom monitor setup
-
-Example usage:
-
-  monitors single
-  monitors multiple
-  monitors help
-
-Supports:
-
-  * single monitor
-  * 2 horizontal monitors
-  * 1 vertical 1 horizontal monitor
-EOF
-      ;;
-  esac
+  if [[ $greprc -eq 0 ]]
+  then
+    monitorsSetup1 $1
+  else
+    monitorsSetup2 $1
+  fi
 }
 
 TIME_NOW=`date "+%s"`
