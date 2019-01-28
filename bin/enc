@@ -124,16 +124,19 @@ enc - CLI to facilitate AES/RSA encryption/decryption
   end
 
   def self.write_new_key
-    if File.exists?(encrc_path) && pls_confirm("Override existing key #{encrc_path}? (y/n)")
-      puts "Overriding key #{encrc_path}"
+    if !File.exists?(encrc_path) || (File.exists?(encrc_path) && pls_confirm("Override existing key #{encrc_path}? (y/n) "))
+      puts "Writing key in #{encrc_path}"
       File.write(encrc_path, AES::generate_key)
     else
-      puts "Key #{encrc_path} left intact"
+      puts "Did not override key"
     end
-    print_key
   end
 
   def self.print_key
+    unless File.exists?(encrc_path)
+      puts "No key saved"
+      return
+    end
     puts File.read(encrc_path)
   end
 
