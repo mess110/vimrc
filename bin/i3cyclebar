@@ -187,8 +187,7 @@ togglelayout() {
   fi
 }
 
-# home
-monitorsSetup1() {
+homeConfiguration() {
   configuration=${1-single}
   case $configuration in
     single)
@@ -205,15 +204,14 @@ monitorsSetup1() {
   esac
 }
 
-# work
-monitorsSetup2() {
+workConfiguration() {
   configuration=${1-single}
   case $configuration in
     single)
-      xrandr --auto --output eDP1 --off
+      xrandr --auto --output eDP-1 --off
       ;;
     multiple)
-      xrandr --auto --output HDMI1 --left-of eDP1
+      xrandr --auto --output HDMI-1 --left-of eDP-1
       ;;
     *)
       echo "Unknown configuration $configuration"
@@ -222,14 +220,14 @@ monitorsSetup2() {
 }
 
 monitors() {
-  xrandr --listmonitors | grep DP-1
+  xrandr --listmonitors | grep eDP-1
   greprc=$?
 
   if [[ $greprc -eq 0 ]]
   then
-    monitorsSetup1 $1
+    workConfiguration $1
   else
-    monitorsSetup2 $1
+    homeConfiguration $1
   fi
 }
 
