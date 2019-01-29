@@ -82,6 +82,7 @@ map <Leader>t :CtrlSpace<CR>
 map <Leader>p :CtrlSpace O<CR>
 set hidden " required for CtrlSpace
 
+nnoremap <Leader>e :TagbarToggle<CR>
 " file explorer
 map <Leader>6 :NERDTreeToggle<CR>
 " Netrw options
@@ -116,8 +117,6 @@ endif
 
 " no more shift for :
 nnoremap ; :
-
-nnoremap <Leader>e :TagbarToggle<CR>
 
 " keep selection while indenting files
 vnoremap > >gv
