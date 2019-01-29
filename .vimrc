@@ -1,12 +1,13 @@
 " Shortcuts:
 "
-" <Leader>v  - reload vim and generate ctags for searching
+" <Leader>v  - reload vim, generate ctags for searching, install plugins
 " <Leader>6  - file explorer
 " /          - search by highlight
 " <Leader>r  - replace highlighted
 " <Leader>f  - search file contents
 " <Leader>t  - search buffers
 " <Leader>p  - search by filename
+" <Leader>e  - toggle Tagbar
 " <Leader>mm - show minimap
 " <Leader>mc - close minimap
 " qq         - define macro
@@ -48,14 +49,13 @@ Plugin 'fisadev/vim-isort'
 Plugin 'pangloss/vim-javascript'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'groenewege/vim-less'
-Plugin 'fatih/vim-go'
+Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plugin 'majutsushi/tagbar'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-map <Leader>i :PluginInstall<CR>
 nmap <silent> <Leader>ev :e $MYVIMRC<CR>
-map <Leader>v :source $MYVIMRC<CR>:!ctags<CR><CR>
+map <Leader>v :source $MYVIMRC<CR>:!ctags<CR><CR>:PluginInstall<CR>q<CR>
 
 " use + to toggle booleans
 
@@ -222,6 +222,12 @@ autocmd FileType go,vim nested :TagbarOpen
 augroup golang
   set listchars=tab:\ \ ,nbsp:_,trail:.
 augroup END
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
 
 syntax on
 let g:airline_solarized_bg='dark'
