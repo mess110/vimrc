@@ -8,8 +8,10 @@
 " <Leader>t  - search buffers
 " <Leader>p  - search by filename
 " <Leader>e  - toggle Tagbar
+" <Leader>c  - snippet suggestion
 " <Leader>mm - show minimap
 " <Leader>mc - close minimap
+" tab        - completes the current word
 " qq         - define macro
 " q          - end define macro
 "
@@ -92,8 +94,8 @@ let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro rnu'  " --> I want line 
 let NERDSpaceDelims=1
 let NERDDefaultNesting=0
 
-" use tab or <Leader>\ for snippet suggestion
-inoremap <Leader>\ <C-x><C-o>
+" <Leader>c for snippet suggestion
+inoremap <Leader>c <C-x><C-o>
 
 set pastetoggle=<Leader>]
 
