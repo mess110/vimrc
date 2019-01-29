@@ -222,6 +222,9 @@ set list
 
 autocmd FileType go,vim nested :TagbarOpen
 augroup golang
+  " vif - visual inner function to select the content of the function
+  " vaf - visual around function to select the function, works from comment as
+  " well
   set listchars=tab:\ \ ,nbsp:_,trail:.
 augroup END
 let g:go_highlight_types = 1
