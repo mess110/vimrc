@@ -4,7 +4,7 @@ sudo apt update
 sudo apt upgrade
 
 sudo apt install -y vim git ack-grep xsel byobu google-chrome-stable zsh silversearcher-ag lm-sensors exuberant-ctags feh jq scrot xautolock pavucontrol
-pip3 install i3ipc
+pip3 install i3ipc i3-py
 
 git config --global user.name "Cristian Mircea Messel"
 git config --global user.email mess110@gmail.com
@@ -21,3 +21,4 @@ cd /usr/bin && sudo ln -s $HOME/vimrc/bin/i3cyclebar i3cyclebar
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/i3cycle i3cycle
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/change_background change_background
 cd /usr/bin && sudo ln -s $HOME/vimrc/bin/weather weather
+cd /usr/bin && sudo ln -s $HOME/vimrc/bin/quickswitch quickswitch
