@@ -48,12 +48,14 @@ Plugin 'fisadev/vim-isort'
 Plugin 'pangloss/vim-javascript'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'groenewege/vim-less'
+Plugin 'fatih/vim-go'
+Plugin 'majutsushi/tagbar'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 map <Leader>i :PluginInstall<CR>
 nmap <silent> <Leader>ev :e $MYVIMRC<CR>
-map <Leader>v :source $MYVIMRC<CR>:!ctags --exclude=bower_components --exclude=node_modules --exclude=public --exclude=tmp --exclude=.git --exclude=log --exclude=seeds --exclude=*.min.js -R .<CR><CR>
+map <Leader>v :source $MYVIMRC<CR>:!ctags<CR><CR>
 
 " use + to toggle booleans
 
@@ -113,8 +115,7 @@ endif
 " no more shift for :
 nnoremap ; :
 
-" execute the current file
-nnoremap <Leader>e :!%:p<CR>
+nnoremap <Leader>e :TagbarToggle<CR>
 
 " keep selection while indenting files
 vnoremap > >gv
@@ -216,6 +217,11 @@ set noerrorbells         " don't beep
 " No funny stuff. trailing spaces tabs etc
 set listchars=tab:>~,nbsp:_,trail:.
 set list
+
+autocmd FileType go,vim nested :TagbarOpen
+augroup golang
+  set listchars=tab:\ \ ,nbsp:_,trail:.
+augroup END
 
 syntax on
 let g:airline_solarized_bg='dark'

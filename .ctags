@@ -1,9 +1,16 @@
 --recurse=yes
 --tag-relative=yes
+
+--exclude=*.min.js
 --exclude=.git
 --exclude=node_modules
+--exclude=bower_components
+--exclude=public
+--exclude=tmp
+--exclude=seeds
 --exclude=release
 --exclude=build
+--exclude=dist
 
 --langdef=coffee
 --langmap=coffee:.coffee
