@@ -96,7 +96,7 @@ let NERDSpaceDelims=1
 let NERDDefaultNesting=0
 
 " <Leader>c for snippet suggestion
-inoremap <Leader>c <C-x><C-o>
+inoremap <Leader>c <C-x><C-o><C-p>
 
 set pastetoggle=<Leader>]
 
@@ -187,6 +187,7 @@ set ttyfast         " smoother changes
 set expandtab       " space instead of tab
 set nowrap          " don't wrap lines, let them continue
 set omnifunc=syntaxcomplete#Complete " set autocomplete
+set completeopt-=preview " don't open scratch pad
 
 " File associations
 
