@@ -5,9 +5,10 @@
 " /          - search by highlight
 " <Leader>r  - replace highlighted
 " <Leader>f  - search file contents
+" <Leader>e  - GoRun
 " <Leader>t  - search buffers
 " <Leader>p  - search by filename
-" <Leader>e  - toggle Tagbar
+" <Leader>i  - toggle Tagbar
 " <Leader>c  - snippet suggestion
 " <Leader>mm - show minimap
 " <Leader>mc - close minimap
@@ -82,7 +83,7 @@ map <Leader>t :CtrlSpace<CR>
 map <Leader>p :CtrlSpace O<CR>
 set hidden " required for CtrlSpace
 
-nnoremap <Leader>e :TagbarToggle<CR>
+nnoremap <Leader>i :TagbarToggle<CR>
 " file explorer
 map <Leader>6 :NERDTreeToggle<CR>
 " Netrw options
@@ -102,15 +103,15 @@ set pastetoggle=<Leader>]
 
 " indent stuff
 filetype indent on
-map <leader>F gg=G``
+map <Leader>F gg=G``
 autocmd FileType json nnoremap<buffer> <leader>F :%!python -m json.tool<CR>
 let g:html_indent_inctags = "html,body,head,tbody"
 
 " File content search
-nnoremap <leader>f :Ack!<SPACE>
+nnoremap <Leader>f :Ack!<SPACE>
 let g:ack_mappings = { "o": "<CR><C-W>j" }
 " replace highlighted search
-nnoremap <leader>r :%s///g<LEFT><LEFT>
+nnoremap <Leader>r :%s///g<LEFT><LEFT>
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
@@ -134,9 +135,9 @@ nnoremap <Space> za
 nnoremap <Leader>n :nohlsearch<CR>
 
 "" split vertical window
-nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <Leader>w <C-w>v<C-w>l
 "" split horizontal window
-nnoremap <leader>s <C-w>s<C-w>j
+nnoremap <Leader>s <C-w>s<C-w>j
 
 "" qq to record q to stop Q to apply
 nnoremap Q @q
@@ -226,6 +227,7 @@ augroup golang
   " vaf - visual around function to select the function, works from comment as
   " well
   set listchars=tab:\ \ ,nbsp:_,trail:.
+  noremap <Leader>e :GoRun<CR>
 augroup END
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
