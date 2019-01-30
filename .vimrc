@@ -220,7 +220,7 @@ set noerrorbells         " don't beep
 set listchars=tab:>~,nbsp:_,trail:.
 set list
 
-autocmd FileType go,vim nested :TagbarOpen
+autocmd FileType vim nested :TagbarOpen
 augroup golang
   " vif - visual inner function to select the content of the function
   " vaf - visual around function to select the function, works from comment as
