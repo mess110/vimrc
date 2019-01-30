@@ -8,8 +8,8 @@
 " <Leader>e  - GoRun
 " <Leader>t  - search buffers
 " <Leader>p  - search by filename
-" <Leader>i  - toggle Tagbar
 " <Leader>c  - snippet suggestion
+" <Leader>ww - swap windows around
 " <Leader>mm - show minimap
 " <Leader>mc - close minimap
 " tab        - completes the current word
@@ -54,6 +54,8 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'groenewege/vim-less'
 Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plugin 'majutsushi/tagbar'
+Bundle 'https://github.com/pseewald/nerdtree-tagbar-combined'
+Plugin 'wesQ3/vim-windowswap'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -83,9 +85,7 @@ map <Leader>t :CtrlSpace<CR>
 map <Leader>p :CtrlSpace O<CR>
 set hidden " required for CtrlSpace
 
-nnoremap <Leader>i :TagbarToggle<CR>
-" file explorer
-map <Leader>6 :NERDTreeToggle<CR>
+nmap <Leader>6 :ToggleNERDTreeAndTagbar<CR>
 " Netrw options
 let g:netrw_altv = 1
 let g:netrw_banner = 0
@@ -221,7 +221,6 @@ set noerrorbells         " don't beep
 set listchars=tab:>~,nbsp:_,trail:.
 set list
 
-autocmd FileType vim nested :TagbarOpen
 augroup golang
   " vif - visual inner function to select the content of the function
   " vaf - visual around function to select the function, works from comment as
