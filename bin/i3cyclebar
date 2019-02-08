@@ -191,7 +191,8 @@ homeConfiguration() {
   configuration=${1-single}
   case $configuration in
     single)
-      xrandr --auto --output HDMI-0 --off
+      xrandr --auto
+      xrandr --output HDMI-0 --off
       ;;
     multiple)
       xrandr --auto
@@ -206,12 +207,15 @@ homeConfiguration() {
 
 workConfiguration() {
   configuration=${1-single}
+  echo 'work'
   case $configuration in
     single)
-      xrandr --auto --output eDP-1 --off
+      xrandr --auto
+      xrandr --output HDMI-1 --off
       ;;
     multiple)
-      xrandr --auto --output HDMI-1 --left-of eDP-1
+      xrandr --auto
+      xrandr --output HDMI-1 --left-of eDP-1
       ;;
     *)
       echo "Unknown configuration $configuration"
