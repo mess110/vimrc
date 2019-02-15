@@ -61,7 +61,7 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 nmap <silent> <Leader>ev :e $MYVIMRC<CR>
-map <Leader>v :source $MYVIMRC<CR>:!ctags<CR><CR>:PluginInstall<CR>q<CR>
+map <Leader>v :source $MYVIMRC<CR>:!ctags --exclude=*.min.js --exclude=.git --exclude=node_modules --exclude=public --exclude=tmp --exclude=seeds --exclude=release --exclude=venv --exclude=build --exclude=release<CR><CR>:PluginInstall<CR>q<CR>
 
 " use + to toggle booleans
 
