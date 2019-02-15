@@ -15,3 +15,8 @@ bindkey '^ ' autosuggest-accept
 ```
 
 ctrl+space to select text
+
+```
+cd ~/.vim/bundle/YouCompleteMe
+python3 install.py
+```

@@ -56,6 +56,7 @@ Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plugin 'majutsushi/tagbar'
 Bundle 'https://github.com/pseewald/nerdtree-tagbar-combined'
 Plugin 'wesQ3/vim-windowswap'
+Plugin 'Valloric/YouCompleteMe'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
