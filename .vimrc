@@ -15,6 +15,7 @@
 " tab        - completes the current word
 " qq         - define macro
 " q          - end define macro
+" s          - vimium navigation
 "
 " scripts from http://vim-scripts.org/vim/scripts.html
 
@@ -50,18 +51,18 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'othree/html5.vim'
 Plugin 'fisadev/vim-isort'
 Plugin 'pangloss/vim-javascript'
-Bundle 'kchmck/vim-coffee-script'
 Bundle 'groenewege/vim-less'
 Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plugin 'majutsushi/tagbar'
 Bundle 'https://github.com/pseewald/nerdtree-tagbar-combined'
 Plugin 'wesQ3/vim-windowswap'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'easymotion/vim-easymotion'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 nmap <silent> <Leader>ev :e $MYVIMRC<CR>
-map <Leader>v :source $MYVIMRC<CR>:!ctags --exclude=*.min.js --exclude=.git --exclude=node_modules --exclude=public --exclude=tmp --exclude=seeds --exclude=release --exclude=venv --exclude=build --exclude=release<CR><CR>:PluginInstall<CR>q<CR>
+map <Leader>v :source $MYVIMRC<CR>:!ctags .<CR><CR>:PluginInstall<CR>q<CR>
 
 " use + to toggle booleans
 
@@ -111,6 +112,7 @@ let g:html_indent_inctags = "html,body,head,tbody"
 " File content search
 nnoremap <Leader>f :Ack!<SPACE>
 let g:ack_mappings = { "o": "<CR><C-W>j" }
+
 " replace highlighted search
 nnoremap <Leader>r :%s///g<LEFT><LEFT>
 if executable('ag')
@@ -154,10 +156,16 @@ noremap <space>y "+y
 noremap <space>p "+p
 noremap <space>P "+P
 
-function! PasteAsCoffee()
-  :read !xsel --clipboard --output | js2coffee
-endfunction
-:command! PasteAsCoffee :call PasteAsCoffee()
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" `f{char}{char}{label}`
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
 
 let g:lightline = {
   \ 'colorscheme': 'solarized',
@@ -193,7 +201,7 @@ set completeopt-=preview " don't open scratch pad
 
 " File associations
 
-autocmd filetype python,coffee set expandtab
+autocmd filetype python set expandtab
 autocmd filetype html setlocal ts=4 sw=4 expandtab
 autocmd BufNewFile,BufRead *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.jbuilder setfiletype ruby " jbuilder to ruby

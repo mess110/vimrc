@@ -3,16 +3,20 @@
 
 --exclude=*.min.js
 --exclude=.git
---exclude=node_modules
---exclude=bower_components
 --exclude=public
 --exclude=tmp
 --exclude=seeds
 --exclude=release
 --exclude=build
 --exclude=dist
-
---langdef=coffee
---langmap=coffee:.coffee
---regex-coffee=/^[ \t]*([A-Za-z.]+)[ \t]+=.*->.*$/\1/f,function/
---regex-coffee=/^[ \t]*([A-Za-z.]+)[ \t]+=[^->\n]*$/\1/v,variable/
+--exclude=min
+--exclude=vendor
+--exclude=\*.min.\*
+--exclude=\*.map
+--exclude=\*.swp
+--exclude=\*.bak
+--exclude=tags
+--exclude=node_modules
+--exclude=bower_components
+--exclude=test
+--exclude=tests
