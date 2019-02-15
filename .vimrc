@@ -56,7 +56,6 @@ Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plugin 'majutsushi/tagbar'
 Bundle 'https://github.com/pseewald/nerdtree-tagbar-combined'
 Plugin 'wesQ3/vim-windowswap'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'easymotion/vim-easymotion'
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -157,7 +156,7 @@ noremap <space>p "+p
 noremap <space>P "+P
 
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
-" `f{char}{char}{label}`
+" `s{char}{char}{label}`
 nmap s <Plug>(easymotion-overwin-f2)
 
 " Turn on case insensitive feature
