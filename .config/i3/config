@@ -217,14 +217,16 @@ bindsym F1 exec quickswitch
 #       F3 terminal prev window
 #       F4 terminal next window
 #       F5 refresh
-bindsym F6 exec google-chrome
-bindsym F7 exec i3-sensible-terminal
+bindsym F6 exec ~/vimrc/bin/i3nextwindow "Chrome$" google-chrome
+bindsym F7 exec ~/vimrc/bin/i3nextwindow "byobu" gnome-terminal
 bindsym F8 kill
 bindsym F9 exec --no-startup-id i3cycle window_prev
 bindsym F10 exec --no-startup-id i3cycle window_next
 #       F11 fullscreen
 #       F12 dev tools
 
+bindsym Shift+F6 exec google-chrome
+bindsym Shift+F7 exec gnome-terminal
 bindsym Shift+F8 mode "$mode_system"
 bindsym Shift+F9 exec --no-startup-id i3cycle workspace_prev
 bindsym Shift+F10 exec --no-startup-id i3cycle workspace_next
