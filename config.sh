@@ -3,7 +3,7 @@
 sudo apt update
 sudo apt upgrade
 
-sudo apt install -y vim vim-gnome git ack-grep xsel byobu google-chrome-stable zsh silversearcher-ag lm-sensors exuberant-ctags feh jq scrot xautolock pavucontrol cmake
+sudo apt install -y vim vim-gnome git ack-grep xsel byobu google-chrome-stable zsh silversearcher-ag lm-sensors exuberant-ctags feh jq scrot xautolock pavucontrol cmake redshift
 pip3 install i3ipc i3-py
 
 git config --global user.name "Cristian Mircea Messel"

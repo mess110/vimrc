@@ -251,6 +251,7 @@ assign [class="Wfica"] 6
 exec i3cyclebar monitors multiple
 exec change_background
 exec nm-applet
+exec redshift
 exec i3cyclebar toggleautolock
 exec --no-startup-id i3-msg 'workspace 1; exec google-chrome'
 exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal'
