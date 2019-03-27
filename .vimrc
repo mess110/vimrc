@@ -114,6 +114,9 @@ let g:ack_mappings = { "o": "<CR><C-W>j" }
 
 " replace highlighted search
 nnoremap <Leader>r :%s///g<LEFT><LEFT>
+" replace in visual selection
+xnoremap <Leader>r :s///g<LEFT><LEFT><LEFT>
+
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
