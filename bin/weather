@@ -85,6 +85,7 @@ def weather_conditions(query, app_id):
         'User-Agent' : 'ConkyWeatherBot/0.1'
     }
     req = urllib2.Request(url, None, headers)
+    # print(url)
     try:
         response = urllib2.urlopen(req)
         j = json.loads(response.read())

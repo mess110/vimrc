@@ -57,11 +57,14 @@ Plugin 'majutsushi/tagbar'
 Bundle 'https://github.com/pseewald/nerdtree-tagbar-combined'
 Plugin 'wesQ3/vim-windowswap'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'CtrlP.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 nmap <silent> <Leader>ev :e $MYVIMRC<CR>
-map <Leader>v :source $MYVIMRC<CR>:!ctags .<CR><CR>:PluginInstall<CR>q<CR>
+" map <Leader>v :source $MYVIMRC<CR>:!ctags .<CR><CR>:PluginInstall<CR>q<CR>
+map <Leader>v :!ctags --exclude=node_modules -R --exclude=\*.min.js .
+" map <Leader>v :source $MYVIMRC<CR>:!ctags --exclude=bower_components --exclude=node_modules --exclude=public --exclude=tmp --exclude=.git --exclude=log --exclude=seeds --exclude=*.min.js -R .<CR><CR>:PluginInstall<CR>q<CR>
 
 " use + to toggle booleans
 
@@ -83,7 +86,10 @@ set showtabline=0
 " search open buffers
 map <Leader>t :CtrlSpace<CR>
 " search by filename
-map <Leader>p :CtrlSpace O<CR>
+" map <Leader>p :CtrlSpace O<CR>
+map <Leader>p :CtrlP<CR>
+let g:ctrlp_working_path = 'ra'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 set hidden " required for CtrlSpace
 
 nmap <Leader>6 :ToggleNERDTreeAndTagbar<CR>
