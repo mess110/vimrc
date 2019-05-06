@@ -131,10 +131,26 @@ function statusbar() {
       battery=""
     fi
 
+    used_ram=`free -g | head -n 2 | tail -n 1 | awk '//{print $3}'`
+    total_ram=`free -g | head -n 2 | tail -n 1 | awk '//{print $2}'`
+    ram="🐏 $used_ram/$total_ram"
+
+    cpu_avg_usage=`grep 'cpu MHz' /proc/cpuinfo | awk -F: '{print $2/1024}' | awk '{ total += $1; count++ } END { printf "%.1f\n", total/count }'`
+    cpu="🧮 $cpu_avg_usage"
+
     weather=`$0 api-disk-cache 3600 'weather'`
     volume=`i3cycle volume icon`
     # uptime=`awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime`
     disk1=`df -h / | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g'`
+    disk1icon="💾 $disk1"
+    if [ -e /dev/sda1 ]
+    then
+      disk2=`df -h /dev/sda1 | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g'`
+      disk2icon="💾 $disk2"
+    else
+      disk2=""
+      disk2icon=""
+    fi
     bluetooth_check=`hciconfig | awk '//{ print tolower($1)}' | tail -n 4 | head -n 1`
     if [ "$bluetooth_check" == "up" ]
     then
@@ -142,7 +158,7 @@ function statusbar() {
     else
       bluetooth=''
     fi
-    echo "$vpn   $bluetooth💾 $disk1   🎹 $layout   $weather   $date   $volume$autolock$battery$drink" || exit 1
+    echo "$cpu $ram $disk1icon $disk2icon $vpn   $bluetooth   🎹 $layout   $weather   $date   $volume$autolock$battery$drink" || exit 1
     sleep 2.5
   done
 }
