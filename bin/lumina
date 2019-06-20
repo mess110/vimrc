@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [ -z "$LAZE_PATH" ]
+then
+  echo "LAZE_PATH environment variable missing"
+  exit 1
+fi
+
+if [ ! -d "$LAZE_PATH/sonoff" ]
+then
+  echo 'sonoff folder does not exist in LAZE_PATH'
+  exit 1
+fi
+
+if [ ! -d "$LAZE_PATH/sonoff/venv" ]
+then
+  echo 'python venv folder does not exist in LAZE_PATH/sonoff'
+  exit 1
+fi
+
+cd $LAZE_PATH/sonoff
+source venv/bin/activate
+./lights.py $1
