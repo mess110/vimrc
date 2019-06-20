@@ -245,13 +245,13 @@ for_window [class="Browser"] floating enable
 assign [class="Pgadmin"] 5
 assign [class="Browser"] 6
 assign [class="Wfica"] 6
+assign [class="Steam"] 4
 
 
 
 exec i3cyclebar monitors multiple
 exec change_background
 exec nm-applet
-exec redshift
 exec i3cyclebar toggleautolock
 exec --no-startup-id i3-msg 'workspace 1; exec google-chrome'
 exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal'
