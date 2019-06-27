@@ -148,4 +148,4 @@ if __name__ == '__main__':
     app_id = os.environ['CONKY_APP_ID']
 
     output = weather_conditions(query, app_id)
-    print(output + "" + lunar_phase())
+    print(output + " " + lunar_phase())
