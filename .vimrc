@@ -54,6 +54,8 @@ Plugin 'pangloss/vim-javascript'
 Bundle 'groenewege/vim-less'
 Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plugin 'majutsushi/tagbar'
+Plugin 'digitaltoad/vim-pug'
+Plugin 'leafgarland/typescript-vim'
 Bundle 'https://github.com/pseewald/nerdtree-tagbar-combined'
 Plugin 'wesQ3/vim-windowswap'
 Plugin 'easymotion/vim-easymotion'
