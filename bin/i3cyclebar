@@ -204,16 +204,19 @@ togglelayout() {
 }
 
 homeConfiguration() {
+  monitor1="DisplayPort-0"
+  monitor2="HDMI-A-0"
+
   configuration=${1-single}
   case $configuration in
     single)
       xrandr --auto
-      xrandr --output HDMI-0 --off
+      xrandr --output $monitor2 --off
       ;;
     multiple)
       xrandr --auto
-      xrandr --output DP-1 --left-of HDMI-0
-      xrandr --output HDMI-0 --rotate left --pos 1920x-400
+      xrandr --output $monitor1 --left-of $monitor2
+      xrandr --output $monitor2 --rotate left --pos 1920x-400
       ;;
     *)
       echo "Unknown configuration $configuration"
@@ -222,16 +225,18 @@ homeConfiguration() {
 }
 
 workConfiguration() {
+  monitor1="HDMI-1"
+  monitor2="eDP-1"
+
   configuration=${1-single}
-  echo 'work'
   case $configuration in
     single)
       xrandr --auto
-      xrandr --output HDMI-1 --off
+      xrandr --output $monitor1 --off
       ;;
     multiple)
       xrandr --auto
-      xrandr --output HDMI-1 --left-of eDP-1
+      xrandr --output $monitor1 --left-of $monitor2
       ;;
     *)
       echo "Unknown configuration $configuration"
@@ -240,14 +245,14 @@ workConfiguration() {
 }
 
 monitors() {
-  xrandr --listmonitors | grep eDP-1
+  xrandr --listmonitors | grep DisplayPort-0
   greprc=$?
 
   if [[ $greprc -eq 0 ]]
   then
-    workConfiguration $1
-  else
     homeConfiguration $1
+  else
+    workConfiguration $1
   fi
 }
 
