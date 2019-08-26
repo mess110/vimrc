@@ -227,6 +227,7 @@ homeConfiguration() {
 workConfiguration() {
   monitor1="HDMI-1"
   monitor2="eDP-1"
+  monitor3="VGA-1"
 
   configuration=${1-single}
   case $configuration in
@@ -236,7 +237,13 @@ workConfiguration() {
       ;;
     multiple)
       xrandr --auto
-      xrandr --output $monitor1 --left-of $monitor2
+      xrandr --output $monitor3 --left-of $monitor1
+      xrandr --output $monitor2 --off
+      ;;
+    all)
+      xrandr --auto
+      xrandr --output $monitor3 --left-of $monitor1
+      xrandr --output $monitor2 --right-of $monitor1
       ;;
     *)
       echo "Unknown configuration $configuration"
