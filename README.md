@@ -20,3 +20,10 @@ ctrl+space to select text
 cd ~/.vim/bundle/YouCompleteMe
 python3 install.py
 ```
+
+https://github.com/Gogh-Co/Gogh
+
+41 Catppuccin Macchiato
+
+```
+```
