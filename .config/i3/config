@@ -30,7 +30,7 @@ set $txtcolor C0C0C0
 set $urgent EF6155
 
 # Disable border
-# new_window 1pixel
+new_window 1pixel
 hide_edge_borders both
 
 # Start XDG autostart .desktop files using dex. See also

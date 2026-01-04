@@ -8,6 +8,9 @@ feh – wallpapers
 picom – compositor (transparency, tearing fixes)
 
 ```sh
+sudo snap install nvim --classic
+ln -s ~/vimrc/.config/nvim ~/.config/nvim
+
 sudo apt install \
   i3 i3status i3blocks i3lock dmenu feh picom \
   gnome-screenshot volumeicon-alsa zenity jq iw
