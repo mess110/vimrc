@@ -11,3 +11,9 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.concealcursor = ""
   end,
 })
+
+-- Disable smooth scrolling plugin -- deprecated
+-- vim.g.neoscroll_disabled = true
+vim.g.snacks_animate = false
+-- disable only scrolling
+-- vim.g.snacks_scroll = false

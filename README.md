@@ -14,7 +14,7 @@ ln -s ~/vimrc/.config/nvim ~/.config/nvim
 ```sh
 sudo apt install \
   i3 i3status i3blocks i3lock dmenu feh picom \
-  gnome-screenshot volumeicon-alsa zenity jq iw
+  gnome-screenshot volumeicon-alsa zenity jq iw fd-find
 sudo update-alternatives --config x-session-manager
 ln -s ~/vimrc/.config/i3 ~/.config/i3
 ln -s ~/vimrc/.config/i3status ~/.config/i3status
