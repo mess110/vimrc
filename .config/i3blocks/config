@@ -1,0 +1,48 @@
+separator=true
+markup=none
+
+[wireless]
+command=iw dev 2>/dev/null | awk '/ssid/ {print "ᯤ " $2}'
+interval=10
+color=#00ff00
+
+[ethernet]
+command=ip route get 1.1.1.1 2>/dev/null | awk '{print "🖧 " $7}'
+interval=10
+color=#00ff00
+
+[nic_temp]
+command=sh -c 't=$(sensors | awk "/MAC Temperature:/ {gsub(\"\\+|°C\",\"\",\$3); print \$3}"); if [ -n \"$t\" ]; then echo "NIC ${t}°C"; [ "$t" -ge 70 ] && exit 33 || ([ "$t" -ge 55 ] && exit 36 || exit 0); else echo "NIC N/A"; exit 0; fi'
+interval=10
+color=#00ff00
+
+[disk]
+command=df -h / | awk 'NR==2 {print "🖴 " $3 "/" $2}'
+interval=30
+color=#ffffff
+
+[memory]
+command=free -h | awk '/Mem:/ {print "🐏 " $3 "/" $2}'
+interval=5
+color=#ffffff
+
+[cpu_temp]
+command=sensors | awk '/Package id 0/ {print "CPU " $4}'
+interval=5
+color=#ffff00
+
+[gpu_temp]
+command=nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader | awk '{print "GPU " $1 "°C"}'
+interval=5
+color=#ffff00
+
+[nvme_temp]
+command=sensors | awk '/Composite:/ {gsub("\\+|°C","",$2); if ($2>max) max=$2} END {if (max) print "NVMe " max "°C"}'
+interval=10
+color=#ffff00
+
+[time]
+command=date '+%Y-%m-%d %H:%M:%S'
+interval=1
+color=#ffffff
+

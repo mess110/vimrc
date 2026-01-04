@@ -1,57 +1,49 @@
 #!/bin/bash
 # shell script to replace i3status
 
-function drink_water()
-{
-  WATER_ENTRY=`date "+%s %A %F %R"`
-  echo $WATER_ENTRY >> $HOME/.drink-water.log
+function drink_water() {
+  WATER_ENTRY=$(date "+%s %A %F %R")
+  echo $WATER_ENTRY >>$HOME/.drink-water.log
 }
 
-function drink_icon()
-{
-    LAST_DRINK=`(tail -n 1 ~/.drink-water.log 2> /dev/null || echo 0) | awk '{print $1}'`
-    RUNTIME=$((TIME_NOW-LAST_DRINK))
-    if [ "$RUNTIME" -gt "$DRINK_INTERVAL_SECONDS" ]
-    then
-      drink=" 🥤🚰🥤"
-    else
-      drink=""
-    fi
+function drink_icon() {
+  LAST_DRINK=$( (tail -n 1 ~/.drink-water.log 2>/dev/null || echo 0) | awk '{print $1}')
+  RUNTIME=$((TIME_NOW - LAST_DRINK))
+  if [ "$RUNTIME" -gt "$DRINK_INTERVAL_SECONDS" ]; then
+    drink=" 🥤🚰🥤"
+  else
+    drink=""
+  fi
 }
 
-function write_to_disk()
-{
-  echo $TIME_NOW > $CMD_FILE_PATH
-  eval $CMD >> $CMD_FILE_PATH
+function write_to_disk() {
+  echo $TIME_NOW >$CMD_FILE_PATH
+  eval $CMD >>$CMD_FILE_PATH
 }
 
-function read_from_disk()
-{
-  OUTPUT=`sed -e 1d $CMD_FILE_PATH`
+function read_from_disk() {
+  OUTPUT=$(sed -e 1d $CMD_FILE_PATH)
   echo $OUTPUT
 }
 
-function api_disk_cache()
-{
-  if (( $# != 3 )); then
-    echo "Usage: `basename $0` $1 expire_seconds 'command'" >&2
+function api_disk_cache() {
+  if (($# != 3)); then
+    echo "Usage: $(basename $0) $1 expire_seconds 'command'" >&2
     exit 1
   fi
 
   EXPIRE_SECONDS=$2
   CMD=$3
-  CMD_HASH=`echo -n "$CMD" | md5sum | awk '{print $1}'`
+  CMD_HASH=$(echo -n "$CMD" | md5sum | awk '{print $1}')
   CMD_FILE_PATH="$HOME/.$CMD_HASH"
 
-  if [ ! -f $CMD_FILE_PATH ]
-  then
+  if [ ! -f $CMD_FILE_PATH ]; then
     write_to_disk
   else
-    LAST_EXECUTE_TIME=`head -n 1 $CMD_FILE_PATH`
-    RUNTIME=$((TIME_NOW-LAST_EXECUTE_TIME))
+    LAST_EXECUTE_TIME=$(head -n 1 $CMD_FILE_PATH)
+    RUNTIME=$((TIME_NOW - LAST_EXECUTE_TIME))
 
-    if [ "$RUNTIME" -gt "$EXPIRE_SECONDS" ]
-    then
+    if [ "$RUNTIME" -gt "$EXPIRE_SECONDS" ]; then
       write_to_disk
     fi
   fi
@@ -59,101 +51,95 @@ function api_disk_cache()
   read_from_disk
 }
 
-function hour_to_icon()
-{
-  hour=`date +"%I"`
+function hour_to_icon() {
+  hour=$(date +"%I")
   case $hour in
-    01)
-      hour_icon="🕐"
-      ;;
-    02)
-      hour_icon="🕑"
-      ;;
-    03)
-      hour_icon="🕒"
-      ;;
-    04)
-      hour_icon="🕓"
-      ;;
-    05)
-      hour_icon="🕔"
-      ;;
-    06)
-      hour_icon="🕕"
-      ;;
-    07)
-      hour_icon="🕖"
-      ;;
-    08)
-      hour_icon="🕗"
-      ;;
-    09)
-      hour_icon="🕘"
-      ;;
-    10)
-      hour_icon="🕙"
-      ;;
-    11)
-      hour_icon="🕚"
-      ;;
-    12)
-      hour_icon="🕛"
-      ;;
-    *)
-      hour_icon="?$hour?"
-      ;;
+  01)
+    hour_icon="🕐"
+    ;;
+  02)
+    hour_icon="🕑"
+    ;;
+  03)
+    hour_icon="🕒"
+    ;;
+  04)
+    hour_icon="🕓"
+    ;;
+  05)
+    hour_icon="🕔"
+    ;;
+  06)
+    hour_icon="🕕"
+    ;;
+  07)
+    hour_icon="🕖"
+    ;;
+  08)
+    hour_icon="🕗"
+    ;;
+  09)
+    hour_icon="🕘"
+    ;;
+  10)
+    hour_icon="🕙"
+    ;;
+  11)
+    hour_icon="🕚"
+    ;;
+  12)
+    hour_icon="🕛"
+    ;;
+  *)
+    hour_icon="?$hour?"
+    ;;
   esac
 }
 
 function statusbar() {
-  infinity 4 'sleep 1' | while :
-  do
+  infinity 4 'sleep 1' | while :; do
     hour_to_icon
     drink_icon
 
-    date=`date +"%A %F $hour_icon %R"`
+    date=$(date +"%A %F $hour_icon %R")
     vpn_file="/proc/sys/net/ipv4/conf/tun0"
-    if [ ! -f $vpn_file ]
-    then
+    if [ ! -f $vpn_file ]; then
       vpn=''
     else
       vpn='vpn'
     fi
 
-    autolock=`$0 showautolock`
-    layout=`setxkbmap -query | grep layout | awk '{print $2}'`
+    autolock=$($0 showautolock)
+    layout=$(setxkbmap -query | grep layout | awk '{print $2}')
     # networks=`nmcli connection show --active | awk '{print $(NF-1)}' | tail -n+2 | sed 'N;s/\n/ /'`
-    if [ -d "/sys/class/power_supply/BAT0" ]
-    then
+    if [ -d "/sys/class/power_supply/BAT0" ]; then
       # battery_status=`cat /sys/class/power_supply/BAT0/status`
       battery=" 🔋"
     else
       battery=""
     fi
 
-    used_ram=`free -g | head -n 2 | tail -n 1 | awk '//{print $3}'`
-    total_ram=`free -g | head -n 2 | tail -n 1 | awk '//{print $2}'`
+    used_ram=$(free -g | head -n 2 | tail -n 1 | awk '//{print $3}')
+    total_ram=$(free -g | head -n 2 | tail -n 1 | awk '//{print $2}')
     ram="🐏 $used_ram/$total_ram"
 
-    cpu_avg_usage=`grep 'cpu MHz' /proc/cpuinfo | awk -F: '{print $2/1024}' | awk '{ total += $1; count++ } END { printf "%.1f\n", total/count }'`
+    cpu_avg_usage=$(grep 'cpu MHz' /proc/cpuinfo | awk -F: '{print $2/1024}' | awk '{ total += $1; count++ } END { printf "%.1f\n", total/count }')
     cpu="🧮 $cpu_avg_usage"
 
-    weather=`$0 api-disk-cache 3600 'weather'`
-    volume=`i3cycle volume icon`
+    weather=$($0 api-disk-cache 3600 'weather')
+    volume=$(i3cycle volume icon)
     # uptime=`awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime`
-    disk1=`df -h / | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g'`
+    disk1=$(df -h / | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g')
     disk1icon="💾 $disk1"
-    if [ -e /dev/sda1 ]
-    then
-      disk2=`df -h /dev/sda1 | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g'`
+    if [ -e /dev/sda1 ]; then
+      disk2=$(df -h /dev/sda1 | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g')
       disk2icon="💾 $disk2"
     else
       disk2=""
       disk2icon=""
     fi
-    bluetooth_check=`hciconfig | awk '//{ print tolower($1)}' | tail -n 4 | head -n 1`
-    if [ "$bluetooth_check" == "up" ]
-    then
+    bluetooth_check=$(hciconfig | awk '//{ print tolower($1)}' | tail -n 4 | head -n 1)
+    if [ "$bluetooth_check" == "up" ]; then
       bluetooth='🔵🦷   '
     else
       bluetooth=''
@@ -168,9 +154,8 @@ lock() {
 }
 
 toggleautolock() {
-  ps cax | grep xautolock > /dev/null
-  if [ $? -eq 0 ]
-  then
+  ps cax | grep xautolock >/dev/null
+  if [ $? -eq 0 ]; then
     pkill -9 xautolock
   else
     i3-msg "exec xautolock -time 15 -locker \"$1 lock\" -detectsleep"
@@ -178,9 +163,8 @@ toggleautolock() {
 }
 
 showautolock() {
-  ps cax | grep xautolock > /dev/null
-  if [ $? -eq 0 ]
-  then
+  ps cax | grep xautolock >/dev/null
+  if [ $? -eq 0 ]; then
     echo ''
   else
     echo ' 🔓'
@@ -188,13 +172,12 @@ showautolock() {
 }
 
 zenity_notification() {
-  which zenity > /dev/null && zenity --notification --text=$1
+  which zenity >/dev/null && zenity --notification --text=$1
 }
 
 togglelayout() {
-  layout=`setxkbmap -query | grep layout | awk '{print $2}'`
-  if [ "$layout" = "us" ]
-  then
+  layout=$(setxkbmap -query | grep layout | awk '{print $2}')
+  if [ "$layout" = "us" ]; then
     setxkbmap ro
     zenity_notification "ro"
   else
@@ -209,18 +192,18 @@ homeConfiguration() {
 
   configuration=${1-single}
   case $configuration in
-    single)
-      xrandr --auto
-      xrandr --output $monitor2 --off
-      ;;
-    multiple)
-      xrandr --auto
-      xrandr --output $monitor1 --left-of $monitor2
-      xrandr --output $monitor2 --rotate left --pos 1920x-400
-      ;;
-    *)
-      echo "Unknown configuration $configuration"
-      ;;
+  single)
+    xrandr --auto
+    xrandr --output $monitor2 --off
+    ;;
+  multiple)
+    xrandr --auto
+    xrandr --output $monitor1 --left-of $monitor2
+    xrandr --output $monitor2 --rotate left --pos 1920x-400
+    ;;
+  *)
+    echo "Unknown configuration $configuration"
+    ;;
   esac
 }
 
@@ -231,84 +214,122 @@ workConfiguration() {
 
   configuration=${1-single}
   case $configuration in
-    single)
-      xrandr --auto
-      xrandr --output $monitor1 --off
-      ;;
-    multiple)
-      xrandr --auto
-      xrandr --output $monitor3 --left-of $monitor1
-      xrandr --output $monitor2 --off
-      ;;
-    all)
-      xrandr --auto
-      xrandr --output $monitor3 --left-of $monitor1
-      xrandr --output $monitor2 --right-of $monitor1
-      ;;
-    *)
-      echo "Unknown configuration $configuration"
-      ;;
+  single)
+    xrandr --auto
+    xrandr --output $monitor1 --off
+    ;;
+  multiple)
+    xrandr --auto
+    xrandr --output $monitor3 --left-of $monitor1
+    xrandr --output $monitor2 --off
+    ;;
+  all)
+    xrandr --auto
+    xrandr --output $monitor3 --left-of $monitor1
+    xrandr --output $monitor2 --right-of $monitor1
+    ;;
+  *)
+    echo "Unknown configuration $configuration"
+    ;;
   esac
 }
 
-monitors() {
+monitors_old() {
   xrandr --listmonitors | grep DisplayPort-0
   greprc=$?
 
-  if [[ $greprc -eq 0 ]]
-  then
+  if [[ $greprc -eq 0 ]]; then
     homeConfiguration $1
   else
     workConfiguration $1
   fi
 }
 
-TIME_NOW=`date "+%s"`
+monitors() {
+  monitor1="DP-2"
+  monitor2="HDMI-0"
+
+  configuration=${1-main}
+  case $configuration in
+  main)
+    xrandr \
+      --output $monitor2 --off \
+      --output $monitor1 --mode 2560x1440 --rate 75 --primary &&
+      zenity_notification "main"
+    ;;
+  secondary)
+    xrandr \
+      --output $monitor1 --off \
+      --output $monitor2 --mode 1920x1080 --primary &&
+      zenity_notification "secondary"
+    ;;
+  clone)
+    xrandr \
+      --auto \
+      --output $monitor1 --mode 1920x1080 --primary --same-as $monitor2 &&
+      zenity_notification "clone"
+    ;;
+  both)
+    xrandr \
+      --auto \
+      --output $monitor1 --mode 2560x1440 --rate 75 --primary \
+      --output $monitor2 --mode 1920x1080 --right-of $monitor1 &&
+      zenity_notification "both"
+    ;;
+  *)
+    echo "Unknown configuration $configuration"
+    ;;
+  esac
+
+}
+
+TIME_NOW=$(date "+%s")
 DRINK_INTERVAL_SECONDS=7200 # seconds / 2 hours
 
 case "$1" in
-  lock)
-    lock
-    ;;
-  statusbar)
-    statusbar
-    ;;
-  monitors)
-    monitors "$2"
-    ;;
-  toggleautolock)
-    toggleautolock "$0"
-    ;;
-  showautolock)
-    showautolock
-    ;;
-  togglelayout)
-    togglelayout
-    ;;
-  logout)
-    i3-msg exit
-    ;;
-  suspend)
-    lock && systemctl suspend
-    ;;
-  hibernate)
-    lock && systemctl hibernate
-    ;;
-  reboot)
-    systemctl reboot
-    ;;
-  shutdown)
-    systemctl poweroff
-    ;;
-  api-disk-cache)
-    api_disk_cache "$1" "$2" "$3"
-    ;;
-  drink-water)
-    drink_water
-    ;;
-  *)
-    echo "Usage: $0 {lock|statusbar|monitors|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown|api-disk-cache|drink-water}"
-    exit 2
+lock)
+  lock
+  ;;
+statusbar)
+  statusbar
+  ;;
+monitors)
+  monitors "$2"
+  ;;
+toggleautolock)
+  toggleautolock "$0"
+  ;;
+showautolock)
+  showautolock
+  ;;
+togglelayout)
+  togglelayout
+  ;;
+logout)
+  i3-msg exit
+  ;;
+suspend)
+  lock && systemctl suspend
+  ;;
+hibernate)
+  lock && systemctl hibernate
+  ;;
+reboot)
+  systemctl reboot
+  ;;
+shutdown)
+  systemctl poweroff
+  ;;
+api-disk-cache)
+  api_disk_cache "$1" "$2" "$3"
+  ;;
+drink-water)
+  drink_water
+  ;;
+*)
+  echo "Usage: $0 {lock|statusbar|monitors|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown|api-disk-cache|drink-water}"
+  exit 2
+  ;;
 esac
 
 exit 0

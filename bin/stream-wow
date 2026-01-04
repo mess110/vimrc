@@ -1,0 +1,41 @@
+#!/bin/sh
+
+monitor1="DP-2"
+monitor2="HDMI-0"
+
+ws7="7:game"
+ws8="8:game-utils"
+
+i3cyclebar monitors both || exit 1
+
+# Create workspace 8:game-utils on monitor2 (without changing focus)
+i3-msg "workspace $ws8; move workspace to output $monitor2; workspace back_and_forth" >/dev/null
+
+i3-msg "workspace $ws8; exec --no-startup-id wowup" >/dev/null
+i3-msg "workspace $ws8; exec --no-startup-id obs" >/dev/null
+
+sleep 5
+
+# create workspace 7:game
+i3-msg "workspace $ws7; move workspace to output $monitor1" >/dev/null
+i3-msg "workspace $ws7; exec --no-startup-id steam steam://rungameid/18319812040501231616" >/dev/null
+
+# Run wow directly (issue: not logged in)
+# STEAM_COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/4265413629" \
+#   STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/root/" \
+#   "$HOME/.steam/steam/steamapps/common/Proton 10.0/proton" run \
+#   "$HOME/.steam/steam/steamapps/compatdata/4265413629/pfx/drive_c/Program Files (x86)/World of Warcraft/_classic_era_/WowClassic.exe"
+
+# Run wow using battle.net (issue: doesn't work)
+# COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/4265413629"
+# PROTON_PATH="$HOME/.steam/steam/steamapps/common/Proton 10.0/proton"
+# BNET_LAUNCHER="drive_c/Program Files (x86)/Battle.net/Battle.net Launcher.exe"
+#
+# # Execution
+# STEAM_COMPAT_DATA_PATH="$COMPAT_DATA_PATH" \
+#   STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/root/" \
+#   "$PROTON_PATH" run \
+#   "$COMPAT_DATA_PATH/pfx/$BNET_LAUNCHER" --exec="launch WoWC"
+
+# works but opens both steam and battle.net
+# steam steam://rungameid/18319812040501231616

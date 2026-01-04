@@ -1,162 +1,98 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+#!/bin/bash
 
-import sys
-from sys import argv
+# Function to display volume info
+show_volume() {
+    local output_format=${1:-"icon"}
+    local amixer_out=$(amixer -D pulse sget Master)
 
-import i3ipc
-import subprocess
-import re
+    # Extract raw volume and mute status
+    local result=$(echo "$amixer_out" | grep -oP '\[\d+\]' | head -n1 | tr -d '[]')
+    local is_muted=$(echo "$amixer_out" | grep -q '\[off\]' && echo "true" || echo "false")
+    local max_volume=65035
+    local amount=$result
+    [[ "$is_muted" == "true" ]] && amount=0
 
+    case "$output_format" in
+        "raw")
+            echo "$amount"
+            ;;
+        "percent")
+            echo "$(( 100 * amount / max_volume ))%"
+            ;;
+        *) # icon
+            if [ "$amount" -gt $(( max_volume * 2 / 3 )) ]; then echo "🔊"
+            elif [ "$amount" -gt $(( max_volume / 3 )) ]; then echo "🔉"
+            elif [ "$amount" -gt 0 ]; then echo "🔈"
+            else echo "🔇"; fi
+            ;;
+    esac
+}
 
-def alert(s):
-    subcmd = "zenity --notification --text=%s" % s
-    subprocess.run(subcmd.split(' '))
+# Get i3 data via i3-msg and jq
+# windows: returns list of con_ids
+windows=($(i3-msg -t get_tree | jq -r '.. | select(.type? == "con" and .name? != null and .window? != null) | .id'))
+focused_window_id=$(i3-msg -t get_tree | jq -r '.. | select(.focused? == true and .type? == "con") | .id')
 
+# workspaces: returns list of workspace numbers
+workspaces=($(i3-msg -t get_workspaces | jq -r '.[] | .num' | sort -n))
+focused_ws_num=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused == true) | .num')
 
-def hr(s):
-    print ('%s%s' % (s, '-' * (80 - len(s))))
+# Function to cycle windows
+cycle_window() {
+    local dir=$1
+    local len=${#windows[@]}
+    local idx=-1
 
+    # Find current index
+    for i in "${!windows[@]}"; do
+       if [[ "${windows[$i]}" == "$focused_window_id" ]]; then idx=$i; break; fi
+    done
 
-def show_volume():
-    if len(sys.argv) < 3:
-        sys.argv.append('icon')
-
-    valid_formats = ['icon', 'raw', 'percent']
-    output_format = sys.argv[2] if sys.argv[2] in valid_formats else 'icon'
-
-    try:
-        cmd = 'amixer -D pulse sget Master'
-        process = subprocess.Popen(cmd.split(' '), stdout=subprocess.PIPE)
-        output, error = process.communicate()
-        volume_full = str(output.split()[-3])
-        muted = b'[off]' in output.split()
-        result = int(re.sub('[^0-9]','', volume_full))
-        amount = 0 if muted else result
-        max_volume = 65035
-
-        if output_format == 'icon':
-            if amount > max_volume / 3 * 2:
-                print('🔊')
-            elif amount > max_volume / 3:
-                print('🔉')
-            elif amount > 0:
-                print('🔈')
-            else:
-                print('🔇')
-        elif output_format == 'raw':
-            print(amount)
-        else:
-            print('%s%%' % int((100 * amount) / max_volume))
-    except IndexError as e:
-        pass
-    sys.exit(0)
-
-
-def cycle_window(reverse):
-    if focused_window_index is None:
-        cycle_workspace(reverse)
+    if [ "$idx" -eq -1 ]; then
+        cycle_workspace "$dir"
         return
+    fi
 
-    last_index = len(windows) - 1
-    target_index = focused_window_index - 1 if reverse else focused_window_index + 1
-    target_index = last_index if target_index < 0 else 0 if target_index > last_index else target_index
-    info_text = "switching_to_window_index_%s" % target_index
-    print(info_text)
-    # alert(info_text)
-    i3.command('[con_id=%s] focus' % windows[target_index].id)
+    if [ "$dir" == "next" ]; then
+        local target=$(( (idx + 1) % len ))
+    else
+        local target=$(( (idx - 1 + len) % len ))
+    fi
 
+    i3-msg "[con_id=${windows[$target]}] focus" > /dev/null
+}
 
-def cycle_workspace(reverse):
-    target_num = focused_workspace_num - 1 if reverse else focused_workspace_num + 1
-    target_num = len(workspaces) if target_num == 0 else target_num
-    print("switching to workspace_num %s" % target_num)
-    i3.command('workspace %s' % target_num)
+# Function to cycle workspaces
+cycle_workspace() {
+    local dir=$1
+    local len=${#workspaces[@]}
+    local idx=-1
 
+    for i in "${!workspaces[@]}"; do
+       if [[ "${workspaces[$i]}" == "$focused_ws_num" ]]; then idx=$i; break; fi
+    done
 
-def ordered_workspaces():
-    workspaces = []
-    for leaf in tree.leaves():
-        if leaf.workspace().num in map(lambda x: x.workspace().num, workspaces):
-            continue
-        workspaces.append(leaf)
+    if [ "$dir" == "next" ]; then
+        local target=$(( (idx + 1) % len ))
+    else
+        local target=$(( (idx - 1 + len) % len ))
+    fi
 
-    workspaces = sorted(workspaces, key=lambda w: w.workspace().num)
-    focused_workspace_num = tree.find_focused().workspace().num
+    i3-msg "workspace ${workspaces[$target]}" > /dev/null
+}
 
-    focused_workspace_index = None
-    for workspace_index, workspace in enumerate(workspaces):
-        if workspace.workspace().num == focused_workspace_num:
-            focused_workspace_index = workspace_index
+# Main Logic
+case "$1" in
+    window_next)    cycle_window "next" ;;
+    window_prev)    cycle_window "prev" ;;
+    workspace_next) cycle_workspace "next" ;;
+    workspace_prev) cycle_workspace "prev" ;;
+    volume)         show_volume "$2" ;;
+    *)
+        echo "Usage: $0 {window_next|window_prev|workspace_next|workspace_prev|volume}"
+        echo "Current Windows: ${#windows[@]}"
+        echo "Current Workspaces: ${#workspaces[@]}"
+        exit 1
+        ;;
+esac
 
-    return workspaces, focused_workspace_index, focused_workspace_num
-
-
-def ordered_windows():
-    windows = []
-    focused_window_index = None
-    window_index = 0
-    for workspace in workspaces:
-        for window in workspace.workspace():
-            if window.id in map(lambda x: x.id, windows):
-                continue
-            if window.name is None:
-                continue
-            windows.append(window)
-            if window.focused:
-                focused_window_index = window_index
-            window_index += 1
-
-    return windows, focused_window_index
-
-
-def help():
-    hr('Workspaces')
-    for workspace_index, workspace in enumerate(workspaces):
-        print("%s - %s" % (workspace_index, workspace.workspace().num))
-
-    hr('Windows')
-    for window_index, window in enumerate(windows):
-        print("%s - %s - %s - %s" % (window_index, window.id, window.focused, window.name))
-
-    print(
-"""About:
-
-Cycles through windows/workspaces
-
-%s windows
-%s workspaces
-Focused window index: %s
-Focused workspace index: %s
-Focused workspace num: %s
-
-Example usage:
-
-i3cycle window_prev|window_next|workspace_prev|workspace_next
-i3cycle volume
-""" % (len(windows), len(workspaces), focused_window_index, focused_workspace_num, focused_workspace_index))
-
-i3 = i3ipc.Connection()
-tree = i3.get_tree()
-
-workspaces, focused_workspace_index, focused_workspace_num = ordered_workspaces()
-windows, focused_window_index = ordered_windows()
-
-if len(argv) < 2:
-    help()
-    sys.exit(1)
-
-reverse = 'prev' in argv[1]
-if argv[1] == 'volume':
-    cmd = 'volume'
-else:
-    cmd = 'window' if 'window' in argv[1] else 'workspace'
-
-if 'window' in argv[1]:
-    cycle_window(reverse)
-elif 'workspace' in argv[1]:
-    cycle_workspace(reverse)
-elif cmd == 'volume':
-    show_volume()
-else:
-    help()
