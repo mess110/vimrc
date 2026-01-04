@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec ~/.local/bin/WowUp-CF-2.20.0.AppImage --no-sandbox "$@"
