@@ -17,17 +17,20 @@ interval=10
 color=#00ff00
 
 [disk]
-command=df -h / | awk 'NR==2 {print "🖴 " $3 "/" $2}'
+# command=df -h / | awk 'NR==2 {print "🖴 " $3 "/" $2}'
+command=df -h / | awk 'NR==2 {sub(/G/,"",$3); sub(/G/,"",$2); print "🖴 "$3"/"$2" GB"}'
 interval=30
 color=#ffffff
 
 [memory]
-command=free -h | awk '/Mem:/ {print "🐏 " $3 "/" $2}'
+# command=free -h | awk '/Mem:/ {print "🐏 " $3 "/" $2}'
+command=free -h | awk '/Mem:/ {sub(/Gi/,"",$3); sub(/Gi/,"",$2); print "🐏 "$3"/"$2" GB"}'
 interval=5
 color=#ffffff
 
 [cpu_temp]
-command=sensors | awk '/Package id 0/ {print "CPU " $4}'
+# command=sensors | awk '/Package id 0/ {print "CPU " $4}'
+command=sensors | awk '/Package id 0/ {sub(/^\+/,"",$4); print "CPU "$4}'
 interval=5
 color=#ffff00
 
