@@ -55,6 +55,10 @@ command=sh -c '[ "$BLOCK_BUTTON" = 1 ] && ~/.local/bin/i3cyclebar calendar & ech
 interval=1
 color=#c0c0c0
 
+[drink]
+command=sh -c '~/.local/bin/drink-water'
+interval=360
+
 [autolock]
 command=sh -c '~/.local/bin/i3cyclebar showautolock'
 interval=1

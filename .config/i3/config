@@ -275,7 +275,7 @@ mode "$mode_launcher" {
     bindsym k exec --no-startup-id i3cyclebar togglelayout, mode "default"
     bindsym c exec --no-startup-id i3cyclebar calendar, mode "default"
     bindsym b exec --no-startup-id blueman-manager, mode "default"
-    bindsym w exec --no-startup-id i3cyclebar drink-water, mode "default"
+    bindsym w exec --no-startup-id drink-water now, mode "default"
 
     bindsym s mode "$mode_sound"
     bindsym d mode "$mode_display"
@@ -311,7 +311,7 @@ exec --no-startup-id xrandr \
   --output HDMI-0 --off --output DP-2 --auto --primary
 
 # seems to not work
-for_window [class="pavucontrol"] floating enable
+# for_window [class="pavucontrol"] floating enable
 
 # assign [class="Pgadmin"] 5
 # assign [class="Browser"] 6

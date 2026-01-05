@@ -1,21 +1,6 @@
 #!/bin/bash
 # shell script to replace i3status
 
-function drink_water() {
-  WATER_ENTRY=$(date "+%s %A %F %R")
-  echo $WATER_ENTRY >>$HOME/.drink-water.log
-}
-
-function drink_icon() {
-  LAST_DRINK=$( (tail -n 1 ~/.drink-water.log 2>/dev/null || echo 0) | awk '{print $1}')
-  RUNTIME=$((TIME_NOW - LAST_DRINK))
-  if [ "$RUNTIME" -gt "$DRINK_INTERVAL_SECONDS" ]; then
-    drink=" 🥤🚰🥤"
-  else
-    drink=""
-  fi
-}
-
 function write_to_disk() {
   echo $TIME_NOW >$CMD_FILE_PATH
   eval $CMD >>$CMD_FILE_PATH
@@ -236,7 +221,6 @@ monitors() {
 }
 
 TIME_NOW=$(date "+%s")
-DRINK_INTERVAL_SECONDS=7200 # seconds / 2 hours
 
 case "$1" in
 lock)
@@ -278,11 +262,8 @@ shutdown)
 api-disk-cache)
   api_disk_cache "$1" "$2" "$3"
   ;;
-drink-water)
-  drink_water
-  ;;
 *)
-  echo "Usage: $0 {lock|calendar|monitors|hourtoicon|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown|api-disk-cache|drink-water}"
+  echo "Usage: $0 {lock|calendar|monitors|hourtoicon|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown|api-disk-cache}"
   exit 2
   ;;
 esac

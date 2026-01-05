@@ -23,6 +23,7 @@ ln -s ~/vimrc/.config/i3blocks ~/.config/i3blocks
 ln -s ~/vimrc/bin/i3cyclebar ~/.local/bin/i3cyclebar
 ln -s ~/vimrc/bin/i3cycle ~/.local/bin/i3cycle
 ln -s ~/vimrc/bin/i3cycleaudio ~/.local/bin/i3cycleaudio
+ln -s ~/vimrc/bin/drink-water ~/.local/bin/drink-water
 ```
 
 ## xrandr
@@ -45,3 +46,7 @@ xrandr --output HDMI-0 --off --output DP-2 --auto --primary
 exec --no-startup-id xrandr \
   ...
 ```
+
+## tips
+
+to select text with the mouse in the terminal, press shift and then select

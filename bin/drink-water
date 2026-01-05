@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+# Basic script to help remind the user to drink water every 2 hours
+
+DRINK_INTERVAL_SECONDS=7200 # 2 hours
+LOG_FILE="$HOME/.drink-water.log"
+
+print_help() {
+  cat <<EOF
+Usage: $(basename "$0") [command]
+
+Script which reminds the user to drink water. If the user drank water in the
+past 2 hours, nothing is displayed. Otherwise we should see the icon.
+
+Commands:
+  now    Log the fact that you drank water
+  icon   Print the drink-icon
+  help   Show this help message
+
+i3blocks usage:
+  Left  click  now
+  Right click  icon
+EOF
+}
+
+drink_water() {
+  # Ensure log file exists
+  touch "$LOG_FILE"
+
+  # Store: unix_timestamp Day YYYY-MM-DD HH:MM
+  date "+%s %A %F %R:%S" >"$LOG_FILE"
+}
+
+drink_icon() {
+  local TIME_NOW LAST_DRINK RUNTIME
+
+  TIME_NOW=$(date "+%s")
+
+  if [[ -f "$LOG_FILE" ]]; then
+    LAST_DRINK=$(tail -n 1 "$LOG_FILE" | awk '{print $1}')
+  else
+    LAST_DRINK=0
+  fi
+
+  # Fallback if log is empty or malformed
+  [[ "$LAST_DRINK" =~ ^[0-9]+$ ]] || LAST_DRINK=0
+
+  RUNTIME=$((TIME_NOW - LAST_DRINK))
+
+  if ((RUNTIME > DRINK_INTERVAL_SECONDS)); then
+    echo "🥤🚰🥤"
+  else
+    echo ""
+  fi
+}
+
+### ── CLI arguments ─────────────────────────────────
+case "$1" in
+now)
+  drink_water
+  exit 0
+  ;;
+drink-icon)
+  drink_icon
+  exit 0
+  ;;
+help | -h | --help)
+  print_help
+  exit 0
+  ;;
+esac
+
+### ── i3blocks click handling ────────────────────────
+case "$BLOCK_BUTTON" in
+1) drink_water ;; # left click
+3) drink_icon ;;  # right click
+esac
+
+drink_icon
