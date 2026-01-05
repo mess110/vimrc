@@ -134,6 +134,10 @@ togglelayout() {
   fi
 }
 
+calendar() {
+  zenity --calendar
+}
+
 homeConfiguration() {
   monitor1="DisplayPort-0"
   monitor2="HDMI-A-0"
@@ -238,6 +242,9 @@ case "$1" in
 lock)
   lock
   ;;
+calendar)
+  calendar
+  ;;
 monitors)
   monitors "$2"
   ;;
@@ -275,7 +282,7 @@ drink-water)
   drink_water
   ;;
 *)
-  echo "Usage: $0 {lock|monitors|hourtoicon|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown|api-disk-cache|drink-water}"
+  echo "Usage: $0 {lock|calendar|monitors|hourtoicon|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown|api-disk-cache|drink-water}"
   exit 2
   ;;
 esac

@@ -51,7 +51,7 @@ interval=5
 color=#c0c0c0
 
 [time]
-command=sh -c '[ "$BLOCK_BUTTON" = 1 ] && zenity --calendar & echo "$(~/.local/bin/i3cyclebar hourtoicon)" $(date "+%Y-%m-%d %H:%M:%S")'
+command=sh -c '[ "$BLOCK_BUTTON" = 1 ] && ~/.local/bin/i3cyclebar calendar & echo "$(~/.local/bin/i3cyclebar hourtoicon)" $(date "+%Y-%m-%d %H:%M:%S")'
 interval=1
 color=#c0c0c0
 

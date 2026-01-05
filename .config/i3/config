@@ -257,7 +257,7 @@ mode "$mode_launcher" {
     bindsym f floating toggle, mode "default"
     bindsym r mode "resize"
     bindsym k exec --no-startup-id i3cyclebar togglelayout, mode "default"
-    bindsym c exec --no-startup-id zenity --calendar, mode "default"
+    bindsym c exec --no-startup-id i3cyclebar calendar, mode "default"
     bindsym s exec --no-startup-id i3cycleaudio cycle, mode "default"
     bindsym m exec --no-startup-id i3cycleaudio mute, mode "default"
     bindsym p exec --no-startup-id pavucontrol, mode "default"
