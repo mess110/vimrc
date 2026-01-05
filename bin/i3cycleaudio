@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+
+STEP=5%
+
+get_sinks() {
+  pactl list short sinks | awk '{print $2}'
+}
+
+get_current() {
+  pactl get-default-sink
+}
+
+get_volume() {
+  # Get first channel volume (works for most setups)
+  pactl get-sink-volume "$(get_current)" | awk -F'/' '{print $2}' | tr -d ' %'
+}
+
+is_muted() {
+  pactl get-sink-mute "$(get_current)" | awk '{print $2}'
+}
+
+toggle_sink() {
+  mapfile -t SINKS < <(get_sinks)
+  CURRENT=$(get_current)
+
+  for i in "${!SINKS[@]}"; do
+    if [[ "${SINKS[$i]}" == "$CURRENT" ]]; then
+      NEXT="${SINKS[$(((i + 1) % ${#SINKS[@]}))]}"
+      pactl set-default-sink "$NEXT"
+      pactl list short sink-inputs | awk '{print $1}' |
+        xargs -I{} pactl move-sink-input {} "$NEXT"
+      notify-send "Audio Output" "Switched to $(basename "$NEXT")"
+      return
+    fi
+  done
+}
+
+volume_up() {
+  pactl set-sink-volume "$(get_current)" +$STEP
+}
+
+volume_down() {
+  pactl set-sink-volume "$(get_current)" -$STEP
+}
+
+toggle_mute() {
+  pactl set-sink-mute "$(get_current)" toggle
+}
+
+print_help() {
+  cat <<EOF
+Usage: $(basename "$0") [command]
+
+Commands:
+  cycle        Cycle to the next audio output (sink)
+  up           Increase volume by $STEP
+  down         Decrease volume by $STEP
+  mute         Toggle mute
+  help         Show this help message
+
+i3blocks usage:
+  Left click   Cycle audio output
+  Scroll up    Increase volume
+  Scroll down  Decrease volume
+  Right click  Toggle mute
+EOF
+}
+
+### ── CLI arguments ─────────────────────────────────
+case "$1" in
+cycle)
+  toggle_sink
+  exit 0
+  ;;
+up)
+  volume_up
+  exit 0
+  ;;
+down)
+  volume_down
+  exit 0
+  ;;
+mute)
+  toggle_mute
+  exit 0
+  ;;
+help | -h | --help)
+  print_help
+  exit 0
+  ;;
+esac
+
+### ── i3blocks click handling ────────────────────────
+case "$BLOCK_BUTTON" in
+1) toggle_sink ;; # left click
+3) toggle_mute ;; # right click
+4) volume_up ;;   # scroll up
+5) volume_down ;; # scroll down
+esac
+
+### ── Output for i3blocks ────────────────────────────
+CURRENT=$(get_current)
+
+LABEL=$(basename "$CURRENT" | sed 's/alsa_output\.//;s/\.analog-stereo//')
+# LABEL=${LABEL%_*}
+
+VOLUME=$(get_volume)
+if ((VOLUME < 10)); then
+  VOLUME=" $VOLUME"
+fi
+MUTED=$(is_muted)
+
+# Define mapping arrays
+HEADPHONES=("usb-Plantronics_Poly_Blackwire_3325_Series_C163F69CD07A42A298D7103045463159-00")
+
+EMOJI="📢"
+
+for item in "${HEADPHONES[@]}"; do
+  if [[ "$LABEL" == "$item" ]]; then
+    EMOJI="🎧"
+    break
+  fi
+done
+
+# Print output
+if [[ "$MUTED" == "yes" ]]; then
+  echo "$EMOJI  🔇"
+else
+  echo "$EMOJI ${VOLUME}%"
+fi

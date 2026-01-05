@@ -1,33 +1,5 @@
 #!/bin/bash
 
-# Function to display volume info
-show_volume() {
-    local output_format=${1:-"icon"}
-    local amixer_out=$(amixer -D pulse sget Master)
-
-    # Extract raw volume and mute status
-    local result=$(echo "$amixer_out" | grep -oP '\[\d+\]' | head -n1 | tr -d '[]')
-    local is_muted=$(echo "$amixer_out" | grep -q '\[off\]' && echo "true" || echo "false")
-    local max_volume=65035
-    local amount=$result
-    [[ "$is_muted" == "true" ]] && amount=0
-
-    case "$output_format" in
-        "raw")
-            echo "$amount"
-            ;;
-        "percent")
-            echo "$(( 100 * amount / max_volume ))%"
-            ;;
-        *) # icon
-            if [ "$amount" -gt $(( max_volume * 2 / 3 )) ]; then echo "🔊"
-            elif [ "$amount" -gt $(( max_volume / 3 )) ]; then echo "🔉"
-            elif [ "$amount" -gt 0 ]; then echo "🔈"
-            else echo "🔇"; fi
-            ;;
-    esac
-}
-
 # Get i3 data via i3-msg and jq
 # windows: returns list of con_ids
 windows=($(i3-msg -t get_tree | jq -r '.. | select(.type? == "con" and .name? != null and .window? != null) | .id'))
@@ -39,60 +11,64 @@ focused_ws_num=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused == true
 
 # Function to cycle windows
 cycle_window() {
-    local dir=$1
-    local len=${#windows[@]}
-    local idx=-1
+  local dir=$1
+  local len=${#windows[@]}
+  local idx=-1
 
-    # Find current index
-    for i in "${!windows[@]}"; do
-       if [[ "${windows[$i]}" == "$focused_window_id" ]]; then idx=$i; break; fi
-    done
-
-    if [ "$idx" -eq -1 ]; then
-        cycle_workspace "$dir"
-        return
+  # Find current index
+  for i in "${!windows[@]}"; do
+    if [[ "${windows[$i]}" == "$focused_window_id" ]]; then
+      idx=$i
+      break
     fi
+  done
 
-    if [ "$dir" == "next" ]; then
-        local target=$(( (idx + 1) % len ))
-    else
-        local target=$(( (idx - 1 + len) % len ))
-    fi
+  if [ "$idx" -eq -1 ]; then
+    cycle_workspace "$dir"
+    return
+  fi
 
-    i3-msg "[con_id=${windows[$target]}] focus" > /dev/null
+  if [ "$dir" == "next" ]; then
+    local target=$(((idx + 1) % len))
+  else
+    local target=$(((idx - 1 + len) % len))
+  fi
+
+  i3-msg "[con_id=${windows[$target]}] focus" >/dev/null
 }
 
 # Function to cycle workspaces
 cycle_workspace() {
-    local dir=$1
-    local len=${#workspaces[@]}
-    local idx=-1
+  local dir=$1
+  local len=${#workspaces[@]}
+  local idx=-1
 
-    for i in "${!workspaces[@]}"; do
-       if [[ "${workspaces[$i]}" == "$focused_ws_num" ]]; then idx=$i; break; fi
-    done
-
-    if [ "$dir" == "next" ]; then
-        local target=$(( (idx + 1) % len ))
-    else
-        local target=$(( (idx - 1 + len) % len ))
+  for i in "${!workspaces[@]}"; do
+    if [[ "${workspaces[$i]}" == "$focused_ws_num" ]]; then
+      idx=$i
+      break
     fi
+  done
 
-    i3-msg "workspace ${workspaces[$target]}" > /dev/null
+  if [ "$dir" == "next" ]; then
+    local target=$(((idx + 1) % len))
+  else
+    local target=$(((idx - 1 + len) % len))
+  fi
+
+  i3-msg "workspace ${workspaces[$target]}" >/dev/null
 }
 
 # Main Logic
 case "$1" in
-    window_next)    cycle_window "next" ;;
-    window_prev)    cycle_window "prev" ;;
-    workspace_next) cycle_workspace "next" ;;
-    workspace_prev) cycle_workspace "prev" ;;
-    volume)         show_volume "$2" ;;
-    *)
-        echo "Usage: $0 {window_next|window_prev|workspace_next|workspace_prev|volume}"
-        echo "Current Windows: ${#windows[@]}"
-        echo "Current Workspaces: ${#workspaces[@]}"
-        exit 1
-        ;;
+window_next) cycle_window "next" ;;
+window_prev) cycle_window "prev" ;;
+workspace_next) cycle_workspace "next" ;;
+workspace_prev) cycle_workspace "prev" ;;
+*)
+  echo "Usage: $0 {window_next|window_prev|workspace_next|workspace_prev|volume}"
+  echo "Current Windows: ${#windows[@]}"
+  echo "Current Workspaces: ${#workspaces[@]}"
+  exit 1
+  ;;
 esac
-

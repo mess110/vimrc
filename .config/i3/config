@@ -48,7 +48,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --color=17181b --n
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
-exec --no-startup-id volumeicon
+# exec --no-startup-id volumeicon
 
 # handled by volumeicon
 # Use pactl to adjust volume in PulseAudio.
@@ -251,14 +251,16 @@ mode "$mode_display" {
     bindsym Escape mode "default"
 }
 
-set $mode_launcher (f)loating, (r)esize, (k)eyboard, (c)alendar, (s)ound, (b)luetooth, (w)ater, (d)isplay
+set $mode_launcher (f)loating, (r)esize, (k)eyboard, (c)alendar, (s)ound, (m)ute, (p)avucontrol, (b)luetooth, (w)ater, (d)isplay
 mode "$mode_launcher" {
     # toggle tiling / floating
     bindsym f floating toggle, mode "default"
     bindsym r mode "resize"
     bindsym k exec --no-startup-id i3cyclebar togglelayout, mode "default"
     bindsym c exec --no-startup-id zenity --calendar, mode "default"
-    bindsym s exec --no-startup-id pavucontrol, mode "default"
+    bindsym s exec --no-startup-id i3cycleaudio cycle, mode "default"
+    bindsym m exec --no-startup-id i3cycleaudio mute, mode "default"
+    bindsym p exec --no-startup-id pavucontrol, mode "default"
     bindsym b exec --no-startup-id blueman-manager, mode "default"
     bindsym w exec --no-startup-id i3cyclebar drink-water, mode "default"
 
@@ -304,5 +306,5 @@ for_window [class="pavucontrol"] floating enable
 exec --no-startup-id feh --bg-fill ~/vimrc/images/thunderfury2.jpg
 
 # exec --no-startup-id i3-msg "workspace 1; exec firefox"
-exec --no-startup-id i3-msg "workspace 2; exec i3-sensible-terminal"
 exec --no-startup-id i3-msg "workspace 1; exec firefox reddit.com coinmarketcap.com; workspace 1"
+exec --no-startup-id i3-msg "workspace 2; exec i3-sensible-terminal -e tmux new -AD -t main -s main"

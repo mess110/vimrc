@@ -94,59 +94,7 @@ function hour_to_icon() {
     hour_icon="?$hour?"
     ;;
   esac
-}
-
-function statusbar() {
-  infinity 4 'sleep 1' | while :; do
-    hour_to_icon
-    drink_icon
-
-    date=$(date +"%A %F $hour_icon %R")
-    vpn_file="/proc/sys/net/ipv4/conf/tun0"
-    if [ ! -f $vpn_file ]; then
-      vpn=''
-    else
-      vpn='vpn'
-    fi
-
-    autolock=$($0 showautolock)
-    layout=$(setxkbmap -query | grep layout | awk '{print $2}')
-    # networks=`nmcli connection show --active | awk '{print $(NF-1)}' | tail -n+2 | sed 'N;s/\n/ /'`
-    if [ -d "/sys/class/power_supply/BAT0" ]; then
-      # battery_status=`cat /sys/class/power_supply/BAT0/status`
-      battery=" 🔋"
-    else
-      battery=""
-    fi
-
-    used_ram=$(free -g | head -n 2 | tail -n 1 | awk '//{print $3}')
-    total_ram=$(free -g | head -n 2 | tail -n 1 | awk '//{print $2}')
-    ram="🐏 $used_ram/$total_ram"
-
-    cpu_avg_usage=$(grep 'cpu MHz' /proc/cpuinfo | awk -F: '{print $2/1024}' | awk '{ total += $1; count++ } END { printf "%.1f\n", total/count }')
-    cpu="🧮 $cpu_avg_usage"
-
-    weather=$($0 api-disk-cache 3600 'weather')
-    volume=$(i3cycle volume icon)
-    # uptime=`awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime`
-    disk1=$(df -h / | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g')
-    disk1icon="💾 $disk1"
-    if [ -e /dev/sda1 ]; then
-      disk2=$(df -h /dev/sda1 | awk '//{print $3 "/" $2;}' | tail -n 1 | sed 's/G//g')
-      disk2icon="💾 $disk2"
-    else
-      disk2=""
-      disk2icon=""
-    fi
-    bluetooth_check=$(hciconfig | awk '//{ print tolower($1)}' | tail -n 4 | head -n 1)
-    if [ "$bluetooth_check" == "up" ]; then
-      bluetooth='🔵🦷   '
-    else
-      bluetooth=''
-    fi
-    echo "$cpu $ram $disk1icon $disk2icon $vpn   $bluetooth   🎹 $layout   $weather   $date   $volume$autolock$battery$drink" || exit 1
-    sleep 2.5
-  done
+  echo $hour_icon
 }
 
 lock() {
@@ -167,7 +115,7 @@ showautolock() {
   if [ $? -eq 0 ]; then
     echo ''
   else
-    echo ' 🔓'
+    echo '🔓'
   fi
 }
 
@@ -290,11 +238,11 @@ case "$1" in
 lock)
   lock
   ;;
-statusbar)
-  statusbar
-  ;;
 monitors)
   monitors "$2"
+  ;;
+hourtoicon)
+  hour_to_icon
   ;;
 toggleautolock)
   toggleautolock "$0"
@@ -327,7 +275,7 @@ drink-water)
   drink_water
   ;;
 *)
-  echo "Usage: $0 {lock|statusbar|monitors|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown|api-disk-cache|drink-water}"
+  echo "Usage: $0 {lock|monitors|hourtoicon|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown|api-disk-cache|drink-water}"
   exit 2
   ;;
 esac

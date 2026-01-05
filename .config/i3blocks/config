@@ -2,50 +2,60 @@ separator=true
 markup=none
 
 [wireless]
-command=iw dev 2>/dev/null | awk '/ssid/ {print "ᯤ " $2}'
+# command=iw dev 2>/dev/null | awk '/ssid/ {print "🛜 " $2}'
+command=iw dev 2>/dev/null | awk '/ssid/ {print "🛜 wifi"}'
 interval=10
-color=#00ff00
+color=#c0c0c0
 
 [ethernet]
-command=ip route get 1.1.1.1 2>/dev/null | awk '{print "🖧 " $7}'
+# command=ip route get 1.1.1.1 2>/dev/null | awk '{print "🌍 " $7}'
+command=ip route get 1.1.1.1 2>/dev/null | awk '{print "🌍 wired"}'
 interval=10
-color=#00ff00
-
-[nic_temp]
-command=sh -c 't=$(sensors | awk "/MAC Temperature:/ {gsub(\"\\+|°C\",\"\",\$3); print \$3}"); if [ -n \"$t\" ]; then echo "NIC ${t}°C"; [ "$t" -ge 70 ] && exit 33 || ([ "$t" -ge 55 ] && exit 36 || exit 0); else echo "NIC N/A"; exit 0; fi'
-interval=10
-color=#00ff00
+color=#c0c0c0
 
 [disk]
-# command=df -h / | awk 'NR==2 {print "🖴 " $3 "/" $2}'
-command=df -h / | awk 'NR==2 {sub(/G/,"",$3); sub(/G/,"",$2); print "🖴 "$3"/"$2" GB"}'
+# command=df -h / | awk 'NR==2 {print "💾 " $3 "/" $2}'
+command=df -h / | awk 'NR==2 {sub(/G/,"",$3); sub(/G/,"",$2); print "💾 "$3"/"$2" GB"}'
 interval=30
-color=#ffffff
+color=#c0c0c0
 
 [memory]
 # command=free -h | awk '/Mem:/ {print "🐏 " $3 "/" $2}'
 command=free -h | awk '/Mem:/ {sub(/Gi/,"",$3); sub(/Gi/,"",$2); print "🐏 "$3"/"$2" GB"}'
-interval=5
-color=#ffffff
+interval=10
+color=#c0c0c0
 
 [cpu_temp]
-# command=sensors | awk '/Package id 0/ {print "CPU " $4}'
-command=sensors | awk '/Package id 0/ {sub(/^\+/,"",$4); print "CPU "$4}'
+command=sensors | awk '/Package id 0/ {sub(/^\+/,"",$4); printf "🌡️CPU %.0f°C",$4}'
 interval=5
-color=#ffff00
+color=#c0c0c0
 
 [gpu_temp]
-command=nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader | awk '{print "GPU " $1 "°C"}'
+command=sh -c 't=$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader | awk "{printf \"%.0f\", \$1}"); echo "🌡️GPU ${t}°C"'
 interval=5
-color=#ffff00
+color=#c0c0c0
 
 [nvme_temp]
-command=sensors | awk '/Composite:/ {gsub("\\+|°C","",$2); if ($2>max) max=$2} END {if (max) print "NVMe " max "°C"}'
+command=sensors | awk '/Composite:/ {gsub("\\+|°C","",$2); if ($2>max) max=$2} END {if (max) printf "🌡️NVMe %.0f°C\n", max}'
 interval=10
-color=#ffff00
+color=#c0c0c0
+
+[nic_temp]
+command=sh -c 't=$(sensors | awk "/MAC Temperature:/ {gsub(\"\\+|°C\",\"\",\$3); printf \"%.0f\",\$3}"); if [ -n \"$t\" ]; then echo "🌡️NIC ${t}°C"; [ \"$t\" -ge 70 ] && exit 33 || ([ \"$t\" -ge 55 ] && exit 36 || exit 0); else echo "🌡️NIC N/A"; exit 0; fi'
+interval=10
+color=#c0c0c0
+
+[audio]
+command=~/.local/bin/i3cycleaudio
+interval=5
+color=#c0c0c0
 
 [time]
-command=date '+%Y-%m-%d %H:%M:%S'
+command=sh -c '[ "$BLOCK_BUTTON" = 1 ] && zenity --calendar & echo "$(~/.local/bin/i3cyclebar hourtoicon)" $(date "+%Y-%m-%d %H:%M:%S")'
 interval=1
-color=#ffffff
+color=#c0c0c0
 
+[autolock]
+command=sh -c '~/.local/bin/i3cyclebar showautolock'
+interval=1
+color=#c0c0c0
