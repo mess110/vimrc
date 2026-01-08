@@ -208,7 +208,6 @@ monitors() {
     ;;
   both)
     xrandr \
-      --auto \
       --output $monitor1 --mode 2560x1440 --rate 75 --primary \
       --output $monitor2 --mode 1920x1080 --right-of $monitor1 &&
       zenity_notification "both"

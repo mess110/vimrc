@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# These should work
+#
+# app-image-runner WowUp-CF-2.20.0.AppImage
+# app-image-runner ~/.local/bin/WowUp-CF-2.20.0.AppImage
+
+function run_it() {
+  echo "Running $1"
+  # $1 is the AppImage path, ${@:2} are the remaining arguments
+  exec "$1" --no-sandbox "${@:2}"
+}
+
+if [ $# -eq 0 ]; then
+  echo "No arguments supplied"
+  exit 1
+fi
+
+# Check if the first argument is a valid file
+if [ ! -f "$1" ]; then
+  # If not a file, check if it's a command in the system PATH
+  path_of_input=$(which "$1")
+  if [ $? -eq 0 ]; then
+    # Replace $1 with the full path, then pass all arguments to run_it
+    set -- "$path_of_input" "${@:2}"
+    run_it "$@"
+    exit 0
+  fi
+  echo "File not found: $1"
+  exit 1
+fi
+
+# If it is a file, just run it with all original arguments
+run_it "$@"
