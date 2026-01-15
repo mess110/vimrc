@@ -83,14 +83,23 @@ function hour_to_icon() {
 }
 
 lock() {
-  i3lock --color=17181b
+  i3lock --ignore-empty-password --color=17181b --image ~/vimrc/images/yamato.png
 }
 
 toggleautolock() {
   ps cax | grep xautolock >/dev/null
   if [ $? -eq 0 ]; then
     pkill -9 xautolock
+    # simple version
+    # xset s off -dpms
+    xset s off s noblank -dpms
+    # use to inspect status:
+    # xset q
   else
+    # enable set screensaver
+    xset s on s blank s 900
+    # enable and set DPMS
+    xset +dpms dpms 900 900 900
     i3-msg "exec xautolock -time 15 -locker \"$1 lock\" -detectsleep"
   fi
 }
