@@ -1,3 +1,14 @@
 #!/bin/bash
 
-exec ~/.local/bin/WowUp-CF-2.20.0.AppImage --no-sandbox "$@"
+# exec ~/.local/bin/WowUp-CF-2.20.0.AppImage --no-sandbox "$@"
+# app-image-runner ~/.local/bin/WowUp-CF-2.22.0.AppImage
+
+# Find files starting with WowUp and ending in AppImage, sort them in reverse, and take the first one
+LATEST_APP=$(ls -1v ~/.local/bin/WowUp*AppImage 2>/dev/null | tail -n 1)
+
+if [ -n "$LATEST_APP" ]; then
+  app-image-runner "$LATEST_APP" "$@"
+else
+  echo "No WowUp AppImage found in ~/.local/bin/"
+  exit 1
+fi

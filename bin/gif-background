@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# ===== CONFIG =====
+GIF="$1"         # path to gif
+DELAY=0.05       # seconds between frames (adjust)
+MODE="--bg-fill" # feh mode
+TMPDIR="/tmp/gif-wallpaper-$$"
+# ==================
+
+if [ -z "$GIF" ]; then
+  echo "Usage: $0 path/to/file.gif"
+  exit 1
+fi
+
+mkdir -p "$TMPDIR"
+
+# Pick ImageMagick command (v7 or v6)
+if command -v magick >/dev/null 2>&1; then
+  IM="magick"
+elif command -v convert >/dev/null 2>&1; then
+  IM="convert"
+else
+  echo "Error: ImageMagick not found (magick or convert)"
+  exit 1
+fi
+
+# Extract frames
+$IM "$GIF" "$TMPDIR/frame-%04d.png"
+
+# Cleanup on exit
+cleanup() {
+  rm -rf "$TMPDIR"
+}
+trap cleanup EXIT INT TERM
+
+# Infinite loop (manual animation)
+while true; do
+  for frame in "$TMPDIR"/frame-*.png; do
+    feh $MODE "$frame"
+    sleep "$DELAY"
+  done
+done
+while true; do
+  feh --no-fehbg --bg-fill --cycle-once --slideshow-delay 0.05 "$TMPDIR"/frame_*.png
+done
