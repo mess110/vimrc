@@ -83,7 +83,7 @@ function hour_to_icon() {
 }
 
 lock() {
-  CUSTOM_I3LOCK=~/work/i3lock/build/i3lock
+  CUSTOM_I3LOCK=~/vimrc/forks/i3lock/build/i3lock
 
   if [ -x "$CUSTOM_I3LOCK" ]; then
     "$CUSTOM_I3LOCK" \
@@ -129,7 +129,7 @@ zenity_notification() {
 }
 
 rofi() {
-  CUSTOM_ROFI=~/work/rofi/build/rofi
+  CUSTOM_ROFI=~/vimrc/forks/rofi/build/rofi
 
   if [ -x "$CUSTOM_ROFI" ]; then
     "$CUSTOM_ROFI" -show drun

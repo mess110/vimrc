@@ -1,0 +1,6 @@
+[submodule "forks/i3lock"]
+	path = forks/i3lock
+	url = git@github.com:mess110/i3lock.git
+[submodule "forks/rofi"]
+	path = forks/rofi
+	url = git@github.com:mess110/rofi.git

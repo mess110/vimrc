@@ -1,0 +1,31 @@
+#!/bin/bash
+# clone/update and build the i3lock and rofi forks tracked as submodules in forks/
+set -e
+
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+REPO_ROOT="$SCRIPT_DIR/.."
+FORKS_DIR="$REPO_ROOT/forks"
+
+cd "$REPO_ROOT"
+git submodule update --init --recursive forks/i3lock forks/rofi
+
+build() {
+  local name=$1
+  local dir="$FORKS_DIR/$name"
+
+  echo "==> building $name"
+  cd "$dir"
+  if [ -d build ]; then
+    meson setup --reconfigure build
+  else
+    meson setup build
+  fi
+  ninja -C build
+}
+
+build i3lock
+build rofi
+
+echo "==> done"
+echo "i3lock: $FORKS_DIR/i3lock/build/i3lock"
+echo "rofi:   $FORKS_DIR/rofi/build/rofi"
