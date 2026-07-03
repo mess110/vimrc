@@ -81,7 +81,7 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 # bindsym $mod+d exec --no-startup-id dmenu_run -nb '#$bgcolor' -sf '#322514' -sb '#$urgent' -nf '#$txtcolor'
-bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+d exec --no-startup-id i3cyclebar rofi
 # bindsym $mod+d exec --no-startup-id bemenu-run -b -i --fn "pango:monospace 12" --nb "#282a2e" --nf "#de935f" --hb "#373b41" --hf "#f0c674"
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"

@@ -128,6 +128,16 @@ zenity_notification() {
   which zenity >/dev/null && zenity --notification --text=$1
 }
 
+rofi() {
+  CUSTOM_ROFI=~/work/rofi/build/rofi
+
+  if [ -x "$CUSTOM_ROFI" ]; then
+    "$CUSTOM_ROFI" -show drun
+  else
+    command rofi -show drun
+  fi
+}
+
 togglelayout() {
   layout=$(setxkbmap -query | grep layout | awk '{print $2}')
   if [ "$layout" = "us" ]; then
@@ -263,6 +273,9 @@ showautolock)
 togglelayout)
   togglelayout
   ;;
+rofi)
+  rofi
+  ;;
 logout)
   i3-msg exit
   ;;
@@ -282,7 +295,7 @@ api-disk-cache)
   api_disk_cache "$1" "$2" "$3"
   ;;
 *)
-  echo "Usage: $0 {lock|calendar|monitors|hourtoicon|toggleautolock|showautolock|togglelayout|logout|suspend|hibernate|reboot|shutdown|api-disk-cache}"
+  echo "Usage: $0 {lock|calendar|monitors|hourtoicon|toggleautolock|showautolock|togglelayout|rofi|logout|suspend|hibernate|reboot|shutdown|api-disk-cache}"
   exit 2
   ;;
 esac
