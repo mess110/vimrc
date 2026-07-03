@@ -42,7 +42,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --color=17181b --nofork --corners +00-
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3cyclebar lock
 # exec --no-startup-id xidlehook \
 #   --not-when-fullscreen \
 #   --timer 600 'i3lock --color=17181b' ''
@@ -311,14 +311,13 @@ bar {
     }
 }
 
-# TODO: use i3cyclebar main
-exec --no-startup-id xrandr \
-  --output HDMI-0 --off --output DP-2 --auto --primary
+exec --no-startup-id i3cyclebar monitors main
+exec --no-startup-id i3cyclebar enableautolock
 
-# seems to not work
-# for_window [class="pavucontrol"] floating enable
+# use `xprop WM_CLASS` cmd to find the window class
+# assign [class="easyeffects"] 9
+# exec --no-startup-id easyeffects
 
-# assign [class="Pgadmin"] 5
 # assign [class="Browser"] 6
 
 # Set wallpaper

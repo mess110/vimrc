@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Disable DPMS (Display Power Management Signaling) - works in many environments
+xset -dpms
+
+# Set screen blanking to never (for Xorg)
+# xset s off
+# xset s noblank
+# xset s noexpose
+# xset dpms force off
+
+# For GNOME/GSettings (e.g., Ubuntu)
+gsettings set org.gnome.desktop.session idle-delay 0
+
+# For older systems or specific configs (e.g., console)
+# setterm -blank 0
+# setterm -powersave off
