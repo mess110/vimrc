@@ -25,6 +25,8 @@ ln -s ~/vimrc/bin/i3cyclebar ~/.local/bin/i3cyclebar
 ln -s ~/vimrc/bin/i3cycle ~/.local/bin/i3cycle
 ln -s ~/vimrc/bin/i3cycleaudio ~/.local/bin/i3cycleaudio
 ln -s ~/vimrc/bin/drink-water ~/.local/bin/drink-water
+ln -s ~/vimrc/bin/trezor ~/.local/bin/trezor
+ln -s ~/vimrc/bin/heroic ~/.local/bin/heroic
 ```
 
 ## xrandr

@@ -4,6 +4,7 @@
 #
 # app-image-runner WowUp-CF-2.20.0.AppImage
 # app-image-runner ~/.local/bin/WowUp-CF-2.20.0.AppImage
+# app-image-runner --latest WowUp
 
 function run_it() {
   echo "Running $1"
@@ -11,9 +12,32 @@ function run_it() {
   exec "$1" --no-sandbox "${@:2}"
 }
 
+function run_latest() {
+  local prefix="$1"
+  # Find files starting with $prefix and ending in AppImage, sort them, and take the last one
+  local latest_app
+  latest_app=$(ls -1v ~/.local/bin/"$prefix"*AppImage 2>/dev/null | tail -n 1)
+
+  if [ -n "$latest_app" ]; then
+    run_it "$latest_app" "${@:2}"
+  else
+    echo "No $prefix AppImage found in ~/.local/bin/"
+    exit 1
+  fi
+}
+
 if [ $# -eq 0 ]; then
   echo "No arguments supplied"
   exit 1
+fi
+
+if [ "$1" = "--latest" ]; then
+  if [ $# -lt 2 ]; then
+    echo "No prefix supplied for --latest"
+    exit 1
+  fi
+  run_latest "${@:2}"
+  exit 0
 fi
 
 # Check if the first argument is a valid file

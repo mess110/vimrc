@@ -105,14 +105,22 @@ lock() {
   fi
 }
 
+enableautolock() {
+  xset s on s blank s 600
+  xset +dpms dpms 600 600 600
+  i3-msg "exec xautolock -time 10 -locker \"$1 lock\" -detectsleep"
+}
+
+disableautolock() {
+  pkill xautolock 2>/dev/null
+  xset s off && xset -dpms && xset s noblank
+}
+
 toggleautolock() {
   if xset q | grep -q "DPMS is Enabled"; then
-    pkill xautolock 2>/dev/null
-    xset s off && xset -dpms && xset s noblank
+    disableautolock
   else
-    xset s on s blank s 600
-    xset +dpms dpms 600 600 600
-    i3-msg "exec xautolock -time 10 -locker \"$1 lock\" -detectsleep"
+    enableautolock "$1"
   fi
 }
 
@@ -267,6 +275,12 @@ hourtoicon)
 toggleautolock)
   toggleautolock "$0"
   ;;
+enableautolock)
+  enableautolock "$0"
+  ;;
+disableautolock)
+  disableautolock
+  ;;
 showautolock)
   showautolock
   ;;
@@ -295,7 +309,7 @@ api-disk-cache)
   api_disk_cache "$1" "$2" "$3"
   ;;
 *)
-  echo "Usage: $0 {lock|calendar|monitors|hourtoicon|toggleautolock|showautolock|togglelayout|rofi|logout|suspend|hibernate|reboot|shutdown|api-disk-cache}"
+  echo "Usage: $0 {lock|calendar|monitors|hourtoicon|toggleautolock|enableautolock|disableautolock|showautolock|togglelayout|rofi|logout|suspend|hibernate|reboot|shutdown|api-disk-cache}"
   exit 2
   ;;
 esac
